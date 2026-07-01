@@ -9,7 +9,7 @@
 
 <p align="center">
   <strong>Situational playbooks for AI coding agents</strong><br />
-  <sub>Repo: <code>agent-skill-routers</code> · Brand: <strong>ROUTR</strong> · by <a href="https://github.com/TeckTinkerere">TeckTinkerere</a></sub>
+  <sub>Repo: <code>ROUTR</code> · Brand: <strong>ROUTR</strong> · by <a href="https://github.com/TeckTinkerere">TeckTinkerere</a></sub>
 </p>
 
 <p align="center">
