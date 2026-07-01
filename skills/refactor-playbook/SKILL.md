@@ -1,11 +1,6 @@
 ---
 name: refactor-playbook
-description: >
-  Improve code structure without changing behavior. Use when refactoring,
-  reducing tech debt, extracting modules, improving architecture, composition
-  patterns, or "clean up this code". Routes to mattpocock improve-codebase-
-  architecture and codebase-design, vercel-composition-patterns, and
-  vercel-react-best-practices for React. Requires tests before risky refactors.
+description: "Improve code structure without changing behavior. Use when: refactor, tech debt, extract module, clean up code."
 ---
 
 # Refactor playbook

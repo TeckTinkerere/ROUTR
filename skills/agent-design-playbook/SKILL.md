@@ -1,11 +1,6 @@
 ---
 name: agent-design-playbook
-description: >
-  Design, optimize, or debug AI agent systems and context architecture. Use when
-  building multi-agent workflows, improving context windows, memory, tool design,
-  evaluation harnesses, autonomous loops, or asking about context engineering
-  principles. Routes to muratcankoylan context-engineering skills by sub-task.
-  Pairs with lean-ctx for runtime context optimization when implementing.
+description: "Design multi-agent systems, context windows, and eval harnesses. Use when: building agents, memory, tools, or context engineering."
 ---
 
 # Agent design playbook

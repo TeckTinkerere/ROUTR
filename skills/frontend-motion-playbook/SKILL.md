@@ -1,13 +1,6 @@
 ---
 name: frontend-motion-playbook
-description: >
-  Add or polish UI motion: animations, transitions, scroll effects, micro-
-  interactions, Framer Motion, GSAP, CSS motion, Lottie. Use when the user asks
-  to animate, add motion, improve transitions, scroll reveals, page-load
-  sequences, or mentions motion.dev, Framer Motion, GSAP, or spring physics.
-  Routes to framer-motion-animator, review-animations, motion-design, and
-  ui-animation. Assumes UI structure exists — for full page builds use
-  frontend-feature-playbook.
+description: "Add or polish animations (Framer Motion, scroll, transitions). Use when: animate, motion, micro-interactions — UI already exists."
 ---
 
 # Frontend motion playbook

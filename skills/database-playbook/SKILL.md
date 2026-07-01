@@ -1,11 +1,6 @@
 ---
 name: database-playbook
-description: >
-  Design queries, schema, migrations, and Postgres/Supabase best practices. Use
-  when working with SQL, Postgres, Supabase, RLS policies, migrations, query
-  performance, database schema, or backend data layer. Routes to supabase and
-  supabase-postgres-best-practices skills. Use symdex for locating data access
-  code in the repo.
+description: "SQL, Postgres, Supabase schema and queries. Use when: migrations, RLS, slow queries, database design."
 ---
 
 # Database playbook

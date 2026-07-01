@@ -1,12 +1,6 @@
 ---
 name: debugging-playbook
-description: >
-  Structured debugging workflow for software defects. Use when the user reports
-  bugs, errors, exceptions, test failures, unexpected behavior, regressions, or
-  asks to debug, trace, or find root cause. Routes to symdex-code-search and
-  lean-ctx before broad file reads. Uses caveman-lite for status updates in long
-  sessions. Escalates to frontend-motion or design skills only if the bug is
-  visual/CSS/animation-related.
+description: "Find and fix bugs step by step (reproduce → locate → fix). Use when: errors, crashes, test failures, 'debug this', root cause."
 ---
 
 # Debugging playbook

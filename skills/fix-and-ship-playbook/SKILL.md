@@ -1,12 +1,6 @@
 ---
 name: fix-and-ship-playbook
-description: >
-  Implement a targeted fix, verify it works, and prepare to ship (commit/PR).
-  Use when the user says fix, patch, make it work, get tests passing, prepare
-  commit, or open PR — and the problem is already understood or narrowly scoped.
-  Routes to symdex-code-search for impact analysis, lean-ctx for minimal reads,
-  caveman-commit for messages, optional caveman-review for diffs. Not for
-  open-ended debugging — use debugging-playbook first if root cause is unknown.
+description: "Make a small fix, verify it, and commit or open a PR. Use when: 'fix this', patch, tests must pass, ready to ship."
 ---
 
 # Fix and ship playbook

@@ -13,7 +13,8 @@
 </p>
 
 <p align="center">
-  <a href="#quick-install">Install</a> ·
+  <a href="INSTALL.md">Install guide</a> ·
+  <a href="#slash-menu">Slash menu</a> ·
   <a href="#famous-skills">Famous skills</a> ·
   <a href="#playbooks">Playbooks</a> ·
   <a href="#frontend-stack">Frontend</a> ·
@@ -36,11 +37,45 @@ You installed caveman, SymDex, lean-ctx, context engineering, Context7, frontend
 
 ## Quick install
 
-One command installs all playbooks globally for every agent `npx skills` supports:
+See **[INSTALL.md](INSTALL.md)** for Windows PowerShell, macOS, Linux, and per-agent steps.
 
 ```bash
 npx skills add TeckTinkerere/agent-skill-routers -g --all -y --copy
 ```
+
+Restart your agent after install.
+
+## Slash menu (hover descriptions)
+
+When you type `/` in Cursor (or use the skill picker in Claude Code, Codex, etc.), each skill shows a **hover tooltip**. That text is the `description` field in each `skills/*/SKILL.md` frontmatter — **we control it**.
+
+Format we use: **what it does** + `Use when:` + **plain trigger phrases**.
+
+| Skill | Hover text (what you see) |
+|-------|---------------------------|
+| `playbook-router` | Pick the right workflow when the task is unclear |
+| `planning-playbook` | Plan before coding: brainstorm, PRD, stress-test ideas |
+| `debugging-playbook` | Find and fix bugs step by step |
+| `fix-and-ship-playbook` | Make a small fix, verify, commit or PR |
+| `testing-playbook` | Write and run tests (TDD, Playwright) |
+| `code-review-playbook` | Review a PR or diff |
+| `refactor-playbook` | Improve structure without changing behavior |
+| `deploy-playbook` | Deploy to Vercel or preview |
+| `database-playbook` | SQL, Postgres, Supabase |
+| `e2e-qa-playbook` | Test in a real browser |
+| `security-review-playbook` | Security pass on code and rules |
+| `explore-codebase-playbook` | Explain how the codebase works |
+| `library-integration-playbook` | Integrate a library with current docs |
+| `agent-design-playbook` | Design agent systems and context |
+| `frontend-feature-playbook` | Build or redesign UI |
+| `frontend-motion-playbook` | Add animations and motion |
+| `playbook-common` | Skill install list for missing dependencies |
+
+To change hover text: edit `description` in the skill's `SKILL.md`, push, then run `npx skills update -g`.
+
+---
+
+## Quick install (one-liner)
 
 Install recommended child skills — full curated bundle in the catalog, or the **famous skills starter pack**:
 

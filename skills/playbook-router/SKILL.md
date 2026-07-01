@@ -1,12 +1,6 @@
 ---
 name: playbook-router
-description: >
-  Meta-router for situational agent workflows. Use when the task type is unclear,
-  the user asks which approach to take, or multiple playbooks could apply. Routes
-  to debugging, fix-and-ship, testing, code-review, planning, deploy, database,
-  refactor, e2e-qa, security-review, explore, library-integration, agent-design,
-  frontend-feature, and frontend-motion playbooks. Prefer a specific playbook
-  when the situation is obvious.
+description: "Pick the right workflow when the task is unclear. Use when: not sure which playbook, 'what approach', or multiple tasks could apply."
 ---
 
 # Playbook router
@@ -22,7 +16,7 @@ User intent?
 ├─ Fix + verify + commit (scoped)             → fix-and-ship-playbook
 ├─ Write tests / TDD / Playwright             → testing-playbook
 ├─ Review PR / code review                    → code-review-playbook
-├─ Security audit / vuln check                → security-review-playbook
+├─ Security audit / vuln check                  → security-review-playbook
 ├─ Refactor / tech debt / architecture        → refactor-playbook
 ├─ Deploy / Vercel / go live                  → deploy-playbook
 ├─ SQL / Supabase / migrations                → database-playbook

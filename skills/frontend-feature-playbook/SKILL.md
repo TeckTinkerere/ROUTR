@@ -1,13 +1,6 @@
 ---
 name: frontend-feature-playbook
-description: >
-  Build or redesign user-facing UI with intentional visual design. Use when
-  creating pages, components, landing pages, dashboards, design systems, layouts,
-  styling, Tailwind/CSS work, or the user mentions frontend, UI, UX, or design.
-  Routes to frontend-design, ui-ux-pro-max, tailwind-design-system, shadcn,
-  and framer-motion-animator when motion is part of the feature. Uses symdex and
-  lean-ctx for codebase discovery. Not for animation-only polish on existing UI
-  — use frontend-motion-playbook.
+description: "Build or redesign UI (pages, components, design system). Use when: new screen, landing page, layout, Tailwind, shadcn, 'make it look good'."
 ---
 
 # Frontend feature playbook

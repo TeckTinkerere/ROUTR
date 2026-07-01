@@ -1,11 +1,6 @@
 ---
 name: explore-codebase-playbook
-description: >
-  Understand how a repository works without fixing a specific bug. Use when the
-  user asks how something works, wants architecture explanation, onboarding,
-  where is X defined, data flow, or system overview. Routes to symdex-code-search
-  and lean-ctx for token-efficient discovery. Uses normal prose (not caveman).
-  Does not load frontend design skills unless explaining UI architecture.
+description: "Explain how the codebase works without changing code. Use when: 'how does X work', architecture, onboarding, where is this defined."
 ---
 
 # Explore codebase playbook

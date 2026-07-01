@@ -1,11 +1,6 @@
 ---
 name: code-review-playbook
-description: >
-  Review code changes, pull requests, or diffs for quality, correctness, and
-  spec alignment. Use when the user asks for code review, PR review, feedback on
-  a branch, "review my changes", or before merging. Routes to obra
-  requesting-code-review and receiving-code-review, vercel-react-best-practices,
-  wshobson code-review-excellence, and optional caveman-review for terse comments.
+description: "Review a PR or diff for bugs, style, and React best practices. Use when: code review, 'review my changes', before merge."
 ---
 
 # Code review playbook

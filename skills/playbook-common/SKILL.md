@@ -1,6 +1,6 @@
 ---
 name: playbook-common
-description: Shared skill-resolution rules and dependency catalog for TeckTinkerere agent-skill-routers playbooks. Load when a playbook references a missing child skill or when installing playbook dependencies.
+description: "Skill install list and paths for all playbooks. Use when: a playbook says a child skill is missing, or you need npx install commands."
 ---
 
 # Playbook common

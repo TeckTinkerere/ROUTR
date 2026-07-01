@@ -1,12 +1,6 @@
 ---
 name: library-integration-playbook
-description: >
-  Integrate or configure third-party libraries using current documentation.
-  Use when the user asks how to use a named library, framework, SDK, CLI tool,
-  or cloud service API; migration between versions; or setup/configuration for
-  dependencies like React, Next.js, Prisma, Tailwind, Framer Motion, etc. Routes
-  to find-docs (Context7) before relying on training data. Combines with symdex
-  to find existing usage patterns in the user's repo.
+description: "Integrate a third-party library using up-to-date docs. Use when: 'how do I use X', SDK setup, API syntax, version migration."
 ---
 
 # Library integration playbook

@@ -1,11 +1,6 @@
 ---
 name: security-review-playbook
-description: >
-  Security-focused review of code, dependencies, or cloud rules. Use when auditing
-  security, checking for vulnerabilities, reviewing auth/authz, RLS/firestore rules,
-  secrets exposure, or before production launch security pass. Routes to
-  trailofbits semgrep, firebase security auditors, and code-review patterns.
-  Not a substitute for professional pentest.
+description: "Security pass on code, auth, and cloud rules. Use when: security audit, vulnerabilities, RLS, secrets in code."
 ---
 
 # Security review playbook

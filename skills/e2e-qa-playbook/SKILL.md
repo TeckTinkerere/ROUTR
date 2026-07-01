@@ -1,12 +1,6 @@
 ---
 name: e2e-qa-playbook
-description: >
-  Browser-based QA, smoke tests, form filling, screenshots, scraping, and live
-  app verification. Use when testing in a real browser, E2E QA, "open the site
-  and check", dogfooding, visual regression, automating login flows, or verifying
-  a deployed preview. Routes to vercel-labs agent-browser (500K+ installs),
-  anthropics webapp-testing, and Playwright skills. Prefer over ad-hoc curl for
-  UI flows.
+description: "Test the app in a real browser (click, screenshot, smoke test). Use when: QA, E2E, 'open the site and check', preview verification."
 ---
 
 # E2E & QA playbook

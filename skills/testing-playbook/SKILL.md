@@ -1,11 +1,6 @@
 ---
 name: testing-playbook
-description: >
-  Write and run tests using TDD and modern testing tools. Use when adding tests,
-  writing specs, test-driven development, unit/integration/E2E coverage, fixing
-  failing tests, or the user mentions Jest, Vitest, Playwright, testing library,
-  or "make sure this is tested". Routes to obra test-driven-development,
-  mattpocock tdd, anthropics webapp-testing, and Playwright skills.
+description: "Write and run tests (TDD, unit, E2E, Playwright). Use when: add tests, TDD, coverage, failing test suite."
 ---
 
 # Testing playbook

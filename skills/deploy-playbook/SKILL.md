@@ -1,11 +1,6 @@
 ---
 name: deploy-playbook
-description: >
-  Deploy applications to production or preview environments. Use when the user
-  says deploy, push live, ship to Vercel, preview URL, production release, CI/CD
-  deploy, or environment variables for hosting. Routes to vercel-labs
-  deploy-to-vercel, vercel-cli-with-tokens, and vercel-optimize for cost/perf
-  after deploy. For mobile use expo-deployment instead.
+description: "Deploy to Vercel or preview environments. Use when: deploy, go live, preview URL, production release."
 ---
 
 # Deploy playbook

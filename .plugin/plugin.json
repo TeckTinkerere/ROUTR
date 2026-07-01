@@ -1,7 +1,7 @@
 {
   "name": "agent-skill-routers",
   "description": "Situational playbook routers for AI coding agents — debug, ship, explore, integrate libraries, design agents, and build polished frontends with motion. Thin meta-skills that route to best-in-class child skills without duplicating them.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "author": {
     "name": "TeckTinkerere",
     "url": "https://github.com/TeckTinkerere"

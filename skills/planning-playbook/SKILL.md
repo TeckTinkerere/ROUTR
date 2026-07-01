@@ -1,12 +1,6 @@
 ---
 name: planning-playbook
-description: >
-  Plan features before coding: brainstorm requirements, write PRDs, stress-test
-  designs, and break work into issues. Use when starting a new feature, writing a
-  spec, PRD, technical design, "plan this", "grill my idea", or before large
-  implementation. Routes to obra brainstorming, mattpocock to-prd and grill-me,
-  and grill-with-docs. Not for implementation — hand off to testing or
-  frontend playbooks after plan is approved.
+description: "Plan before coding: brainstorm, PRD, stress-test ideas. Use when: new feature, spec, 'grill my plan', before big implementation."
 ---
 
 # Planning playbook
