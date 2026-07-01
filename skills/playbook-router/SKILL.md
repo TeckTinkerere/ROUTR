@@ -27,6 +27,7 @@ User intent?
 ├─ AI chatbot / LLM / RAG / AI SDK            → ai-llm-app-playbook
 ├─ Expo / React Native / mobile app           → mobile-expo-playbook
 ├─ Marketing / SEO / landing copy / ads       → marketing-seo-playbook
+├─ Video / promo / launch clip / Remotion     → video-generation-playbook
 ├─ New UI / page / component / redesign       → frontend-feature-playbook
 └─ Animate / motion / scroll / transitions    → frontend-motion-playbook
 ```
@@ -66,5 +67,8 @@ Treat as **frontend** when the work touches: `.tsx`, `.jsx`, `.vue`, `.svelte`, 
 | `ai-llm-app-playbook` | chatbot, LLM, AI SDK, RAG, streaming |
 | `mobile-expo-playbook` | Expo, React Native, iOS, Android |
 | `marketing-seo-playbook` | SEO, copy, ads, ASO, growth |
+| `video-generation-playbook` | video, promo, MP4, brag, Remotion |
+| `video-launch-playbook` | /brag, launch video, PR video, explainer |
+| `video-remotion-playbook` | Remotion, React video, create-video |
 | `frontend-feature-playbook` | build UI, landing, component |
 | `frontend-motion-playbook` | animate, Framer, motion, scroll |

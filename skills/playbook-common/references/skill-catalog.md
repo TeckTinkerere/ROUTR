@@ -9,7 +9,7 @@ npx skills add <source> -g -y --copy
 Install this router pack:
 
 ```bash
-npx skills add TeckTinkerere/agent-skill-routers -g --all -y --copy
+npx skills add TeckTinkerere/ROUTR -g --all -y --copy
 ```
 
 ## Famous skills starter pack (curated from skills.sh top installs)
@@ -194,6 +194,28 @@ npx skills add coreyhaines31/marketingskills -g --all -y --copy
 npx skills add vercel/ai -g --all -y --copy
 ```
 
+## Video generation
+
+Leaderboard and routing notes: [video-skills-leaderboard.md](video-skills-leaderboard.md)
+
+| Skill | Source | Installs | Playbooks |
+|-------|--------|----------|-----------|
+| `remotion-best-practices` | `remotion-dev/skills` | 401K+ | video-remotion |
+| `brag` | `latent-spaces/brag` | 61+ · 716★ | video-launch |
+| `hyperframes` | `heygen-com/hyperframes` | bundle | video-generation, video-launch |
+| `product-launch-video` | `heygen-com/hyperframes` | bundle | video-launch |
+| `pr-to-video` | `heygen-com/hyperframes` | bundle | video-launch |
+| `website-to-video` | `heygen-com/hyperframes` | bundle | video-launch |
+| `faceless-explainer` | `heygen-com/hyperframes` | bundle | video-launch |
+| `motion-graphics` | `heygen-com/hyperframes` | bundle | video-launch |
+| `embedded-captions` | `heygen-com/hyperframes` | bundle | video-launch |
+| `remotion-video-toolkit` | `shreefentsar/remotion-video-toolkit` | 671 | video-remotion (fallback) |
+
+```bash
+npx skills add remotion-dev/skills@remotion-best-practices latent-spaces/brag@brag -g -y --copy
+npx skills add heygen-com/hyperframes -g --all -y --copy
+```
+
 ## Agent architecture
 
 | Skill | Source | Playbooks |
@@ -228,3 +250,6 @@ npx skills add muratcankoylan/Agent-Skills-for-Context-Engineering -g --all --fu
 | `mobile-expo-playbook` | building-native-ui, vercel-react-native-skills |
 | `marketing-seo-playbook` | seo-audit, copywriting, ai-seo |
 | `ai-llm-app-playbook` | ai-sdk, find-docs, agent-design |
+| `video-generation-playbook` | hyperframes, brag, remotion-best-practices |
+| `video-launch-playbook` | brag, product-launch-video, pr-to-video |
+| `video-remotion-playbook` | remotion-best-practices |

@@ -9,11 +9,11 @@
 
 <p align="center">
   <strong>Situational playbooks for AI coding agents</strong><br />
-  <sub>Repo: <code>agent-skill-routers</code> · Brand: <strong>ROUTR</strong> · by <a href="https://github.com/TeckTinkerere">TeckTinkerere</a></sub>
+  <sub>Repo: <a href="https://github.com/TeckTinkerere/ROUTR"><code>ROUTR</code></a> · by <a href="https://github.com/TeckTinkerere">TeckTinkerere</a></sub>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/playbooks-19-blue?style=flat-square" alt="19 playbooks" />
+  <img src="https://img.shields.io/badge/playbooks-22-blue?style=flat-square" alt="22 playbooks" />
   <img src="https://img.shields.io/badge/agents-70%2B-green?style=flat-square" alt="70+ agents" />
   <img src="https://img.shields.io/badge/skills.sh-routed-orange?style=flat-square" alt="skills.sh" />
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="MIT" />
@@ -24,7 +24,7 @@
   <a href="#slash-menu">Slash menu</a> ·
   <a href="#stacks">Stacks</a> ·
   <a href="#all-playbooks">All playbooks</a> ·
-  <a href="skills/playbook-common/references/skill-catalog.md">Skill catalog</a> ·
+  <a href="skills/playbook-common/references/video-skills-leaderboard.md">Video leaderboard</a> ·
   <a href="docs/architecture.md">Architecture</a>
 </p>
 
@@ -43,7 +43,7 @@ You installed dozens of skills. The agent picks the wrong one, reads whole files
 > Routers route. They do not replace child skills.
 
 ```bash
-npx skills add TeckTinkerere/agent-skill-routers -g --all -y --copy
+npx skills add TeckTinkerere/ROUTR -g --all -y --copy
 ```
 
 Full install: **[INSTALL.md](INSTALL.md)** (Windows · macOS · Linux · Cursor · Claude · Codex · Kiro · OpenCode)
@@ -62,6 +62,9 @@ Hover text in `/` skill picker = YAML `description` in each `SKILL.md`. We keep 
 | `mobile-expo-playbook` | Build Expo / React Native apps |
 | `marketing-seo-playbook` | Marketing copy, SEO, growth |
 | `ai-llm-app-playbook` | AI SDK chat, agents, RAG, streaming |
+| `video-generation-playbook` | Make a video — route launch vs Remotion |
+| `video-launch-playbook` | /brag, launch promo, PR video |
+| `video-remotion-playbook` | Remotion React programmatic video |
 | `debugging-playbook` | Find and fix bugs step by step |
 | `frontend-feature-playbook` | Build or redesign UI |
 | … | [Full table in INSTALL.md](INSTALL.md) |
@@ -70,7 +73,7 @@ Hover text in `/` skill picker = YAML `description` in each `SKILL.md`. We keep 
 
 ## Stacks
 
-Three new playbook groups — each routes to top [skills.sh](https://skills.sh) skills in that domain.
+Three playbook groups — each routes to top [skills.sh](https://skills.sh) skills in that domain.
 
 ### Mobile · Expo / React Native
 
@@ -117,6 +120,26 @@ For multi-agent architecture (not just AI SDK wiring) → `agent-design-playbook
 
 ---
 
+### Video generation · brag, HyperFrames, Remotion
+
+| Playbook | Child skills (leaderboard) |
+|----------|---------------------------|
+| [`video-generation-playbook`](skills/video-generation-playbook/) | Routes launch vs Remotion vs HyperFrames |
+| [`video-launch-playbook`](skills/video-launch-playbook/) | **`brag`** (#1 launch), `product-launch-video`, `pr-to-video` |
+| [`video-remotion-playbook`](skills/video-remotion-playbook/) | `remotion-best-practices` (**401K+**) |
+
+Full ranking: [`video-skills-leaderboard.md`](skills/playbook-common/references/video-skills-leaderboard.md)
+
+```bash
+npx skills add latent-spaces/brag@brag remotion-dev/skills@remotion-best-practices -g -y --copy
+npx skills add heygen-com/hyperframes -g --all -y --copy
+```
+
+**Say:** *"/brag about this project"* → `video-launch-playbook` → `brag`  
+**Say:** *"Spotify Wrapped-style video from JSON"* → `video-remotion-playbook` → `remotion-best-practices`
+
+---
+
 ## All playbooks
 
 <details>
@@ -139,7 +162,7 @@ For multi-agent architecture (not just AI SDK wiring) → `agent-design-playbook
 </details>
 
 <details>
-<summary><b>Product surfaces (5)</b></summary>
+<summary><b>Product surfaces (8)</b></summary>
 
 | Playbook | Triggers | Top skills |
 |----------|----------|------------|
@@ -148,6 +171,9 @@ For multi-agent architecture (not just AI SDK wiring) → `agent-design-playbook
 | [`mobile-expo-playbook`](skills/mobile-expo-playbook/) | Expo, RN | `building-native-ui` |
 | [`marketing-seo-playbook`](skills/marketing-seo-playbook/) | SEO, copy | `seo-audit`, `copywriting` |
 | [`ai-llm-app-playbook`](skills/ai-llm-app-playbook/) | chatbot, AI SDK | `ai-sdk` |
+| [`video-generation-playbook`](skills/video-generation-playbook/) | make a video | `hyperframes`, `brag` |
+| [`video-launch-playbook`](skills/video-launch-playbook/) | /brag, launch | **`brag`**, `pr-to-video` |
+| [`video-remotion-playbook`](skills/video-remotion-playbook/) | Remotion | `remotion-best-practices` |
 
 </details>
 
@@ -170,11 +196,13 @@ For multi-agent architecture (not just AI SDK wiring) → `agent-design-playbook
 ```mermaid
 flowchart LR
     U[You] --> R[playbook-router]
+    R --> V[video-generation]
     R --> M[mobile-expo]
     R --> K[marketing-seo]
     R --> A[ai-llm-app]
     R --> D[debugging]
     R --> F[frontend-feature]
+    V --> S4[brag / remotion / hyperframes]
     M --> S1[expo skills]
     K --> S2[marketingskills]
     A --> S3[vercel ai-sdk]
@@ -195,8 +223,9 @@ flowchart LR
 | `vercel-react-best-practices` | 515K+ | frontend, review |
 | `agent-browser` | 499K+ | e2e-qa |
 | `building-native-ui` | 57K+ | mobile-expo |
+| `remotion-best-practices` | 401K+ | video-remotion |
+| `brag` | 716★ | video-launch |
 | `seo-audit` | 150K+ | marketing-seo |
-| `ai-sdk` | 37K+ | ai-llm-app |
 
 ---
 
@@ -208,6 +237,14 @@ flowchart LR
 mobile-expo-playbook → building-native-ui
 marketing-seo-playbook → aso + copywriting
 deploy-playbook → expo-deployment / EAS
+```
+
+**Ship a feature + brag video**
+
+```
+fix-and-ship-playbook → commit
+video-launch-playbook → brag
+marketing-seo-playbook → share copy from brag-output
 ```
 
 **AI chat product**

@@ -1,4 +1,4 @@
-# Install — Agent Skill Routers
+# Install — ROUTR
 
 The **slash-command hover text** in Cursor, Claude Code, Codex, and other agents comes from each skill’s `description` field in `SKILL.md`. This repo keeps those descriptions short and plain.
 
@@ -25,13 +25,13 @@ node -v
 ### Windows — PowerShell
 
 ```powershell
-npx skills add TeckTinkerere/agent-skill-routers -g --all -y --copy
+npx skills add TeckTinkerere/ROUTR -g --all -y --copy
 ```
 
 ### macOS / Linux — Bash or Zsh
 
 ```bash
-npx skills add TeckTinkerere/agent-skill-routers -g --all -y --copy
+npx skills add TeckTinkerere/ROUTR -g --all -y --copy
 ```
 
 | Flag | Meaning |
@@ -68,6 +68,15 @@ npx skills add anthropics/skills@frontend-design shadcn/ui@shadcn -g -y --copy
 ```
 
 Full list with install counts: [`skills/playbook-common/references/skill-catalog.md`](skills/playbook-common/references/skill-catalog.md)
+
+### Video stack (optional)
+
+```powershell
+npx skills add latent-spaces/brag@brag remotion-dev/skills@remotion-best-practices -g -y --copy
+npx skills add heygen-com/hyperframes -g --all -y --copy
+```
+
+Leaderboard: [`video-skills-leaderboard.md`](skills/playbook-common/references/video-skills-leaderboard.md)
 
 ---
 
@@ -116,13 +125,13 @@ In **Cursor**: open chat → type `/` → search `debugging-playbook`. Hover sho
 ## Update playbooks
 
 ```powershell
-npx skills update TeckTinkerere/agent-skill-routers -g -y
+npx skills update TeckTinkerere/ROUTR -g -y
 ```
 
 Or reinstall:
 
 ```powershell
-npx skills add TeckTinkerere/agent-skill-routers -g --all -y --copy
+npx skills add TeckTinkerere/ROUTR -g --all -y --copy
 ```
 
 ---
@@ -136,7 +145,7 @@ npx skills remove debugging-playbook frontend-feature-playbook -g -y
 Remove all playbooks from this repo:
 
 ```powershell
-npx skills remove playbook-router debugging-playbook fix-and-ship-playbook explore-codebase-playbook library-integration-playbook agent-design-playbook frontend-feature-playbook frontend-motion-playbook planning-playbook testing-playbook code-review-playbook refactor-playbook deploy-playbook database-playbook e2e-qa-playbook security-review-playbook playbook-common -g -y
+npx skills remove playbook-router debugging-playbook fix-and-ship-playbook explore-codebase-playbook library-integration-playbook agent-design-playbook frontend-feature-playbook frontend-motion-playbook planning-playbook testing-playbook code-review-playbook refactor-playbook deploy-playbook database-playbook e2e-qa-playbook security-review-playbook mobile-expo-playbook marketing-seo-playbook ai-llm-app-playbook video-generation-playbook video-launch-playbook video-remotion-playbook playbook-common -g -y
 ```
 
 ---
@@ -175,7 +184,7 @@ Omit `-g` inside a project that has `skills` configured:
 
 ```bash
 cd your-project
-npx skills add TeckTinkerere/agent-skill-routers --all -y --copy
+npx skills add TeckTinkerere/ROUTR --all -y --copy
 ```
 
 Commits `skills-lock.json` if your team uses lockfile workflow.

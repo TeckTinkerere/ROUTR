@@ -45,5 +45,8 @@ When multiple playbooks could apply, use the **most specific** match:
 16. `mobile-expo-playbook` — Expo / React Native
 17. `marketing-seo-playbook` — SEO, copy, growth
 18. `ai-llm-app-playbook` — Vercel AI SDK apps
+19. `video-remotion-playbook` — Remotion / React programmatic video
+20. `video-launch-playbook` — brag, launch promo, PR video, HyperFrames workflows
+21. `video-generation-playbook` — general video intent (routes to launch or Remotion)
 
 When unsure, read `playbook-router/SKILL.md` first.

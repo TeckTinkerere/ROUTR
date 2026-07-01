@@ -1,7 +1,7 @@
 {
-  "name": "agent-skill-routers",
-  "description": "ROUTR — situational playbook routers for AI agents. Route debug, ship, mobile Expo, marketing SEO, AI SDK, frontend, and 19 workflows to famous skills.sh child skills.",
-  "version": "1.2.0",
+  "name": "routr",
+  "description": "ROUTR — situational playbook routers for AI agents. Route debug, ship, video (brag/Remotion/HyperFrames), mobile Expo, marketing SEO, AI SDK, frontend, and 22 workflows to famous skills.sh child skills.",
+  "version": "1.3.0",
   "author": {
     "name": "TeckTinkerere",
     "url": "https://github.com/TeckTinkerere"
