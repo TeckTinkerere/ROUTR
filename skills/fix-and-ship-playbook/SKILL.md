@@ -19,8 +19,11 @@ Read if present:
 
 1. `symdex-code-search` — impact / callers before editing public APIs
 2. `lean-ctx` — read only files you will touch
-3. `caveman-commit` — when writing commit message
-4. `caveman-review` — optional before PR
+3. `test-driven-development` — add regression test when fixing bugs
+4. `finishing-a-development-branch` — merge vs PR when done
+5. `caveman-commit` — when writing commit message
+6. `requesting-code-review` — before opening PR
+7. `caveman-review` — optional terse self-review
 
 If root cause unclear → **stop** and switch to `debugging-playbook`.
 

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/skills-playbook%20routers-8%20situations-blue?style=for-the-badge" alt="8 playbooks" />
+  <img src="https://img.shields.io/badge/playbooks-16%20situations-blue?style=for-the-badge" alt="16 playbooks" />
   <img src="https://img.shields.io/badge/agents-70%2B%20supported-green?style=for-the-badge" alt="70+ agents" />
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=for-the-badge" alt="MIT" />
 </p>
@@ -8,12 +8,13 @@
 
 <p align="center">
   <strong>Stop drowning your agent in 50 skills.</strong><br />
-  Thin playbooks that route to the right workflow — debug, ship, explore, integrate libraries,<br />
-  design agent systems, and build frontends with real motion.
+  Thin playbooks that route to the right workflow — and to <strong>famous skills.sh skills</strong><br />
+  (Vercel, Anthropic, Obra Superpowers, Matt Pocock, Supabase, Playwright, and more).
 </p>
 
 <p align="center">
   <a href="#quick-install">Install</a> ·
+  <a href="#famous-skills">Famous skills</a> ·
   <a href="#playbooks">Playbooks</a> ·
   <a href="#frontend-stack">Frontend</a> ·
   <a href="#how-it-works">How it works</a> ·
@@ -41,7 +42,15 @@ One command installs all playbooks globally for every agent `npx skills` support
 npx skills add TeckTinkerere/agent-skill-routers -g --all -y --copy
 ```
 
-Install recommended child skills (code + frontend bundle):
+Install recommended child skills — full curated bundle in the catalog, or the **famous skills starter pack**:
+
+```bash
+# See skills/playbook-common/references/skill-catalog.md for the full one-shot bundle
+npx skills add vercel-labs/agent-browser anthropics/skills@webapp-testing obra/superpowers -g --all -y --copy
+npx skills add vercel-labs/agent-skills supabase/agent-skills mattpocock/skills -g --all -y --copy
+```
+
+Legacy minimal bundle:
 
 ```bash
 # Code intelligence
@@ -62,18 +71,51 @@ Restart your agent after install.
 
 ## Playbooks
 
-| Playbook | Say this… | Routes to |
-|----------|-----------|-----------|
-| [`playbook-router`](skills/playbook-router/) | "Which approach?" / unclear task | Picks one playbook below |
-| [`debugging-playbook`](skills/debugging-playbook/) | debug, trace, root cause, error | SymDex → lean-ctx → optional caveman-lite |
-| [`fix-and-ship-playbook`](skills/fix-and-ship-playbook/) | fix, patch, commit, PR | Impact check → verify → caveman-commit |
-| [`explore-codebase-playbook`](skills/explore-codebase-playbook/) | how does X work, architecture | SymDex maps → lean-ctx narrow reads |
-| [`library-integration-playbook`](skills/library-integration-playbook/) | how do I use Prisma/Next… | Context7 docs → repo patterns |
-| [`agent-design-playbook`](skills/agent-design-playbook/) | multi-agent, harness, eval | Context engineering skills by sub-task |
-| [`frontend-feature-playbook`](skills/frontend-feature-playbook/) | build UI, page, redesign | Design → UX → Tailwind → shadcn |
-| [`frontend-motion-playbook`](skills/frontend-motion-playbook/) | animate, motion, Framer | Motion.dev patterns → review pass |
+### Core workflows
 
-Full dependency list: [`skills/playbook-common/references/skill-catalog.md`](skills/playbook-common/references/skill-catalog.md)
+| Playbook | Say this… | Routes to (top skills) |
+|----------|-----------|------------------------|
+| [`playbook-router`](skills/playbook-router/) | unclear task | Picks one playbook |
+| [`planning-playbook`](skills/planning-playbook/) | plan, PRD, grill idea | `brainstorming`, `grill-me`, `to-prd` |
+| [`debugging-playbook`](skills/debugging-playbook/) | debug, error, root cause | `systematic-debugging`, SymDex, lean-ctx |
+| [`fix-and-ship-playbook`](skills/fix-and-ship-playbook/) | fix, commit, PR | TDD, `caveman-commit`, code review |
+| [`testing-playbook`](skills/testing-playbook/) | tests, TDD, Playwright | `test-driven-development`, `webapp-testing` |
+| [`code-review-playbook`](skills/code-review-playbook/) | review PR, diff | `requesting-code-review`, `vercel-react-best-practices` |
+| [`refactor-playbook`](skills/refactor-playbook/) | refactor, tech debt | `improve-codebase-architecture`, composition patterns |
+| [`deploy-playbook`](skills/deploy-playbook/) | deploy, Vercel, go live | `deploy-to-vercel`, `vercel-optimize` |
+| [`database-playbook`](skills/database-playbook/) | SQL, Supabase, migrations | `supabase-postgres-best-practices` |
+| [`e2e-qa-playbook`](skills/e2e-qa-playbook/) | browser QA, smoke test | `agent-browser` (499K+ installs) |
+| [`security-review-playbook`](skills/security-review-playbook/) | security audit | `semgrep`, Firebase rules auditors |
+| [`explore-codebase-playbook`](skills/explore-codebase-playbook/) | how does X work | SymDex → lean-ctx |
+| [`library-integration-playbook`](skills/library-integration-playbook/) | library API docs | Context7 → repo patterns |
+| [`agent-design-playbook`](skills/agent-design-playbook/) | multi-agent, harness | Context engineering collection |
+| [`frontend-feature-playbook`](skills/frontend-feature-playbook/) | build UI, landing | `frontend-design`, `web-design-guidelines` |
+| [`frontend-motion-playbook`](skills/frontend-motion-playbook/) | animate, Framer Motion | `framer-motion-animator`, `review-animations` |
+
+Full dependency list with install counts: [`skills/playbook-common/references/skill-catalog.md`](skills/playbook-common/references/skill-catalog.md)
+
+## Famous skills (skills.sh leaderboard)
+
+Routers wire into the most-installed ecosystem skills — vendor-first, battle-tested:
+
+| Skill | Publisher | Installs | Routed by |
+|-------|-----------|----------|-----------|
+| `find-skills` | vercel-labs | 2.3M+ | planning |
+| `frontend-design` | anthropics | 610K+ | frontend-feature |
+| `vercel-react-best-practices` | vercel-labs | 515K+ | frontend, code-review, refactor |
+| `agent-browser` | vercel-labs | 499K+ | e2e-qa |
+| `web-design-guidelines` | vercel-labs | 428K+ | frontend-feature |
+| `grill-me` | mattpocock | 425K+ | planning |
+| `remotion-best-practices` | remotion-dev | 401K+ | frontend-motion (video) |
+| `tdd` | mattpocock | 330K+ | testing |
+| `systematic-debugging` | obra | 166K+ | debugging |
+| `requesting-code-review` | obra | 149K+ | code-review |
+| `supabase-postgres-best-practices` | supabase | 260K+ | database |
+| `webapp-testing` | anthropics | 107K+ | testing, e2e-qa |
+| `deploy-to-vercel` | vercel-labs | 82K+ | deploy |
+| `playwright-cli` | microsoft | 72K+ | testing, e2e-qa |
+
+Data from [skills.sh](https://skills.sh) leaderboard (2026). Install counts are telemetry-based, not quality guarantees — prefer vendor skills.
 
 ## How it works
 
@@ -109,7 +151,9 @@ Two playbooks split UI work so design and motion don't fight each other.
 
 | Child skill | Source | Role |
 |-------------|--------|------|
-| `frontend-design` | [anthropics/skills](https://skills.sh/anthropics/skills/frontend-design) | Distinctive visual direction |
+| `frontend-design` | [anthropics/skills](https://skills.sh/anthropics/skills/frontend-design) | Distinctive visual direction (610K+) |
+| `web-design-guidelines` | [vercel-labs/agent-skills](https://skills.sh/vercel-labs/agent-skills/web-design-guidelines) | Vercel UI/a11y bar (428K+) |
+| `vercel-react-best-practices` | [vercel-labs/agent-skills](https://skills.sh/vercel-labs/agent-skills/vercel-react-best-practices) | React/Next perf (515K+) |
 | `ui-ux-pro-max` | [nextlevelbuilder](https://skills.sh/nextlevelbuilder/ui-ux-pro-max-skill/ui-ux-pro-max) | UX + accessibility patterns |
 | `tailwind-design-system` | [wshobson/agents](https://skills.sh/wshobson/agents/tailwind-design-system) | Token scale, responsive layout |
 | `shadcn` | [shadcn/ui](https://skills.sh/shadcn/ui/shadcn) | Component primitives |
@@ -172,6 +216,14 @@ agent-skill-routers/
 │   ├── playbook-common/          # Skill catalog + resolution rules
 │   ├── debugging-playbook/
 │   ├── fix-and-ship-playbook/
+│   ├── planning-playbook/
+│   ├── testing-playbook/
+│   ├── code-review-playbook/
+│   ├── refactor-playbook/
+│   ├── deploy-playbook/
+│   ├── database-playbook/
+│   ├── e2e-qa-playbook/
+│   ├── security-review-playbook/
 │   ├── explore-codebase-playbook/
 │   ├── library-integration-playbook/
 │   ├── agent-design-playbook/

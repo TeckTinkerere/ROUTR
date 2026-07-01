@@ -12,39 +12,141 @@ Install this router pack:
 npx skills add TeckTinkerere/agent-skill-routers -g --all -y --copy
 ```
 
+## Famous skills starter pack (curated from skills.sh top installs)
+
+One-shot install of the most adopted vendor skills (2M–100K+ installs each):
+
+```bash
+# Discovery & docs
+npx skills add vercel-labs/skills@find-skills upstash/context7 -g -y --copy
+
+# Vercel engineering (515K+ react, 428K+ web design, 499K+ browser)
+npx skills add vercel-labs/agent-skills -g --skill vercel-react-best-practices -g --skill web-design-guidelines -g --skill deploy-to-vercel -g --skill vercel-composition-patterns -y --copy
+npx skills add vercel-labs/agent-browser -g -y --copy
+
+# Anthropic (610K+ frontend, 107K+ webapp testing)
+npx skills add anthropics/skills@frontend-design anthropics/skills@webapp-testing -g -y --copy
+
+# Obra Superpowers (166K+ debugging, 149K+ code review)
+npx skills add obra/superpowers -g --skill systematic-debugging --skill test-driven-development --skill brainstorming --skill requesting-code-review --skill receiving-code-review -y --copy
+
+# Matt Pocock (330K+ tdd, 350K+ architecture, 425K+ grill)
+npx skills add mattpocock/skills -g --skill tdd --skill to-prd --skill grill-me --skill improve-codebase-architecture --skill diagnosing-bugs -y --copy
+
+# Database (260K+ postgres practices)
+npx skills add supabase/agent-skills -g --all -y --copy
+
+# Playwright E2E (72K+ / 56K+)
+npx skills add microsoft/playwright-cli@playwright-cli currents-dev/playwright-best-practices-skill -g -y --copy
+```
+
 ---
 
 ## Code intelligence & context
 
-| Skill | Source | Playbooks |
-|-------|--------|-----------|
-| `symdex-code-search` | `husnainpk/SymDex` | debug, fix, explore, frontend |
-| `lean-ctx` | `yvgude/lean-ctx` | debug, fix, explore, frontend |
-| `find-docs` | `upstash/context7` | library, frontend |
-| `caveman` | `JuliusBrussee/caveman` | debug (lite), fix-ship |
-| `caveman-commit` | `JuliusBrussee/caveman` | fix-ship |
-| `caveman-review` | `JuliusBrussee/caveman` | fix-ship |
+| Skill | Source | Installs | Playbooks |
+|-------|--------|----------|-----------|
+| `find-skills` | `vercel-labs/skills` | 2.3M+ | planning |
+| `symdex-code-search` | `husnainpk/SymDex` | — | debug, fix, explore, frontend, database, refactor |
+| `lean-ctx` | `yvgude/lean-ctx` | — | all code playbooks |
+| `find-docs` | `upstash/context7` | 8K+ | library, frontend |
+| `caveman` | `JuliusBrussee/caveman` | 78K+ stars | debug (lite), fix-ship |
+| `caveman-commit` | `JuliusBrussee/caveman` | — | fix-ship |
+| `caveman-review` | `JuliusBrussee/caveman` | — | code-review |
+
+## Debugging & quality (Obra Superpowers + Matt Pocock)
+
+| Skill | Source | Installs | Playbooks |
+|-------|--------|----------|-----------|
+| `systematic-debugging` | `obra/superpowers` | 166K+ | debugging |
+| `test-driven-development` | `obra/superpowers` | — | testing, fix-ship |
+| `diagnosing-bugs` | `mattpocock/skills` | — | debugging |
+| `finishing-a-development-branch` | `obra/superpowers` | — | fix-ship, deploy |
+| `executing-plans` | `obra/superpowers` | — | planning (execute phase) |
+| `subagent-driven-development` | `obra/superpowers` | — | agent-design |
+
+## Planning & specs
+
+| Skill | Source | Installs | Playbooks |
+|-------|--------|----------|-----------|
+| `brainstorming` | `obra/superpowers` | — | planning |
+| `to-prd` | `mattpocock/skills` | 310K+ | planning |
+| `grill-me` | `mattpocock/skills` | 425K+ | planning |
+| `grill-with-docs` | `mattpocock/skills` | 350K+ | planning |
+| `improve-codebase-architecture` | `mattpocock/skills` | 350K+ | planning, refactor |
+
+## Testing & E2E
+
+| Skill | Source | Installs | Playbooks |
+|-------|--------|----------|-----------|
+| `webapp-testing` | `anthropics/skills` | 107K+ | testing, e2e-qa |
+| `tdd` | `mattpocock/skills` | 330K+ | testing |
+| `playwright-cli` | `microsoft/playwright-cli` | 72K+ | testing, e2e-qa |
+| `playwright-best-practices` | `currents-dev/playwright-best-practices-skill` | 56K+ | testing, e2e-qa |
+| `agent-browser` | `vercel-labs/agent-browser` | 499K+ | e2e-qa |
+
+## Code review
+
+| Skill | Source | Installs | Playbooks |
+|-------|--------|----------|-----------|
+| `requesting-code-review` | `obra/superpowers` | 149K+ | code-review, fix-ship |
+| `receiving-code-review` | `obra/superpowers` | 122K+ | code-review |
+| `code-review-excellence` | `wshobson/agents` | 24K+ | code-review |
+| `review-since` | `mattpocock/skills` | — | code-review |
+| `vercel-react-best-practices` | `vercel-labs/agent-skills` | 515K+ | code-review, refactor, frontend |
+
+## Deploy & optimize
+
+| Skill | Source | Installs | Playbooks |
+|-------|--------|----------|-----------|
+| `deploy-to-vercel` | `vercel-labs/agent-skills` | 82K+ | deploy |
+| `vercel-cli-with-tokens` | `vercel-labs/agent-skills` | — | deploy |
+| `vercel-optimize` | `vercel-labs/agent-skills` | — | deploy |
+| `expo-deployment` | `expo/skills` | 39K+ | deploy (mobile) |
 
 ## Frontend — visual design
 
-| Skill | Source | Playbooks |
-|-------|--------|-----------|
-| `frontend-design` | `anthropics/skills@frontend-design` | frontend-feature |
-| `ui-ux-pro-max` | `nextlevelbuilder/ui-ux-pro-max-skill` | frontend-feature |
-| `tailwind-design-system` | `wshobson/agents@tailwind-design-system` | frontend-feature |
-| `shadcn` | `shadcn/ui@shadcn` | frontend-feature |
+| Skill | Source | Installs | Playbooks |
+|-------|--------|----------|-----------|
+| `frontend-design` | `anthropics/skills` | 610K+ | frontend-feature |
+| `web-design-guidelines` | `vercel-labs/agent-skills` | 428K+ | frontend-feature, e2e-qa, code-review |
+| `ui-ux-pro-max` | `nextlevelbuilder/ui-ux-pro-max-skill` | 243K+ | frontend-feature |
+| `tailwind-design-system` | `wshobson/agents` | 52K+ | frontend-feature |
+| `shadcn` | `shadcn/ui` | 214K+ | frontend-feature |
+| `vercel-react-view-transitions` | `vercel-labs/agent-skills` | — | frontend-motion |
+| `design-taste-frontend` | `leonxlnx/taste-skill` | 202K+ | frontend-feature (alt aesthetic) |
 
 ## Frontend — motion & animation
 
-| Skill | Source | Playbooks |
-|-------|--------|-----------|
-| `framer-motion-animator` | `patricio0312rev/skills` | frontend-feature, frontend-motion |
-| `review-animations` | `emilkowalski/skills` | frontend-motion |
-| `motion-design` | `lottiefiles/motion-design-skill` | frontend-motion |
-| `ui-animation` | `mblode/agent-skills` | frontend-motion |
-| `gsap-framer-scroll-animation` | `github/awesome-copilot` | frontend-motion (scroll-heavy) |
+| Skill | Source | Installs | Playbooks |
+|-------|--------|----------|-----------|
+| `framer-motion-animator` | `patricio0312rev/skills` | 7K+ | frontend-feature, frontend-motion |
+| `review-animations` | `emilkowalski/skills` | 12K+ | frontend-motion, code-review |
+| `motion-design` | `lottiefiles/motion-design-skill` | 3.6K+ | frontend-motion |
+| `ui-animation` | `mblode/agent-skills` | 6.6K+ | frontend-motion |
+| `remotion-best-practices` | `remotion-dev/skills` | 401K+ | frontend-motion (video) |
 
-> **Motion.dev / Framer Motion:** use `framer-motion-animator` for React `motion` components; pair with `review-animations` before shipping.
+## Refactor & architecture
+
+| Skill | Source | Installs | Playbooks |
+|-------|--------|----------|-----------|
+| `vercel-composition-patterns` | `vercel-labs/agent-skills` | — | refactor |
+| `codebase-design` | `mattpocock/skills` | — | refactor |
+| `nextjs-app-router-patterns` | `wshobson/agents` | 23K+ | frontend-feature, library |
+
+## Database
+
+| Skill | Source | Installs | Playbooks |
+|-------|--------|----------|-----------|
+| `supabase-postgres-best-practices` | `supabase/agent-skills` | 260K+ | database |
+| `supabase` | `supabase/agent-skills` | 146K+ | database |
+
+## Security
+
+| Skill | Source | Installs | Playbooks |
+|-------|--------|----------|-----------|
+| `semgrep` | `trailofbits/skills` | 5.6K+ | security-review |
+| `firebase-security-rules-auditor` | `firebase/agent-skills` | 59K+ | security-review |
 
 ## Agent architecture
 
@@ -52,21 +154,28 @@ npx skills add TeckTinkerere/agent-skill-routers -g --all -y --copy
 |-------|--------|-----------|
 | `context-fundamentals` | `muratcankoylan/Agent-Skills-for-Context-Engineering` | agent-design |
 | `context-degradation` | same repo | debug, agent-design |
-| `context-compression` | same repo | agent-design |
-| `multi-agent-patterns` | same repo | agent-design |
 | `harness-engineering` | same repo | agent-design |
-| `evaluation` | same repo | agent-design |
-| `tool-design` | same repo | agent-design |
-
-Install full context-engineering set:
+| `multi-agent-patterns` | same repo | agent-design |
 
 ```bash
 npx skills add muratcankoylan/Agent-Skills-for-Context-Engineering -g --all --full-depth -y --copy
 ```
 
-## Optional quality gates
+---
 
-| Skill | Source | When |
-|-------|--------|------|
-| `react-best-practices` | `vercel-labs/agent-skills` | React / Next.js frontend |
-| `webapp-testing` | `anthropics/skills` or project skill | fix-ship verification |
+## Playbook → skill quick map
+
+| Playbook | Top child skills |
+|----------|------------------|
+| `debugging-playbook` | systematic-debugging, diagnosing-bugs, symdex, lean-ctx |
+| `fix-and-ship-playbook` | symdex, lean-ctx, test-driven-development, caveman-commit |
+| `testing-playbook` | test-driven-development, tdd, webapp-testing, playwright-* |
+| `code-review-playbook` | requesting-code-review, vercel-react-best-practices |
+| `planning-playbook` | brainstorming, grill-me, to-prd |
+| `deploy-playbook` | deploy-to-vercel, vercel-optimize |
+| `database-playbook` | supabase-postgres-best-practices, supabase |
+| `refactor-playbook` | improve-codebase-architecture, vercel-composition-patterns |
+| `e2e-qa-playbook` | agent-browser, playwright-best-practices |
+| `security-review-playbook` | semgrep, firebase-security-rules-auditor |
+| `frontend-feature-playbook` | frontend-design, web-design-guidelines, shadcn |
+| `frontend-motion-playbook` | framer-motion-animator, review-animations |

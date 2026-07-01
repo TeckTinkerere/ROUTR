@@ -20,14 +20,16 @@ Install missing skills from `playbook-common/references/skill-catalog.md`.
 
 | Order | Skill | Role |
 |-------|-------|------|
-| 1 | `frontend-design` | Aesthetic direction, typography, layout thesis |
-| 2 | `ui-ux-pro-max` | UX patterns, accessibility, design-system thinking |
-| 3 | `tailwind-design-system` | Tailwind tokens, spacing, responsive scale |
-| 4 | `shadcn` | If project uses shadcn/ui |
-| 5 | `symdex-code-search` | Find existing components, routes, patterns |
-| 6 | `lean-ctx` | Read related files without dumping whole components |
-| 7 | `find-docs` | Current API docs for UI libraries in stack |
-| 8 | `framer-motion-animator` | If feature includes motion (hero, transitions) |
+| 1 | `frontend-design` | Aesthetic direction, typography, layout thesis (610K+ installs) |
+| 2 | `web-design-guidelines` | Vercel UI/UX/a11y guidelines (428K+ installs) |
+| 3 | `ui-ux-pro-max` | UX patterns, accessibility, design-system thinking |
+| 4 | `vercel-react-best-practices` | React/Next performance while building UI (515K+ installs) |
+| 5 | `tailwind-design-system` | Tailwind tokens, spacing, responsive scale |
+| 6 | `shadcn` | If project uses shadcn/ui |
+| 7 | `symdex-code-search` | Find existing components, routes, patterns |
+| 8 | `lean-ctx` | Read related files without dumping whole components |
+| 9 | `find-docs` | Current API docs for UI libraries in stack |
+| 10 | `framer-motion-animator` | If feature includes motion (hero, transitions) |
 
 Optional: `react-best-practices` for React/Next.js performance.
 

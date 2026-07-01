@@ -17,9 +17,11 @@ description: >
 
 Read if present (install from `playbook-common/references/skill-catalog.md` if missing):
 
-1. `symdex-code-search`
-2. `lean-ctx`
-3. `context-degradation` — if the agent seems confused or contradicts earlier facts
+1. `systematic-debugging` — Obra: structured debug before proposing fixes (166K+ installs)
+2. `diagnosing-bugs` — Matt Pocock: hard bugs and perf regressions
+3. `symdex-code-search`
+4. `lean-ctx`
+5. `context-degradation` — if the agent seems confused or contradicts earlier facts
 
 Optional: `caveman` at **lite** intensity for terse progress updates only.
 

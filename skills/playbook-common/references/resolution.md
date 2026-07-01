@@ -34,5 +34,13 @@ When multiple playbooks could apply, use the **most specific** match:
 5. `library-integration-playbook` — third-party library API / docs
 6. `explore-codebase-playbook` — understand architecture, no bug yet
 7. `agent-design-playbook` — build or optimize agent systems
+8. `planning-playbook` — specs and PRDs before coding
+9. `testing-playbook` — TDD and Playwright
+10. `code-review-playbook` — PR and diff review
+11. `deploy-playbook` — Vercel and shipping
+12. `database-playbook` — Postgres / Supabase
+13. `refactor-playbook` — structure without behavior change
+14. `e2e-qa-playbook` — browser QA and smoke tests
+15. `security-review-playbook` — security pass
 
 When unsure, read `playbook-router/SKILL.md` first.

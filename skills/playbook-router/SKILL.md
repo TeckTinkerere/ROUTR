@@ -2,11 +2,11 @@
 name: playbook-router
 description: >
   Meta-router for situational agent workflows. Use when the task type is unclear,
-  the user asks which approach to take, or multiple playbooks could apply. Routes to
-  debugging-playbook, fix-and-ship-playbook, explore-codebase-playbook,
-  library-integration-playbook, agent-design-playbook, frontend-feature-playbook,
-  or frontend-motion-playbook. Prefer a specific playbook over this when the
-  situation is obvious.
+  the user asks which approach to take, or multiple playbooks could apply. Routes
+  to debugging, fix-and-ship, testing, code-review, planning, deploy, database,
+  refactor, e2e-qa, security-review, explore, library-integration, agent-design,
+  frontend-feature, and frontend-motion playbooks. Prefer a specific playbook
+  when the situation is obvious.
 ---
 
 # Playbook router
@@ -17,13 +17,21 @@ Pick **one** playbook, announce it in one line, then read and follow that playbo
 
 ```
 User intent?
-├─ Bug / error / crash / "why does X fail?"     → debugging-playbook
-├─ "Fix this" / patch / make tests pass         → fix-and-ship-playbook
-├─ "How does X work?" / onboard / architecture  → explore-codebase-playbook
-├─ Library API / "how do I use Prisma/Next…"    → library-integration-playbook
-├─ Build agent / multi-agent / context design   → agent-design-playbook
-├─ New page / UI / component / landing / design → frontend-feature-playbook
-└─ Animate / motion / scroll / micro-interaction → frontend-motion-playbook
+├─ Plan / spec / PRD / "grill my idea"        → planning-playbook
+├─ Bug / error / crash / root cause           → debugging-playbook
+├─ Fix + verify + commit (scoped)             → fix-and-ship-playbook
+├─ Write tests / TDD / Playwright             → testing-playbook
+├─ Review PR / code review                    → code-review-playbook
+├─ Security audit / vuln check                → security-review-playbook
+├─ Refactor / tech debt / architecture        → refactor-playbook
+├─ Deploy / Vercel / go live                  → deploy-playbook
+├─ SQL / Supabase / migrations                → database-playbook
+├─ Browser QA / smoke test deployed app       → e2e-qa-playbook
+├─ How does X work? / onboard                 → explore-codebase-playbook
+├─ Library API / "how do I use Next…"         → library-integration-playbook
+├─ Build agent / multi-agent / context        → agent-design-playbook
+├─ New UI / page / component / redesign       → frontend-feature-playbook
+└─ Animate / motion / scroll / transitions    → frontend-motion-playbook
 ```
 
 ## Frontend detection
@@ -31,23 +39,32 @@ User intent?
 Treat as **frontend** when the work touches: `.tsx`, `.jsx`, `.vue`, `.svelte`, CSS/Tailwind, design tokens, layout, components, pages, or the user mentions UI/UX/design.
 
 - Building or redesigning UI → `frontend-feature-playbook`
-- UI exists; add/polish motion only → `frontend-motion-playbook`
-- Frontend bug → `debugging-playbook` (it will pull design context if needed)
+- UI exists; motion only → `frontend-motion-playbook`
+- Visual bug → `debugging-playbook`
+- Post-deploy UI check → `e2e-qa-playbook`
 
 ## After routing
 
 1. Read `playbook-common/references/resolution.md` if child skills may be missing.
-2. Load the chosen playbook skill from skills root (see resolution.md).
+2. Load the chosen playbook skill from skills root.
 3. Do not load unrelated playbooks in parallel.
 
 ## Quick reference
 
 | Playbook | Trigger words |
 |----------|----------------|
-| `debugging-playbook` | debug, trace, root cause, error, failing, broken |
-| `fix-and-ship-playbook` | fix, patch, ship, commit, PR, tests green |
-| `explore-codebase-playbook` | how does, explain, architecture, where is |
-| `library-integration-playbook` | docs for, API, migrate, configure library |
-| `agent-design-playbook` | agent system, harness, eval, context window |
-| `frontend-feature-playbook` | build UI, page, component, redesign, landing |
-| `frontend-motion-playbook` | animate, motion, framer, scroll reveal, transition |
+| `planning-playbook` | plan, spec, PRD, brainstorm, grill |
+| `debugging-playbook` | debug, trace, error, failing, broken |
+| `fix-and-ship-playbook` | fix, patch, ship, commit, PR |
+| `testing-playbook` | test, TDD, Playwright, coverage |
+| `code-review-playbook` | review, PR feedback, diff |
+| `security-review-playbook` | security, audit, vuln, RLS |
+| `refactor-playbook` | refactor, clean up, tech debt |
+| `deploy-playbook` | deploy, Vercel, production, preview URL |
+| `database-playbook` | SQL, Postgres, Supabase, migration |
+| `e2e-qa-playbook` | browser test, QA, screenshot, smoke test |
+| `explore-codebase-playbook` | how does, architecture, where is |
+| `library-integration-playbook` | library docs, API, configure SDK |
+| `agent-design-playbook` | agent system, harness, eval |
+| `frontend-feature-playbook` | build UI, landing, component |
+| `frontend-motion-playbook` | animate, Framer, motion, scroll |
