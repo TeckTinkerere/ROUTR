@@ -1,0 +1,30 @@
+title: "👋 Welcome to ROUTR Discussions!"
+labels: ["welcome", "announcement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 👋 Welcome to ROUTR Discussions!
+
+        This is the community space for **ROUTR** — situational `routr-*` router skills that help your AI coding agent pick the *right* skill for the job instead of guessing, reading whole files, and burning context.
+
+        Whether you installed the routers, wrote your own, or are just here to figure out which one fits your workflow — you're in the right place. We hope you'll:
+
+        * 🧭 **Ask questions** — "which router handles X?", install issues, `routr-depth-*` fallbacks, or anything from [INSTALL.md](../blob/master/INSTALL.md).
+        * 💡 **Share ideas** — a new router you'd like to see, a better decision tree, or a child-skill bundle worth adding to the [skill registry](../blob/master/skills/routr-catalog/references/skill-registry.md).
+        * 🔗 **Show your setup** — the router chains and stacks that work for you (e.g. `routr-plan → routr-frontend → routr-ship`).
+        * 🤝 **Help each other out** — welcome newcomers, answer a routing question, review someone's custom `SKILL.md`. This is a community we build together 💪.
+
+        ### 🚀 Get started
+
+        **Comment below and introduce yourself!** Tell us:
+        - What you're building with AI coding agents
+        - Which routers (or other skills) you rely on most
+        - One workflow you wish routed itself automatically
+
+        ### 📌 Handy links
+
+        - 📖 [README](../blob/master/README.md) — what ROUTR is and how routing works
+        - ⚙️ [INSTALL.md](../blob/master/INSTALL.md) — full slash menu + install commands
+        - 🗂️ [Skill registry](../blob/master/skills/routr-catalog/references/skill-registry.md) — routers, child skills, and bundles
+        - 🏷️ [Naming](../blob/master/docs/naming.md) · [Architecture](../blob/master/docs/architecture.md)
