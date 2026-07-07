@@ -1,6 +1,6 @@
 # Video Remotion workflow
 
-Consolidated from deprecated `video-remotion-playbook`.
+Remotion workflow for `routr-video`.
 
 ## Bootstrap
 

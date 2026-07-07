@@ -7,4 +7,4 @@
 | Build marketing page | `routr-frontend` |
 | Unclear video vs design | Ask 2 questions max, then pick launch or remotion reference |
 
-Deprecated `video-launch-playbook` and `video-remotion-playbook` redirect here.
+The launch and Remotion workflows live here — see [launch.md](./launch.md) and [remotion.md](./remotion.md).

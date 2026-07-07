@@ -8,18 +8,18 @@ Ranked for **agent coding workflows** (not generative AI video like Sora). Score
 
 ## Top 10
 
-| # | Skill | Installs | Stack | Best for | Playbook |
-|---|-------|----------|-------|----------|----------|
-| 1 | `remotion-best-practices` | **401K+** | Remotion | React/TS video code, captions, charts, Lambda scale | `video-remotion-playbook` |
-| 2 | `brag` | 61+ · 716★ | HyperFrames | **One-command launch video from the repo you just built** | `video-launch-playbook` |
-| 3 | `hyperframes` | bundle | HyperFrames | Entry router — HTML compositions, all workflows | `video-generation-playbook` |
-| 4 | `product-launch-video` | bundle | HyperFrames | Product URL / brief → 30–90s promo | `video-launch-playbook` |
-| 5 | `pr-to-video` | bundle | HyperFrames | GitHub PR → changelog / feature video | `video-launch-playbook` |
-| 6 | `website-to-video` | bundle | HyperFrames | Site tour, portfolio, homepage social clip | `video-launch-playbook` |
-| 7 | `remotion-video-toolkit` | 671 | Remotion | Alternate Remotion rules — fallback only | `video-remotion-playbook` |
-| 8 | `faceless-explainer` | bundle | HyperFrames | Explain a topic from text — no product URL | `video-launch-playbook` |
-| 9 | `motion-graphics` | bundle | HyperFrames | Short unnarrated kinetic type / stat hit | `video-launch-playbook` |
-| 10 | `embedded-captions` | bundle | HyperFrames | Subtitles on existing talking-head footage | `video-launch-playbook` |
+| # | Skill | Installs | Stack | Best for |
+|---|-------|----------|-------|----------|
+| 1 | `remotion-best-practices` | **401K+** | Remotion | React/TS video code, captions, charts, Lambda scale |
+| 2 | `brag` | 61+ · 716★ | HyperFrames | **One-command launch video from the repo you just built** |
+| 3 | `hyperframes` | bundle | HyperFrames | Entry router — HTML compositions, all workflows |
+| 4 | `product-launch-video` | bundle | HyperFrames | Product URL / brief → 30–90s promo |
+| 5 | `pr-to-video` | bundle | HyperFrames | GitHub PR → changelog / feature video |
+| 6 | `website-to-video` | bundle | HyperFrames | Site tour, portfolio, homepage social clip |
+| 7 | `remotion-video-toolkit` | 671 | Remotion | Alternate Remotion rules — fallback only |
+| 8 | `faceless-explainer` | bundle | HyperFrames | Explain a topic from text — no product URL |
+| 9 | `motion-graphics` | bundle | HyperFrames | Short unnarrated kinetic type / stat hit |
+| 10 | `embedded-captions` | bundle | HyperFrames | Subtitles on existing talking-head footage |
 
 ---
 
@@ -40,12 +40,12 @@ Ranked for **agent coding workflows** (not generative AI video like Sora). Score
 
 ```
 Need a video?
-├─ "Brag about this project" / just shipped        → brag (video-launch-playbook)
+├─ "Brag about this project" / just shipped        → brag
 ├─ Product launch / SaaS promo from URL or brief   → product-launch-video
 ├─ PR / changelog / release notes                  → pr-to-video
 ├─ Site tour / portfolio clip                      → website-to-video
 ├─ Explain a concept (no product)                  → faceless-explainer
-├─ Parametric / data-driven / React codebase       → remotion-best-practices (video-remotion-playbook)
+├─ Parametric / data-driven / React codebase       → remotion-best-practices
 ├─ Custom HTML composition / edit existing HF work → hyperframes entry skill
 └─ Captions on existing MP4                        → embedded-captions
 ```
@@ -59,7 +59,7 @@ Need a video?
 ## Install bundles
 
 ```bash
-# ROUTR playbooks
+# ROUTR routers
 npx skills add TeckTinkerere/ROUTR -g --all -y --copy
 
 # #1 Remotion (skills.sh)

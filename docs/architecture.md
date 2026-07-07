@@ -51,11 +51,11 @@ Routers route. They do not replace child skills — but they stay useful without
 
 ## Video stack (v2)
 
-Single entry: `routr-video` with `references/launch.md` and `references/remotion.md`. Deprecated `video-*-playbook` folders redirect here.
+Single entry: `routr-video` with `references/launch.md` and `references/remotion.md`. Old `video-*-playbook` folders were removed in v2.
 
 ## Naming
 
-All ROUTR-owned skills use `routr-` prefix. See [naming.md](naming.md). Deprecated `*-playbook` names ship redirect stubs for two release cycles.
+All ROUTR-owned skills use `routr-` prefix. See [naming.md](naming.md). Old `*-playbook` names were removed in v2 (see the rename map).
 
 ## Progressive disclosure
 

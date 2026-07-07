@@ -54,7 +54,7 @@ npx skills add TeckTinkerere/ROUTR -g --all -y --copy
 # See routr-bundle-core / routr-bundle-frontend in skill-registry.md
 ```
 
-**v2 breaking rename:** `*-playbook` → `routr-*`. Old names redirect. [docs/naming.md](docs/naming.md)
+**v2 breaking rename:** `*-playbook` → `routr-*`. Old names were removed in v2. [docs/naming.md](docs/naming.md)
 
 Full install: **[INSTALL.md](INSTALL.md)**
 
@@ -168,7 +168,7 @@ Single entry — `references/launch.md` and `references/remotion.md` for sub-pat
 | `routr-depth-ship` | Fallback when `caveman-commit` missing |
 | `routr-depth-test` | Fallback when `webapp-testing` missing |
 
-Deprecated `*-playbook` folders redirect to `routr-*`.
+Old `*-playbook` folders were removed in v2 — use `routr-*`.
 
 </details>
 

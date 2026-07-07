@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ROUTR bundle installer — pick groups, then install selected routers.
-# v2: routr-* names + optional deprecated aliases
+# v2: routr-* names
 
 set -euo pipefail
 
@@ -12,7 +12,6 @@ BUNDLE_SKILLS[video]="routr-video"
 BUNDLE_SKILLS[mobile]="routr-mobile"
 BUNDLE_SKILLS[marketing]="routr-marketing"
 BUNDLE_SKILLS[ai]="routr-ai"
-BUNDLE_SKILLS[deprecated]="playbook-router playbook-common debugging-playbook fix-and-ship-playbook planning-playbook testing-playbook code-review-playbook refactor-playbook deploy-playbook database-playbook e2e-qa-playbook security-review-playbook explore-codebase-playbook library-integration-playbook agent-design-playbook frontend-feature-playbook frontend-motion-playbook mobile-expo-playbook marketing-seo-playbook ai-llm-app-playbook video-generation-playbook video-launch-playbook video-remotion-playbook"
 
 echo ""
 echo "ROUTR v2 — select bundles (comma-separated numbers, or 'a' for all, Enter for skills CLI picker)"
@@ -24,20 +23,19 @@ echo "  4) Video"
 echo "  5) Mobile"
 echo "  6) Marketing & SEO"
 echo "  7) AI / LLM apps"
-echo "  8) Deprecated *-playbook aliases (migration)"
-echo "  9) Use skills CLI checkbox picker (recommended if unsure)"
+echo "  8) Use skills CLI checkbox picker (recommended if unsure)"
 echo ""
-read -r -p "Choice [9]: " choice
-choice="${choice:-9}"
+read -r -p "Choice [8]: " choice
+choice="${choice:-8}"
 
-if [[ "$choice" == "9" ]]; then
+if [[ "$choice" == "8" ]]; then
   echo ""
   echo "Launching interactive skills CLI (Space = toggle, Enter = confirm)..."
   npx skills add TeckTinkerere/ROUTR -g --copy
   exit 0
 fi
 
-keys=(meta core frontend video mobile marketing ai deprecated)
+keys=(meta core frontend video mobile marketing ai)
 selected_skills=()
 
 if [[ "$choice" == "a" || "$choice" == "A" ]]; then

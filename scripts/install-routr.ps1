@@ -1,6 +1,6 @@
 # ROUTR bundle installer — pick groups with checkboxes, then install selected routers.
 # Usage: .\scripts\install-routr.ps1
-# v2: routr-* names + deprecated *-playbook aliases for migration
+# v2: routr-* names
 
 $ErrorActionPreference = "Stop"
 
@@ -45,21 +45,6 @@ $bundles = @(
         Bundle = "AI / LLM apps"
         Description = "Vercel AI SDK, chat, RAG"
         Skills = @("routr-ai")
-    }
-    [PSCustomObject]@{
-        Bundle = "Deprecated aliases"
-        Description = "Old *-playbook names (redirect stubs) — optional for migration"
-        Skills = @(
-            "playbook-router", "playbook-common",
-            "debugging-playbook", "fix-and-ship-playbook", "planning-playbook",
-            "testing-playbook", "code-review-playbook", "refactor-playbook",
-            "deploy-playbook", "database-playbook", "e2e-qa-playbook",
-            "security-review-playbook", "explore-codebase-playbook",
-            "library-integration-playbook", "agent-design-playbook",
-            "frontend-feature-playbook", "frontend-motion-playbook",
-            "mobile-expo-playbook", "marketing-seo-playbook", "ai-llm-app-playbook",
-            "video-generation-playbook", "video-launch-playbook", "video-remotion-playbook"
-        )
     }
 )
 

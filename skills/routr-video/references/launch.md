@@ -1,6 +1,6 @@
 # Video launch workflow
 
-Consolidated from deprecated `video-launch-playbook`.
+Launch-video workflow for `routr-video`.
 
 ## Bootstrap
 

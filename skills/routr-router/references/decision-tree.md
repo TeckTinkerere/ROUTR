@@ -30,4 +30,4 @@
 
 ## Deprecated names
 
-If agent loads `*-playbook`, follow redirect to `routr-*` equivalent. See [docs/naming.md](../../../docs/naming.md).
+If a user references an old `*-playbook` name (removed in v2), use the `routr-*` equivalent. See [docs/naming.md](../../../docs/naming.md).

@@ -63,7 +63,7 @@ Do not rename upstream skills (`brag`, `caveman`, `frontend-design`).
 | `video-launch-playbook` | `routr-video` (see `references/launch.md`) |
 | `video-remotion-playbook` | `routr-video` (see `references/remotion.md`) |
 
-Deprecated folders ship redirect-only `SKILL.md` stubs for two release cycles.
+Old `*-playbook` folders were removed in v2. The map above is kept for migration reference.
 
 ## Description format
 

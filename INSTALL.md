@@ -1,6 +1,6 @@
 # Install — ROUTR v2
 
-> **Breaking rename (v2):** `*-playbook` → `routr-*`. Old names ship as redirect stubs. See [docs/naming.md](docs/naming.md).
+> **Breaking rename (v2):** `*-playbook` → `routr-*`. Old names were removed in v2. See [docs/naming.md](docs/naming.md).
 
 The **slash-command hover text** comes from each skill’s `description` in `SKILL.md`.
 
@@ -43,7 +43,7 @@ npx skills add TeckTinkerere/ROUTR -g --all -y --copy
 | Flag | Meaning |
 |------|---------|
 | `-g` | Global — all projects |
-| `--all` | Every skill (routers + deprecated aliases) |
+| `--all` | Every routr-* skill |
 | `-y` | Skip confirmations |
 | `--copy` | Copy files (Windows-safe) |
 | `--skill <name>` | Specific skills only |
@@ -101,7 +101,7 @@ Search `routr-` in `/` picker:
 | `routr-marketing` | SEO, copy, growth |
 | … | Full list in [README](README.md) |
 
-Deprecated `debugging-playbook` etc. redirect to `routr-*`.
+Old `debugging-playbook` etc. were removed — use `routr-*`.
 
 ---
 
@@ -134,7 +134,7 @@ npx skills remove routr-router routr-catalog routr-debug routr-ship routr-plan r
 | Problem | Fix |
 |---------|-----|
 | Weak output | Install child bundles from skill-registry.md |
-| Old playbook names | Use `routr-*` or install deprecated alias bundle |
+| Old playbook names | Use `routr-*` (old names removed in v2) |
 | Skill not in menu | Restart agent; `-g --copy` |
 | Child missing | `routr-catalog/references/skill-registry.md` |
 
