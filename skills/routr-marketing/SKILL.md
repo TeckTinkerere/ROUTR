@@ -1,6 +1,6 @@
 ---
 name: routr-marketing
-description: "Marketing copy, SEO audits, and growth content. Use when: landing copy, SEO, meta tags, ads, CRO, App Store listing, blog post, growth."
+description: "Marketing copy, SEO audits, and growth content. Use when: landing copy, SEO, meta tags, ads, CRO, App Store listing, blog post, growth. Not for: building the landing page UI (→ routr-frontend)."
 ---
 
 # routr-marketing
@@ -13,12 +13,10 @@ See `routr-catalog/references/skill-registry.md`:
 
 | Skill | When |
 |-------|------|
-| `seo-audit` | Technical SEO |
-| `copywriting` | Headlines, CTAs |
+| `seo-audit` | Technical + programmatic SEO (templated pages at scale) |
+| `copywriting` | Headlines, CTAs, paid-ad creative |
 | `ai-seo` | AI search visibility |
-| `programmatic-seo` | Template pages at scale |
 | `aso` | App store listings |
-| `ad-creative` | Paid ads |
 
 ```bash
 npx skills add coreyhaines31/marketingskills -g --all -y --copy
@@ -46,4 +44,4 @@ Page UI → `routr-frontend` after copy approved. Mobile store → `routr-mobile
 ## Anti-patterns
 
 - Keyword stuffing without user value
-- Copy before audience context (`product-marketing-context` first)
+- Copy before audience and positioning context is defined

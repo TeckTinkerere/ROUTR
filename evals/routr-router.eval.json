@@ -1,6 +1,6 @@
 {
   "skill_name": "routr-router",
-  "description": "Router selection accuracy",
+  "description": "Router selection accuracy — includes adversarial pairs that the description `Not for:` boundaries must disambiguate",
   "prompts": [
     {
       "prompt": "I'm not sure where to start — I need to fix a bug and then commit it",
@@ -41,6 +41,92 @@
       "prompt": "Deploy to Vercel and smoke test the preview",
       "expected_router": "routr-deploy",
       "expected_chain": ["routr-deploy", "routr-qa"]
+    },
+
+    {
+      "prompt": "Fix this typo in the header and open a PR — I already know the change",
+      "expected_router": "routr-ship",
+      "must_not_load": ["routr-debug"],
+      "boundary": "ship vs debug — known change, no investigation"
+    },
+    {
+      "prompt": "The checkout button throws a 500 sometimes and I don't know why",
+      "expected_router": "routr-debug",
+      "must_not_load": ["routr-ship", "routr-qa"],
+      "boundary": "debug vs ship — unknown root cause"
+    },
+    {
+      "prompt": "The dropdown looks fine but selecting an item shows the wrong data",
+      "expected_router": "routr-debug",
+      "must_not_load": ["routr-frontend"],
+      "boundary": "debug vs frontend — visual surface, logic bug"
+    },
+    {
+      "prompt": "Give the hero section a parallax scroll effect",
+      "expected_router": "routr-motion",
+      "must_not_load": ["routr-frontend", "routr-video"],
+      "boundary": "motion vs frontend — existing UI, motion only"
+    },
+    {
+      "prompt": "Show me where the rate limiter is defined and how it's called",
+      "expected_router": "routr-explore",
+      "must_not_load": ["routr-debug", "routr-refactor"],
+      "boundary": "explore vs debug — no symptom, just understanding"
+    },
+    {
+      "prompt": "How do I configure the Stripe SDK for subscriptions?",
+      "expected_router": "routr-integrate",
+      "must_not_load": ["routr-explore", "routr-ai"],
+      "boundary": "integrate vs explore — third-party library docs"
+    },
+    {
+      "prompt": "Extract the pricing logic into its own module without changing behavior",
+      "expected_router": "routr-refactor",
+      "must_not_load": ["routr-debug", "routr-ship"],
+      "boundary": "refactor vs debug/ship — structure only"
+    },
+    {
+      "prompt": "Open the app in a browser and check the signup flow works",
+      "expected_router": "routr-qa",
+      "must_not_load": ["routr-test", "routr-debug"],
+      "boundary": "qa vs test — real browser, not writing test files"
+    },
+    {
+      "prompt": "Write unit tests for the invoice calculator",
+      "expected_router": "routr-test",
+      "must_not_load": ["routr-qa", "routr-debug"],
+      "boundary": "test vs qa — authoring tests"
+    },
+    {
+      "prompt": "Add an RLS policy so users only see their own orders",
+      "expected_router": "routr-database",
+      "must_not_load": ["routr-security", "routr-integrate"],
+      "boundary": "database vs security — schema/RLS design"
+    },
+    {
+      "prompt": "Audit the codebase for secrets and injection risks",
+      "expected_router": "routr-security",
+      "must_not_load": ["routr-debug", "routr-review"],
+      "boundary": "security vs debug — security pass"
+    },
+    {
+      "prompt": "Rewrite the landing copy and improve its SEO",
+      "expected_router": "routr-marketing",
+      "must_not_load": ["routr-frontend"],
+      "boundary": "marketing vs frontend — copy/SEO, not building UI"
+    },
+    {
+      "prompt": "Design the agent's operating loop with error recovery and an eval gate",
+      "expected_router": "routr-agents",
+      "expected_child": "harness-engineering",
+      "must_not_load": ["routr-ai"],
+      "boundary": "agents/loop vs ai — loop engineering, not a single SDK feature"
+    },
+    {
+      "prompt": "My agent keeps drifting off task and re-reading the same files — help me debug the loop",
+      "expected_router": "routr-agents",
+      "expected_child": "reasoning-trace-optimizer",
+      "boundary": "loop debugging routes to loop-engineering child"
     }
   ]
 }

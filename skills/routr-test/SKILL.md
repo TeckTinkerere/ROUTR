@@ -1,6 +1,6 @@
 ---
 name: routr-test
-description: "Write and run tests (TDD, unit, E2E, Playwright). Use when: add tests, TDD, coverage, failing test suite, 'write tests for this'."
+description: "Write and run tests (TDD, unit, E2E, Playwright). Use when: add tests, TDD, coverage, failing test suite, 'write tests for this'. Not for: browser smoke test (→ routr-qa); diagnosing why a test fails (→ routr-debug)."
 ---
 
 # routr-test

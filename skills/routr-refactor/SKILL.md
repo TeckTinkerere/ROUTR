@@ -1,6 +1,6 @@
 ---
 name: routr-refactor
-description: "Improve code structure without changing behavior. Use when: refactor, tech debt, extract module, clean up code, restructure."
+description: "Improve code structure without changing behavior. Use when: refactor, tech debt, extract module, clean up code, restructure. Not for: fixing bugs or changing behavior (→ routr-debug / routr-ship)."
 ---
 
 # routr-refactor
@@ -11,8 +11,7 @@ description: "Improve code structure without changing behavior. Use when: refact
 
 | Skill | Role |
 |-------|------|
-| `improve-codebase-architecture` | Deepening opportunities |
-| `codebase-design` | Deep modules, seams |
+| `improve-codebase-architecture` | Deep modules, seams, deepening opportunities |
 | `vercel-composition-patterns` | React composition refactors |
 | `vercel-react-best-practices` | Performance-safe refactors |
 | `symdex-code-search` | Callers before moves |

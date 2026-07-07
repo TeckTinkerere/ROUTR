@@ -1,6 +1,6 @@
 ---
 name: routr-ai
-description: "Build AI features with Vercel AI SDK (chat, agents, RAG, tools). Use when: chatbot, LLM, streaming, embeddings, tool calling, AI SDK, RAG."
+description: "Build AI features with Vercel AI SDK (chat, agents, RAG, tools). Use when: chatbot, LLM, streaming, embeddings, tool calling, AI SDK, RAG. Not for: multi-agent architecture or eval harness (→ routr-agents); chat UI styling only (→ routr-frontend)."
 ---
 
 # routr-ai

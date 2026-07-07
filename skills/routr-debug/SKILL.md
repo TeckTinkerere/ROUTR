@@ -1,6 +1,6 @@
 ---
 name: routr-debug
-description: "Find and fix bugs step by step (reproduce → locate → fix). Use when: errors, crashes, test failures, 'debug this', 'why is this broken', stack trace, root cause, flaky test."
+description: "Find and fix bugs step by step (reproduce → locate → fix). Use when: errors, crashes, test failures, 'debug this', 'why is this broken', stack trace, root cause, flaky test. Not for: a known fix ready to commit (→ routr-ship); understanding code with no bug (→ routr-explore)."
 ---
 
 # routr-debug
@@ -36,6 +36,8 @@ Read if present (install from `routr-catalog/references/skill-registry.md`):
 | 3 | `symdex-code-search` | recommended |
 | 4 | `lean-ctx` | recommended |
 | 5 | `context-degradation` | optional — agent confused mid-session |
+
+**Budget gate:** read `required` + `recommended` only for routine bugs. Pull an `optional` child solely when its stated signal fires (e.g. `context-degradation` only if the agent is mid-session confused). Never load all five for a simple fix.
 
 If `systematic-debugging` missing → read `routr-depth-debug` OR [references/fallback.md](./references/fallback.md).
 
@@ -88,7 +90,7 @@ For each hypothesis:
 
 ## Handoff
 
-Commit/PR next → `routr-ship`
+**Root cause fixed → STOP here.** Do not commit from within routr-debug — re-route to `routr-ship` (fresh) so shipping runs its own verification. Chain: `routr-debug` → `routr-ship` → `routr-deploy`.
 
 ## References
 

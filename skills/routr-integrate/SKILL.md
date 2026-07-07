@@ -1,6 +1,6 @@
 ---
 name: routr-integrate
-description: "Integrate a third-party library using up-to-date docs. Use when: 'how do I use X', SDK setup, API syntax, version migration, configure library."
+description: "Integrate a third-party library using up-to-date docs. Use when: 'how do I use X', SDK setup, API syntax, version migration, configure library. Not for: internal codebase exploration (→ routr-explore); debugging a library error (→ routr-debug)."
 ---
 
 # routr-integrate

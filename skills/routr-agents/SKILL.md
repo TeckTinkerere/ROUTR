@@ -1,6 +1,6 @@
 ---
 name: routr-agents
-description: "Design multi-agent systems, context windows, and eval harnesses. Use when: building agents, memory, tools, context engineering, agent harness."
+description: "Design multi-agent systems, agent loops, and eval harnesses. Use when: building agents, agent operating loop, research/self-correction loop, harness, memory, tools, context engineering, eval loop. Not for: a single AI SDK chat/RAG feature (→ routr-ai)."
 ---
 
 # routr-agents
@@ -9,7 +9,9 @@ description: "Design multi-agent systems, context windows, and eval harnesses. U
 
 ## 0. Bootstrap
 
-See `routr-catalog/references/skill-registry.md`. Load by sub-task only:
+See `routr-catalog/references/skill-registry.md`. **Load by sub-task only — never read the whole cluster.**
+
+**Context engineering**
 
 | Sub-task | Skill |
 |----------|-------|
@@ -17,14 +19,26 @@ See `routr-catalog/references/skill-registry.md`. Load by sub-task only:
 | Degrading mid-session | `context-degradation` |
 | Long handoff | `context-compression` |
 | Token budget | `context-optimization` |
-| Multiple agents | `multi-agent-patterns` |
+| File-based context | `filesystem-context` |
 | Memory | `memory-systems` |
 | Tools / MCP | `tool-design` |
-| File-based context | `filesystem-context` |
-| Production | `harness-engineering` |
-| Quality | `evaluation`, `advanced-evaluation` |
+
+**Loop engineering** (the operating loop — growing fast, pick per symptom)
+
+| Sub-task | Skill |
+|----------|-------|
+| Design the agent operating / research loop | `harness-engineering` |
+| Robust research loop (validation, error recovery) | `comprehensive-research-agent` |
+| Debug a misbehaving loop (drift, tool confusion, repeat failures) | `reasoning-trace-optimizer` |
+| Eval loop / quality gate | `evaluation`, `advanced-evaluation` |
+| Multiple agents / handoffs | `multi-agent-patterns` |
+| Subagent delegation loop | `subagent-driven-development` |
+| Background / hosted / self-spawning loop | `hosted-agents` |
+| Cross-agent memory briefing | `latent-briefing` |
 
 Runtime: `lean-ctx` when implementing.
+
+**Budget gate:** read one row per active symptom. Do not preload the context + loop clusters together.
 
 **Skip:** `frontend-design`, `caveman` unless terse docs requested.
 

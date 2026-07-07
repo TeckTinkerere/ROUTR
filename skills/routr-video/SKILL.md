@@ -1,6 +1,6 @@
 ---
 name: routr-video
-description: "Pick and run the right video workflow — launch, Remotion, or HyperFrames. Use when: make a video, promo, explainer, launch clip, /brag, render MP4, motion graphic, Remotion, product video."
+description: "Pick and run the right video workflow — launch, Remotion, or HyperFrames. Use when: make a video, promo, explainer, launch clip, /brag, render MP4, motion graphic, Remotion, product video. Not for: in-app UI animation (→ routr-motion)."
 ---
 
 # routr-video

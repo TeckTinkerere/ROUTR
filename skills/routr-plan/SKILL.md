@@ -1,6 +1,6 @@
 ---
 name: routr-plan
-description: "Plan before coding: brainstorm, PRD, stress-test ideas. Use when: new feature, spec, PRD, 'grill my plan', brainstorm, architecture decision, before big implementation."
+description: "Plan before coding: brainstorm, PRD, stress-test ideas. Use when: new feature, spec, PRD, 'grill my plan', brainstorm, architecture decision, before big implementation. Not for: writing code now (→ routr-ship or routr-frontend)."
 ---
 
 # routr-plan
@@ -34,6 +34,8 @@ description: "Plan before coding: brainstorm, PRD, stress-test ideas. Use when: 
 | `improve-codebase-architecture` | optional — large changes |
 | `find-skills` | optional |
 
+**Budget gate:** `brainstorming` first; add `to-prd` only when writing the doc and `grill-me` only for non-trivial plans. `improve-codebase-architecture` / `find-skills` are exception-only.
+
 If `brainstorming` missing → read `routr-depth-plan` OR [references/fallback.md](./references/fallback.md).
 
 ## 1. Intake
@@ -59,6 +61,8 @@ Non-trivial plan → `grill-me` before build.
 See PRD template in [workflow.md](./references/workflow.md).
 
 ## Handoff
+
+**Plan approved → STOP.** Do not implement from within routr-plan — re-route to the build skill below (fresh context, its own bootstrap):
 
 | Next | Skill |
 |------|-------|

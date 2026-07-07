@@ -1,6 +1,6 @@
 ---
 name: routr-security
-description: "Security pass on code, auth, and cloud rules. Use when: security audit, vulnerabilities, RLS, secrets in code, 'is this secure'."
+description: "Security pass on code, auth, and cloud rules. Use when: security audit, vulnerabilities, RLS, secrets in code, 'is this secure'. Not for: non-security bugs (→ routr-debug)."
 ---
 
 # routr-security
@@ -12,8 +12,7 @@ description: "Security pass on code, auth, and cloud rules. Use when: security a
 | Skill | Role |
 |-------|------|
 | `semgrep` | Static analysis |
-| `firebase-security-rules-auditor` | Firebase rules |
-| `firestore-security-rules-auditor` | Firestore rules |
+| `firebase-security-rules-auditor` | Firebase & Firestore rules |
 | `requesting-code-review` | Review discipline |
 
 ## 1. Scope

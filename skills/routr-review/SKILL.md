@@ -1,6 +1,6 @@
 ---
 name: routr-review
-description: "Review a PR or diff for bugs, style, and React best practices. Use when: code review, 'review my changes', before merge, PR feedback."
+description: "Review a PR or diff for bugs, style, and React best practices. Use when: code review, 'review my changes', before merge, PR feedback. Not for: writing the fix yourself (→ routr-ship)."
 ---
 
 # routr-review

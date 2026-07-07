@@ -1,6 +1,6 @@
 ---
 name: routr-database
-description: "SQL, Postgres, Supabase schema and queries. Use when: migrations, RLS, slow queries, database design, Supabase."
+description: "SQL, Postgres, Supabase schema and queries. Use when: migrations, RLS, slow queries, database design, Supabase. Not for: ORM or client-library setup (→ routr-integrate)."
 ---
 
 # routr-database

@@ -1,6 +1,6 @@
 ---
 name: routr-motion
-description: "Add or polish animations (Framer Motion, scroll, transitions). Use when: animate, motion, micro-interactions — UI already exists, not building new pages."
+description: "Add or polish animations (Framer Motion, scroll, transitions). Use when: animate, motion, micro-interactions on UI that already exists. Not for: building new pages or components (→ routr-frontend)."
 ---
 
 # routr-motion

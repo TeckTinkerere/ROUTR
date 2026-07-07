@@ -1,6 +1,6 @@
 ---
 name: routr-qa
-description: "Test the app in a real browser (click, screenshot, smoke test). Use when: QA, E2E, 'open the site and check', preview verification, smoke test."
+description: "Test the app in a real browser (click, screenshot, smoke test). Use when: QA, E2E, 'open the site and check', preview verification, smoke test. Not for: writing test files (→ routr-test); fixing a bug you find (→ routr-debug)."
 ---
 
 # routr-qa

@@ -49,6 +49,6 @@ When multiple `routr-*` skills could apply, use the **most specific** match:
 
 When unsure, read `routr-router/SKILL.md` first.
 
-## Deprecated playbook names
+## Removed playbook names
 
-`*-playbook` folders redirect to `routr-*`. See [docs/naming.md](../../../docs/naming.md).
+Old `*-playbook` folders were removed in v2 — use the `routr-*` equivalent. Mapping: [docs/naming.md](../../../docs/naming.md).

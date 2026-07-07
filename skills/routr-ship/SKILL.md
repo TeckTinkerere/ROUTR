@@ -1,6 +1,6 @@
 ---
 name: routr-ship
-description: "Make a small fix, verify it, and commit or open a PR. Use when: 'fix this', patch, tests must pass, ready to ship, commit, open PR, merge this change."
+description: "Make a small fix, verify it, and commit or open a PR. Use when: 'fix this', patch, tests must pass, ready to ship, commit, open PR, merge this change. Not for: unknown root cause (→ routr-debug); building new UI (→ routr-frontend)."
 ---
 
 # routr-ship
@@ -34,6 +34,8 @@ description: "Make a small fix, verify it, and commit or open a PR. Use when: 'f
 | `caveman-commit` | optional |
 | `requesting-code-review` | optional — before PR |
 
+**Budget gate:** `symdex` + `lean-ctx` to locate the change; add `test-driven-development` for bugfixes only, and `requesting-code-review` only when opening a PR. Skip the rest.
+
 If root cause unclear → **stop**, switch to `routr-debug`.
 
 If `caveman-commit` missing → `routr-depth-ship` for commit format.
@@ -58,6 +60,8 @@ If `caveman-commit` missing → `routr-depth-ship` for commit format.
 Commit or PR per project convention — templates in [workflow.md](./references/workflow.md).
 
 ## Handoff
+
+Committed → **STOP and re-route** for the next stage (do not deploy or polish from here):
 
 - Motion polish → `routr-motion` (short pass)
 - Deploy → `routr-deploy`

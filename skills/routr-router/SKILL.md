@@ -1,11 +1,13 @@
 ---
 name: routr-router
-description: "Pick the right ROUTR workflow when the task is unclear. Use when: not sure which skill, 'what approach', multiple tasks apply, 'help me with this', starting a new task, or user didn't name a playbook."
+description: "Pick the right ROUTR workflow when the task is unclear. Use when: not sure which skill, 'what approach', multiple tasks apply, 'help me with this', starting a new task, or user didn't name a specific router."
 ---
 
 # routr-router
 
 Pick **one** `routr-*` skill, announce it in one line, then read and follow that skill's `SKILL.md` exclusively.
+
+> Most tasks route from the slash-menu `description` alone — each router now carries `Use when:` **and** `Not for:` boundaries. Only load this file when genuinely ambiguous.
 
 ## When to activate
 
@@ -15,7 +17,7 @@ Pick **one** `routr-*` skill, announce it in one line, then read and follow that
 
 ## Do not activate
 
-- Intent already clear — load the specific `routr-*` directly
+- Intent already clear — load the specific `routr-*` directly (its `description` already disambiguates)
 
 ## Iron law
 
@@ -27,7 +29,7 @@ Pick **one** `routr-*` skill, announce it in one line, then read and follow that
 User intent?
 ├─ Plan / spec / PRD / grill idea              → routr-plan
 ├─ Bug / error / crash / root cause            → routr-debug
-├─ Fix + verify + commit (scoped)              → routr-ship
+├─ Fix + verify + commit (known change)        → routr-ship
 ├─ Write tests / TDD / Playwright              → routr-test
 ├─ Review PR / code review                     → routr-review
 ├─ Security audit / vuln                       → routr-security
@@ -37,7 +39,7 @@ User intent?
 ├─ Browser QA / smoke test                     → routr-qa
 ├─ How does X work? / onboard                  → routr-explore
 ├─ Library API / SDK setup                     → routr-integrate
-├─ Build agent / multi-agent / context         → routr-agents
+├─ Build agent / multi-agent / context / loop  → routr-agents
 ├─ AI chatbot / LLM / RAG / AI SDK             → routr-ai
 ├─ Expo / React Native                         → routr-mobile
 ├─ Marketing / SEO / landing copy              → routr-marketing
@@ -46,42 +48,15 @@ User intent?
 └─ Animate / motion / scroll (UI exists)       → routr-motion
 ```
 
-Details: [references/decision-tree.md](./references/decision-tree.md)
+Tie-break by **most specific wins** — single source of truth in [routr-catalog/references/resolution.md](../routr-catalog/references/resolution.md#router-precedence). Overlap edge cases (fix-the-UI, ship-the-feature, video-vs-frontend, AI-feature): [references/decision-tree.md](./references/decision-tree.md).
 
 ## Frontend detection
 
-Touches `.tsx`, `.jsx`, `.vue`, `.svelte`, CSS/Tailwind, layout, components, pages, UI/UX:
-
-- Build or redesign → `routr-frontend`
-- Motion only → `routr-motion`
-- Visual bug → `routr-debug`
-- Post-deploy UI check → `routr-qa`
-
-## Precedence (most specific wins)
-
-1. `routr-motion` — motion polish only
-2. `routr-frontend` — new UI, pages, design system
-3. `routr-debug` — bugs, errors
-4. `routr-ship` — fix + commit (not open debug)
-5. `routr-integrate` — third-party library docs
-6. `routr-explore` — understand code, no bug
-7. `routr-agents` — agent systems
-8. `routr-plan` — specs before coding
-9. `routr-test` — TDD, Playwright
-10. `routr-review` — PR review
-11. `routr-deploy` — shipping to production
-12. `routr-database` — Postgres / Supabase
-13. `routr-refactor` — structure, no behavior change
-14. `routr-qa` — browser smoke tests
-15. `routr-security` — security pass
-16. `routr-mobile` — Expo / RN
-17. `routr-marketing` — SEO, copy
-18. `routr-ai` — AI SDK apps
-19. `routr-video` — video workflows
+Touches `.tsx`/`.jsx`/`.vue`/`.svelte`, CSS/Tailwind, layout, components, pages: build/redesign → `routr-frontend`; motion only → `routr-motion`; visual bug → `routr-debug`; post-deploy check → `routr-qa`.
 
 ## Multi-router chains
 
-Run **sequentially** — finish one before starting next:
+Run **sequentially** — finish one, then re-route for the next (see each router's Handoff):
 
 | User goal | Chain |
 |-----------|-------|
@@ -94,30 +69,6 @@ Run **sequentially** — finish one before starting next:
 
 ## After routing
 
-1. Read `routr-catalog/references/resolution.md` if child skills missing
-2. Load chosen `routr-*` skill only
-3. Install child bundles from `skill-registry.md` if output feels weak
-
-## Quick reference
-
-| Router | Trigger words |
-|--------|---------------|
-| `routr-plan` | plan, spec, PRD, brainstorm, grill |
-| `routr-debug` | debug, trace, error, failing, broken |
-| `routr-ship` | fix, patch, ship, commit, PR |
-| `routr-test` | test, TDD, Playwright, coverage |
-| `routr-review` | review, PR feedback, diff |
-| `routr-security` | security, audit, vuln, RLS |
-| `routr-refactor` | refactor, clean up, tech debt |
-| `routr-deploy` | deploy, Vercel, production, preview |
-| `routr-database` | SQL, Postgres, Supabase, migration |
-| `routr-qa` | browser test, QA, screenshot, smoke |
-| `routr-explore` | how does, architecture, where is |
-| `routr-integrate` | library docs, API, configure SDK |
-| `routr-agents` | agent system, harness, eval |
-| `routr-ai` | chatbot, LLM, AI SDK, RAG, streaming |
-| `routr-mobile` | Expo, React Native, iOS, Android |
-| `routr-marketing` | SEO, copy, ads, ASO, growth |
-| `routr-video` | video, promo, /brag, Remotion, MP4 |
-| `routr-frontend` | build UI, landing, component |
-| `routr-motion` | animate, Framer, motion, scroll |
+1. Load the chosen `routr-*` skill only.
+2. If a child skill is missing → its `routr-depth-*` or `routr-catalog/references/resolution.md`.
+3. Install child bundles from `skill-registry.md` if output feels weak.

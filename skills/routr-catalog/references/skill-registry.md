@@ -95,9 +95,8 @@ npx skills add husnainpk/SymDex yvgude/lean-ctx -g -y --copy
 | `diagnosing-bugs` | — | mattpocock | recommended | routr-debug | mattpocock/skills |
 | `finishing-a-development-branch` | — | obra | optional | routr-ship, routr-deploy | obra/superpowers |
 | `executing-plans` | — | obra | optional | routr-plan | obra/superpowers |
-| `subagent-driven-development` | — | obra | optional | routr-agents | obra/superpowers |
 
-**ROUTR fallback:** `routr-depth-debug` when `systematic-debugging` missing.
+**ROUTR fallback:** `routr-depth-debug` when `systematic-debugging` missing. Agent-loop skills (`subagent-driven-development` et al.) live in [Agent & loop engineering](#agent--loop-engineering).
 
 ## Planning & specs
 
@@ -132,6 +131,7 @@ npx skills add husnainpk/SymDex yvgude/lean-ctx -g -y --copy
 | `code-review-excellence` | — | wshobson | optional | routr-review | wshobson/agents |
 | `review-since` | — | mattpocock | optional | routr-review | mattpocock/skills |
 | `vercel-react-best-practices` | — | vercel | recommended | routr-review, routr-refactor, routr-frontend | vercel-labs/agent-skills |
+| `vercel-composition-patterns` | — | vercel | optional | routr-refactor, routr-frontend | vercel-labs/agent-skills |
 
 ## Deploy
 
@@ -215,18 +215,44 @@ Leaderboard: [video-skills-leaderboard.md](video-skills-leaderboard.md)
 | `product-launch-video` | plv | hyperframes | optional | routr-video | heygen-com/hyperframes |
 | `pr-to-video` | — | hyperframes | optional | routr-video | heygen-com/hyperframes |
 
-## Agent architecture
+## Agent & loop engineering
+
+The **operating loop** (research loops, self-correction, eval gates, trace debugging) is a fast-growing skill area. All ship in one collection — install once, route per symptom via `routr-agents`.
+
+### Context engineering
 
 | canonical | aliases | namespace | tier | routers | source |
 |-----------|---------|-----------|------|---------|--------|
 | `context-fundamentals` | — | context-eng | optional | routr-agents | muratcankoylan/Agent-Skills-for-Context-Engineering |
 | `context-degradation` | — | context-eng | optional | routr-debug, routr-agents | same |
-| `harness-engineering` | — | context-eng | optional | routr-agents | same |
-| `multi-agent-patterns` | — | context-eng | optional | routr-agents | same |
+| `context-optimization` | — | context-eng | optional | routr-agents | same |
+| `context-compression` | — | context-eng | optional | routr-agents | same |
+| `filesystem-context` | — | context-eng | optional | routr-agents | same |
+| `memory-systems` | — | context-eng | optional | routr-agents | same |
+| `tool-design` | — | context-eng | optional | routr-agents | same |
+
+### Loop engineering
+
+| canonical | aliases | namespace | tier | routers | source |
+|-----------|---------|-----------|------|---------|--------|
+| `harness-engineering` | — | context-eng | recommended | routr-agents | muratcankoylan/Agent-Skills-for-Context-Engineering |
+| `comprehensive-research-agent` | — | context-eng | recommended | routr-agents | same |
+| `reasoning-trace-optimizer` | — | context-eng | recommended | routr-agents, routr-debug | same |
+| `multi-agent-patterns` | — | context-eng | recommended | routr-agents | same |
+| `subagent-driven-development` | — | obra | optional | routr-agents | obra/superpowers |
+| `evaluation` | — | context-eng | optional | routr-agents | same as harness-engineering |
+| `advanced-evaluation` | — | context-eng | optional | routr-agents | same |
+| `hosted-agents` | — | context-eng | optional | routr-agents | same |
+| `latent-briefing` | — | context-eng | optional | routr-agents | same |
 
 ```bash
+# Context + loop engineering (one collection, all skills)
 npx skills add muratcankoylan/Agent-Skills-for-Context-Engineering -g --all --full-depth -y --copy
+# Subagent delegation loop (Obra)
+npx skills add obra/superpowers -g --skill subagent-driven-development -y --copy
 ```
+
+**Route:** `routr-agents` bootstrap loads exactly one row per active symptom — never the whole cluster.
 
 ---
 
@@ -252,7 +278,7 @@ npx skills add muratcankoylan/Agent-Skills-for-Context-Engineering -g --all --fu
 | `routr-video` | brag, remotion-best-practices, hyperframes |
 | `routr-explore` | symdex, lean-ctx |
 | `routr-integrate` | find-docs, symdex |
-| `routr-agents` | context-fundamentals, multi-agent-patterns |
+| `routr-agents` | harness-engineering, comprehensive-research-agent, reasoning-trace-optimizer, multi-agent-patterns |
 
 ## Legacy catalog
 
