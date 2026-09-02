@@ -7,6 +7,19 @@ description: "Build Expo or React Native apps (screens, navigation, native UI). 
 
 **Goal:** native-quality mobile UI with Expo/RN best practices.
 
+## When to activate
+
+- Mobile app, Expo, React Native, iOS, Android, EAS
+- Native screen, navigation, mobile-specific UI
+
+## Do not activate
+
+- Web-only UI → `routr-frontend`
+
+## Iron law
+
+**Never port web React patterns (div, CSS grid) into RN — native primitives only.**
+
 ## 0. Bootstrap
 
 See `routr-catalog/references/skill-registry.md`:
@@ -43,6 +56,19 @@ Store copy → `routr-marketing` (`aso`). EAS → `expo-deployment`, `routr-depl
 | SEO / ASO | `routr-marketing` |
 | Backend API | `routr-integrate` |
 | Mobile bug | `routr-debug` |
+
+## Output format
+
+```markdown
+## Mobile build report
+**Screens:** …
+**Platform conventions:** safe areas, touch targets, accessibility checked
+**Verified:** …
+```
+
+## References
+
+- [boundaries](./references/boundaries.md)
 
 ## Anti-patterns
 

@@ -1,0 +1,46 @@
+{
+  "skill_name": "routr-test + routr-qa",
+  "description": "Adversarial routing between test authoring, exploratory QA, and security escalation — the pairs flagged as untested in the collection audit",
+  "prompts": [
+    {
+      "prompt": "Write tests for the checkout flow",
+      "expected_router": "routr-test",
+      "must_not_load": ["routr-qa"],
+      "boundary": "authoring a spec that lives in the repo → routr-test, not a one-off browser check"
+    },
+    {
+      "prompt": "Open the preview URL and check the checkout flow works",
+      "expected_router": "routr-qa",
+      "must_not_load": ["routr-test"],
+      "boundary": "one-off exploratory verification, no spec file implied → routr-qa"
+    },
+    {
+      "prompt": "Write a Playwright test for login, then confirm it actually passes against the running app",
+      "expected_router": "routr-test",
+      "expected_chain": ["routr-test", "routr-qa"],
+      "boundary": "authoring leads; a short QA pass confirms, not the reverse"
+    },
+    {
+      "prompt": "The E2E suite is flaky and failing on CI, not sure why",
+      "expected_router": "routr-debug",
+      "must_not_load": ["routr-test", "routr-qa"],
+      "boundary": "unknown root cause → routr-debug first; routr-test/routr-qa assume the cause is known"
+    },
+    {
+      "prompt": "Check if this auth endpoint is secure before we launch",
+      "expected_router": "routr-security",
+      "expected_behaviors": [
+        "Every finding includes a concrete exploit scenario",
+        "Scope limited to authN/authZ, injection, secrets, CVEs unless a full audit was requested"
+      ]
+    },
+    {
+      "prompt": "Review this PR for correctness and anything else worth flagging",
+      "expected_router": "routr-review",
+      "expected_chain_conditional": {
+        "if_security_issue_found": ["routr-review", "routr-security"]
+      },
+      "boundary": "routr-review escalates to routr-security only if it hits a security-shaped finding, not by default"
+    }
+  ]
+}

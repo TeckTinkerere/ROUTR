@@ -1,0 +1,54 @@
+{
+  "skill_name": "routr-video",
+  "description": "Video routing accuracy — adversarial pairs against routr-motion/routr-frontend, and the brag vs product-launch-video split that launch.md asserts in one line with no prior test coverage",
+  "prompts": [
+    {
+      "prompt": "/brag about what we just shipped",
+      "expected_router": "routr-video",
+      "expected_child": "brag",
+      "must_not_load": ["remotion-best-practices", "hyperframes"],
+      "boundary": "current workspace → brag only, no HyperFrames entry skill, no Remotion"
+    },
+    {
+      "prompt": "Make a 60 second promo from our SaaS landing page URL",
+      "expected_router": "routr-video",
+      "expected_child": "product-launch-video",
+      "must_not_load": ["brag"],
+      "boundary": "external product URL, not current workspace → product-launch-video, not brag"
+    },
+    {
+      "prompt": "Make the hero section animation feel more alive",
+      "expected_router": "routr-motion",
+      "must_not_load": ["routr-video"],
+      "boundary": "in-app motion, no exported MP4 → routr-motion, not routr-video"
+    },
+    {
+      "prompt": "Build a landing page with an embedded product demo video",
+      "expected_router": "routr-frontend",
+      "expected_chain": ["routr-frontend", "routr-video"],
+      "boundary": "page build owns routr-frontend; the video asset itself hands off to routr-video"
+    },
+    {
+      "prompt": "Turn our JSON dataset with thousands of variants into per-user recap videos",
+      "expected_router": "routr-video",
+      "expected_child": "remotion-best-practices",
+      "must_not_load": ["brag", "hyperframes"],
+      "boundary": "parametric/data-driven scale → Remotion, not a one-off launch stack"
+    },
+    {
+      "prompt": "We have 5 minutes before the demo and the render just failed",
+      "expected_router": "routr-video",
+      "expected_behaviors": [
+        "Skip clarifying questions, use all defaults",
+        "Fall back to screen capture + embedded-captions or stills rather than debugging the render",
+        "Do not attempt a full re-render with no smoke-render checkpoint"
+      ],
+      "boundary": "deadline-pressure path in references/gotchas.md, not the standard clarify-then-execute flow"
+    },
+    {
+      "prompt": "Just record my screen walking through the app",
+      "expected_router": null,
+      "boundary": "manual screen capture is explicitly out of scope — do not activate routr-video"
+    }
+  ]
+}

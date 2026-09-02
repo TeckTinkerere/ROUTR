@@ -7,6 +7,19 @@ description: "Marketing copy, SEO audits, and growth content. Use when: landing 
 
 **Goal:** copy and SEO that converts.
 
+## When to activate
+
+- Landing copy, SEO, meta tags, ads, CRO
+- App Store listing, blog post, growth content
+
+## Do not activate
+
+- Building the landing page UI → `routr-frontend`
+
+## Iron law
+
+**Never write copy before audience and positioning are defined.**
+
 ## 0. Bootstrap
 
 See `routr-catalog/references/skill-registry.md`:
@@ -35,11 +48,24 @@ npx skills add coreyhaines31/marketingskills -g --all -y --copy
 
 Page UI → `routr-frontend` after copy approved. Mobile store → `routr-mobile` + `aso`.
 
+## Output format
+
+```markdown
+## Marketing report
+**Deliverable:** copy / SEO audit / ASO listing
+**Audience & positioning stated:** yes/no
+**Handoff:** routr-frontend for UI / routr-deploy to ship
+```
+
 ## Handoff
 
 - Implement site → `routr-frontend`
 - Deploy/optimize → `routr-deploy`
 - Tracking bug → `routr-debug`
+
+## References
+
+- [boundaries](./references/boundaries.md)
 
 ## Anti-patterns
 

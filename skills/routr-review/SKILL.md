@@ -7,6 +7,18 @@ description: "Review a PR or diff for bugs, style, and React best practices. Use
 
 **Goal:** actionable, verified feedback.
 
+## When to activate
+
+- Code review, "review my changes", before merge, PR feedback
+
+## Do not activate
+
+- Writing the fix yourself → `routr-ship`
+
+## Iron law
+
+**Every review comment ships with a suggested fix — a flagged issue with no fix is half a review.**
+
 ## 0. Bootstrap
 
 | Skill | When |
@@ -39,3 +51,8 @@ Security escalate → `routr-security`
 
 - Fix findings → `routr-ship`
 - Unclear comments → `receiving-code-review`
+- Security-shaped finding → `routr-security`
+
+## References
+
+- [boundaries](./references/boundaries.md)

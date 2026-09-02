@@ -7,6 +7,20 @@ description: "Design multi-agent systems, agent loops, and eval harnesses. Use w
 
 **Goal:** principled agent architecture — not ad-hoc prompt stacking.
 
+## When to activate
+
+- Building agents, multi-agent systems, agent operating/research loops
+- Eval harness, context engineering, memory, tool/MCP design
+
+## Do not activate
+
+- Single AI SDK chat/RAG feature, no architecture question → `routr-ai`
+- Agent UI (chat window, controls) → `routr-frontend`
+
+## Iron law
+
+**Prototype the harness on one path before scaling prompts — never scale a pattern that hasn't been proven once.**
+
 ## 0. Bootstrap
 
 See `routr-catalog/references/skill-registry.md`. **Load by sub-task only — never read the whole cluster.**
@@ -54,7 +68,20 @@ Pattern → tools → memory → harness.
 
 Prototype harness before scaling prompts.
 
+## Output format
+
+```markdown
+## Agent design report
+**Pattern:** single / multi-agent, loop shape
+**Context, memory, tools:** …
+**Prototype status:** proven on one path / not yet
+```
+
 ## Handoff
 
 - Wrong file reads → `routr-debug` + symdex
 - Agent UI → `routr-frontend`
+
+## References
+
+- [boundaries](./references/boundaries.md)
