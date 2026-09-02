@@ -7,6 +7,20 @@ description: "Build AI features with Vercel AI SDK (chat, agents, RAG, tools). U
 
 **Goal:** production AI features — streaming, tools, providers.
 
+## When to activate
+
+- Chatbot, LLM feature, streaming, embeddings, tool calling, RAG
+- "AI SDK", provider setup, generateText/streamText/useChat
+
+## Do not activate
+
+- Multi-agent architecture or eval harness → `routr-agents`
+- Chat UI styling only, logic unchanged → `routr-frontend`
+
+## Iron law
+
+**Never put an API key in client-side code — server actions or route handlers only.**
+
 ## 0. Bootstrap
 
 See `routr-catalog/references/skill-registry.md`:
@@ -33,6 +47,15 @@ Chat UI → pair with `routr-frontend`.
 
 API keys server-side; rate limits; prompt injection awareness.
 
+## Output format
+
+```markdown
+## AI feature report
+**Pattern:** chat UI / agent+tools / RAG
+**Provider / model:** …
+**Safety:** keys server-side, rate limits, injection awareness confirmed
+```
+
 ## Handoff
 
 - SDK upgrade errors → `migrate-ai-sdk-v6-to-v7`
@@ -41,6 +64,10 @@ API keys server-side; rate limits; prompt injection awareness.
 - Chat UI polish → `routr-frontend`
 - Deploy → `routr-deploy`
 - Marketing → `routr-marketing`
+
+## References
+
+- [boundaries](./references/boundaries.md)
 
 ## Anti-patterns
 

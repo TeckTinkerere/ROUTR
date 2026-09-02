@@ -83,3 +83,6 @@ Always use **canonical** names from `skill-registry.md`. Never invent aliases in
 - [ ] `references/boundaries.md` if overlaps siblings
 - [ ] Deprecated redirect if renaming existing skill
 - [ ] Eval prompt in `evals/` for high-traffic routers
+- [ ] `bash scripts/validate-skills.sh` passes locally — CI runs it on every PR
+
+The validator mechanically checks the first four items above (name/folder match, `Use when:` presence, router-tree + resolution.md listing, every referenced child skill resolving to a `skill-registry.md` row). It cannot check design quality — boundaries, evals, and redirect correctness are still a human review job.

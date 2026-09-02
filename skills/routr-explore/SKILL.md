@@ -7,6 +7,20 @@ description: "Explain how the codebase works without changing code. Use when: 'h
 
 **Goal:** accurate mental model with minimal file reads.
 
+## When to activate
+
+- "How does X work", architecture questions, onboarding
+- "Where is this defined", "walk me through"
+
+## Do not activate
+
+- A specific bug or error → `routr-debug`
+- Changing code → `routr-ship`
+
+## Iron law
+
+**Map before you read — SymDex/lean-ctx narrow the search before any full-file read.**
+
 ## 0. Bootstrap
 
 1. `symdex-code-search`
@@ -35,7 +49,21 @@ Overview → Flow → Key files → Extension points
 
 Component tree, state, styling — defer design opinions → `routr-frontend`
 
+## Output format
+
+```markdown
+## Explore report
+**Overview:** …
+**Flow:** …
+**Key files:** …
+**Extension points:** …
+```
+
 ## Handoff
 
 - Build UI → `routr-frontend`
 - Bug while exploring → `routr-debug`
+
+## References
+
+- [boundaries](./references/boundaries.md)

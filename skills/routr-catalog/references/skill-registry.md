@@ -85,6 +85,7 @@ npx skills add husnainpk/SymDex yvgude/lean-ctx -g -y --copy
 | `caveman` | — | routr | optional | routr-debug | JuliusBrussee/caveman |
 | `caveman-commit` | — | routr | optional | routr-ship | JuliusBrussee/caveman |
 | `caveman-review` | — | routr | optional | routr-review | JuliusBrussee/caveman |
+| `caveman-compress` | — | routr | optional | routr-debug | JuliusBrussee/caveman |
 
 ## Debugging & quality
 
@@ -126,7 +127,7 @@ npx skills add husnainpk/SymDex yvgude/lean-ctx -g -y --copy
 
 | canonical | aliases | namespace | tier | routers | source |
 |-----------|---------|-----------|------|---------|--------|
-| `requesting-code-review` | — | obra | recommended | routr-review, routr-ship | obra/superpowers |
+| `requesting-code-review` | — | obra | recommended | routr-review, routr-ship, routr-security | obra/superpowers |
 | `receiving-code-review` | — | obra | optional | routr-review | obra/superpowers |
 | `code-review-excellence` | — | wshobson | optional | routr-review | wshobson/agents |
 | `review-since` | — | mattpocock | optional | routr-review | mattpocock/skills |
@@ -162,7 +163,6 @@ npx skills add husnainpk/SymDex yvgude/lean-ctx -g -y --copy
 | `review-animations` | — | emilkowalski | recommended | routr-motion, routr-review | emilkowalski/skills |
 | `motion-design` | — | lottie | optional | routr-motion | lottiefiles/motion-design-skill |
 | `ui-animation` | — | mblode | optional | routr-motion | mblode/agent-skills |
-| `remotion-best-practices` | — | remotion | optional | routr-video | remotion-dev/skills |
 
 ## Database
 
@@ -214,6 +214,20 @@ Leaderboard: [video-skills-leaderboard.md](video-skills-leaderboard.md)
 | `hyperframes` | — | hyperframes | recommended | routr-video | heygen-com/hyperframes |
 | `product-launch-video` | plv | hyperframes | optional | routr-video | heygen-com/hyperframes |
 | `pr-to-video` | — | hyperframes | optional | routr-video | heygen-com/hyperframes |
+| `website-to-video` | — | hyperframes | optional | routr-video | heygen-com/hyperframes |
+| `faceless-explainer` | — | hyperframes | optional | routr-video | heygen-com/hyperframes |
+| `motion-graphics` | — | hyperframes | optional | routr-video | heygen-com/hyperframes |
+| `embedded-captions` | — | hyperframes | optional | routr-video | heygen-com/hyperframes |
+| `remotion-video-toolkit` | — | remotion | optional | routr-video | shreefentsar/remotion-video-toolkit |
+| `talking-head-recut` | — | hyperframes | optional | routr-video | heygen-com/hyperframes |
+| `music-to-video` | — | hyperframes | optional | routr-video | heygen-com/hyperframes |
+| `slideshow` | — | hyperframes | optional | routr-video | heygen-com/hyperframes |
+| `general-video` | — | hyperframes | optional | routr-video | heygen-com/hyperframes |
+| `remotion-to-hyperframes` | — | hyperframes | optional | routr-video | heygen-com/hyperframes |
+| `hyperframes-core` | — | hyperframes | optional | routr-video | heygen-com/hyperframes |
+| `hyperframes-animation` | — | hyperframes | optional | routr-video | heygen-com/hyperframes |
+| `hyperframes-media` | — | hyperframes | optional | routr-video | heygen-com/hyperframes |
+| `hyperframes-cli` | — | hyperframes | optional | routr-video | heygen-com/hyperframes |
 
 ## Agent & loop engineering
 

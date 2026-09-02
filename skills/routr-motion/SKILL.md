@@ -7,6 +7,18 @@ description: "Add or polish animations (Framer Motion, scroll, transitions). Use
 
 **Goal:** intentional, performant, accessible motion.
 
+## When to activate
+
+- Animate, motion, micro-interactions on UI that already exists
+
+## Do not activate
+
+- Building new pages or components → `routr-frontend`
+
+## Iron law
+
+**`useReducedMotion()` is mandatory — no animation ships without a reduced-motion guard.**
+
 ## 0. Bootstrap
 
 See `routr-catalog/references/skill-registry.md`:
@@ -32,10 +44,23 @@ What moves? Entry triggers? `prefers-reduced-motion` upfront.
 
 `review-animations` — purpose, jank, mobile, reduced motion.
 
+## Output format
+
+```markdown
+## Motion report
+**What moves / entry triggers:** …
+**Reduced-motion guard:** yes/no
+**Review pass:** purpose, jank, mobile checked
+```
+
 ## Handoff
 
 - Page from scratch → `routr-frontend` first
 - Jank debug → `routr-debug`
+
+## References
+
+- [boundaries](./references/boundaries.md)
 
 ## Anti-patterns
 

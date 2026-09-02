@@ -7,6 +7,21 @@ description: "SQL, Postgres, Supabase schema and queries. Use when: migrations, 
 
 **Goal:** correct, performant, secure data layer.
 
+## When to activate
+
+- Migrations, schema design, RLS policies
+- Slow queries, indexing, connection pooling
+- Supabase/Postgres setup or troubleshooting
+
+## Do not activate
+
+- ORM or client-library setup only, no schema/query work → `routr-integrate`
+- Query bug with unknown cause → `routr-debug`
+
+## Iron law
+
+**Every multi-tenant table ships with an RLS policy — no exceptions without a stated reason.**
+
 ## 0. Bootstrap
 
 | Skill | Role |
@@ -33,8 +48,21 @@ Explain analyze for slow queries; N+1 detection; connection pooling.
 
 Escalate policy audit → `routr-security`
 
+## Output format
+
+```markdown
+## Database report
+**Change:** schema / migration / query
+**RLS reviewed:** yes/no
+**Verified:** explain analyze run, or test query confirmed
+```
+
 ## Handoff
 
 - API endpoints → `routr-integrate`
 - Query bug → `routr-debug`
 - Ship migration → `routr-ship`
+
+## References
+
+- [boundaries](./references/boundaries.md)

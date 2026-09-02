@@ -7,6 +7,20 @@ description: "Integrate a third-party library using up-to-date docs. Use when: '
 
 **Goal:** version-aware integration matching repo patterns.
 
+## When to activate
+
+- "How do I use X", SDK setup, API syntax
+- Version migration, configuring a third-party library
+
+## Do not activate
+
+- Internal codebase exploration, no library involved → `routr-explore`
+- Debugging a library error → `routr-debug`
+
+## Iron law
+
+**Never guess an API — verify against find-docs and the installed package version before writing code.**
+
 ## 0. Bootstrap
 
 1. `find-docs` — **always** for API details
@@ -35,7 +49,20 @@ Minimal working example; types compile; linter clean.
 | Motion | `framer-motion-animator` |
 | General UI | `frontend-design` for layout |
 
+## Output format
+
+```markdown
+## Integration report
+**Library / version:** …
+**Matched repo conventions:** yes/no
+**Verified:** types compile, linter clean
+```
+
 ## Handoff
 
 - Full new page → `routr-frontend`
 - Motion polish → `routr-motion`
+
+## References
+
+- [boundaries](./references/boundaries.md)

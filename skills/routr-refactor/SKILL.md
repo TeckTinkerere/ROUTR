@@ -7,6 +7,18 @@ description: "Improve code structure without changing behavior. Use when: refact
 
 **Goal:** safer structure — behavior preserved, diff reviewable.
 
+## When to activate
+
+- Refactor, tech debt, extract module, clean up code, restructure
+
+## Do not activate
+
+- Fixing a bug (behavior change) → `routr-debug` / `routr-ship`
+
+## Iron law
+
+**No refactor without a green safety net first — tests or characterization tests before touching structure.**
+
 ## 0. Bootstrap
 
 | Skill | Role |
@@ -35,10 +47,23 @@ Small steps — one seam at a time. No behavior + feature mix.
 - [ ] Tests pass
 - [ ] Public API changes documented
 
+## Output format
+
+```markdown
+## Refactor report
+**Safety net:** tests green / characterization tests added
+**Seams moved:** …
+**Public API changes:** documented yes/no
+```
+
 ## Handoff
 
 - Review PR → `routr-review`
 - Bug uncovered → `routr-debug`
+
+## References
+
+- [boundaries](./references/boundaries.md)
 
 ## Anti-patterns
 
