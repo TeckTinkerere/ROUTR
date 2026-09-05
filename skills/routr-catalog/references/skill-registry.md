@@ -228,6 +228,14 @@ Leaderboard: [video-skills-leaderboard.md](video-skills-leaderboard.md)
 | `hyperframes-animation` | — | hyperframes | optional | routr-video | heygen-com/hyperframes |
 | `hyperframes-media` | — | hyperframes | optional | routr-video | heygen-com/hyperframes |
 | `hyperframes-cli` | — | hyperframes | optional | routr-video | heygen-com/hyperframes |
+| `hyperframes-creative` | — | hyperframes | optional | routr-video | heygen-com/hyperframes |
+| `hyperframes-keyframes` | — | hyperframes | optional | routr-video | heygen-com/hyperframes |
+| `hyperframes-registry` | — | hyperframes | optional | routr-video | heygen-com/hyperframes |
+| `media-use` | — | hyperframes | recommended | routr-video | heygen-com/hyperframes |
+| `figma` | — | figma | optional | routr-video, routr-frontend | figma/figma-skills |
+
+**HeyGen credential:** voice, music, sound-effect, image, and avatar quality all degrade on one switch — whether a HeyGen credential resolves. Details and the sign-in preflight: `routr-video/references/media.md`.
+
 
 ## Agent & loop engineering
 
@@ -289,7 +297,7 @@ npx skills add obra/superpowers -g --skill subagent-driven-development -y --copy
 | `routr-mobile` | building-native-ui, vercel-react-native-skills |
 | `routr-marketing` | seo-audit, copywriting, ai-seo |
 | `routr-ai` | ai-sdk, find-docs |
-| `routr-video` | brag, remotion-best-practices, hyperframes |
+| `routr-video` | brag, remotion-best-practices, hyperframes, media-use |
 | `routr-explore` | symdex, lean-ctx |
 | `routr-integrate` | find-docs, symdex |
 | `routr-agents` | harness-engineering, comprehensive-research-agent, reasoning-trace-optimizer, multi-agent-patterns |

@@ -18,6 +18,8 @@ NEVER LOAD REMOTION + HYPERFRAMES IN PARALLEL FOR A ONE-OFF CLIP
 4. **Keep scope small** — one scene, one duration target, no dynamic props system. This is a stopgap, not a maintained video codebase.
 5. **Verify** — play back the rendered file; check duration and aspect ratio against the target.
 
+6. **Audio with no child skill** — if narration is needed and no media skill is installed, prefer burned-in captions over a hand-rolled TTS pipeline. A silent, captioned clip lands; a half-wired voice pipeline does not.
+
 ## When stuck
 
 - Render fails silently → check FFmpeg exit code directly, not just the wrapping tool's output
@@ -30,3 +32,5 @@ NEVER LOAD REMOTION + HYPERFRAMES IN PARALLEL FOR A ONE-OFF CLIP
 npx skills add latent-spaces/brag@brag heygen-com/hyperframes -g -y --copy
 npx skills add remotion-dev/skills@remotion-best-practices -g -y --copy
 ```
+
+For voice, music, effects, transcription, and captions, `media-use` ships with the HyperFrames bundle above — see [media.md](./media.md) for its credential switch and preflight rule.

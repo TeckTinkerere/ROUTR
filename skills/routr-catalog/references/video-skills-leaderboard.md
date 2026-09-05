@@ -2,7 +2,7 @@
 
 Ranked for **agent coding workflows** (not generative AI video like Sora). Scores blend [skills.sh](https://skills.sh) installs, workflow quality, and how often agents pick the right tool.
 
-**Last reviewed:** July 2026
+**Last reviewed:** September 2026
 
 ---
 
@@ -27,12 +27,13 @@ Ranked for **agent coding workflows** (not generative AI video like Sora). Score
 
 | Skill | When to use |
 |-------|-------------|
+| `media-use` | **The media layer for every stack** — voice/TTS, BGM, SFX, transcription, captions, background removal, avatar upsell, cross-project asset cache |
 | `talking-head-recut` | Overlays on interview footage (lower-thirds, callouts) |
 | `music-to-video` | Beat-synced lyric / slideshow from a track |
 | `slideshow` | Interactive deck — output is navigable slides, not MP4 |
 | `general-video` | Multi-scene or custom HyperFrames when nothing else fits |
 | `remotion-to-hyperframes` | **Port** Remotion → HyperFrames (migration only) |
-| `hyperframes-core` / `hyperframes-animation` / `hyperframes-media` / `hyperframes-cli` | Load on demand after `hyperframes` routes you |
+| `hyperframes-core` / `hyperframes-animation` / `hyperframes-keyframes` / `hyperframes-creative` / `hyperframes-cli` / `hyperframes-registry` | Capability layers — load on demand after `hyperframes` routes you, never as a workflow |
 
 ---
 
@@ -47,8 +48,13 @@ Need a video?
 ├─ Explain a concept (no product)                  → faceless-explainer
 ├─ Parametric / data-driven / React codebase       → remotion-best-practices
 ├─ Custom HTML composition / edit existing HF work → hyperframes entry skill
-└─ Captions on existing MP4                        → embedded-captions
+├─ Captions on existing MP4                        → embedded-captions
+├─ Music track drives the pacing                   → music-to-video
+├─ Navigable deck, presenter mode                  → slideshow
+└─ Anything else / multi-scene / long / loop       → general-video
 ```
+
+**Two axes, not one.** A *workflow* owns the deliverable; a *capability layer* (`media-use`, `hyperframes-core`, `hyperframes-animation`, `hyperframes-keyframes`, `hyperframes-creative`, `hyperframes-registry`) is pulled in mid-flight. Loading two workflows for one video is the mistake; loading three layers under one workflow is normal.
 
 **Default for "I built it, make a share video":** `brag` → hands off to HyperFrames.
 
@@ -75,7 +81,9 @@ npx skills add heygen-com/hyperframes -g --all -y --copy
 npx skills add shreefentsar/remotion-video-toolkit@remotion-video-toolkit -g -y --copy
 ```
 
-**Prerequisites (HyperFrames / brag):** Node.js 22+, FFmpeg on `PATH`, `npx hyperframes doctor`.
+**Prerequisites (HyperFrames / brag):** Node.js 22+, FFmpeg on `PATH`, and a clean `npx hyperframes doctor --json` payload (the command exits 0 even when the environment is broken — gate on the payload field).
+
+**Audio quality is one switch.** Voice, music, sound effects, images, and avatar presenters all degrade based on whether a HeyGen credential resolves. Run `npx hyperframes auth status` and relay it before generating audio — full table in `routr-video/references/media.md`.
 
 ---
 

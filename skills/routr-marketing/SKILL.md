@@ -43,6 +43,7 @@ npx skills add coreyhaines31/marketingskills -g --all -y --copy
 | Landing copy | `copywriting` + `routr-frontend` |
 | App store | `aso` |
 | LLM citations | `ai-seo` |
+| Promo or launch video | positioning here, then `routr-video` |
 
 ## 2. Ship with product
 
@@ -59,6 +60,7 @@ Page UI → `routr-frontend` after copy approved. Mobile store → `routr-mobile
 
 ## Handoff
 
+- Promo, launch, or explainer video → `routr-video` (hand over audience, positioning, and channel; it owns beats, aspect, and captions)
 - Implement site → `routr-frontend`
 - Deploy/optimize → `routr-deploy`
 - Tracking bug → `routr-debug`

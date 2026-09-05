@@ -1,6 +1,6 @@
 {
   "skill_name": "routr-video",
-  "description": "Video routing accuracy — adversarial pairs against routr-motion/routr-frontend, and the brag vs product-launch-video split that launch.md asserts in one line with no prior test coverage",
+  "description": "Video routing accuracy — adversarial pairs against routr-motion/routr-frontend, the brag vs product-launch-video split, the one-video vs batch data split, and the HeyGen credential preflight gate",
   "prompts": [
     {
       "prompt": "/brag about what we just shipped",
@@ -13,8 +13,26 @@
       "prompt": "Make a 60 second promo from our SaaS landing page URL",
       "expected_router": "routr-video",
       "expected_child": "product-launch-video",
-      "must_not_load": ["brag"],
-      "boundary": "external product URL, not current workspace → product-launch-video, not brag"
+      "expected_reference": "references/product-marketing.md",
+      "must_not_load": ["brag", "website-to-video"],
+      "boundary": "external commercial URL → product-launch-video in crawl mode, not brag and not a site tour"
+    },
+    {
+      "prompt": "Turn my portfolio site into a short video",
+      "expected_router": "routr-video",
+      "expected_child": "website-to-video",
+      "must_not_load": ["product-launch-video"],
+      "boundary": "non-commercial site shown as-is → tour, not promo"
+    },
+    {
+      "prompt": "Here is my script for a launch video. Don't scrape anything.",
+      "expected_router": "routr-video",
+      "expected_child": "product-launch-video",
+      "expected_behaviors": [
+        "Select no-capture mode and a style preset for palette and design system",
+        "Ask once whether the script is verbatim voice-over or a brief to restructure per scene"
+      ],
+      "boundary": "no-capture mode; do not resolve or crawl a site the user opted out of"
     },
     {
       "prompt": "Make the hero section animation feel more alive",
@@ -32,8 +50,74 @@
       "prompt": "Turn our JSON dataset with thousands of variants into per-user recap videos",
       "expected_router": "routr-video",
       "expected_child": "remotion-best-practices",
+      "expected_reference": "references/data-video.md",
       "must_not_load": ["brag", "hyperframes"],
+      "expected_behaviors": [
+        "Classify as the N-videos-one-template shape because the render repeats",
+        "Type props with a schema and compute duration from the data",
+        "Test edge-case rows before the batch, and hand the batch pipeline to routr-deploy"
+      ],
       "boundary": "parametric/data-driven scale → Remotion, not a one-off launch stack"
+    },
+    {
+      "prompt": "Make a video of our Q3 numbers from this CSV",
+      "expected_router": "routr-video",
+      "expected_reference": "references/data-video.md",
+      "must_not_load": ["remotion-best-practices"],
+      "expected_behaviors": [
+        "Classify as one-video-real-numbers because the render does not repeat",
+        "Read the CSV before writing any composition; no invented or estimated figures",
+        "Put the as-of date on screen or in the description"
+      ],
+      "boundary": "single data video → HyperFrames with variables, not a Remotion project"
+    },
+    {
+      "prompt": "Add a voiceover to the promo",
+      "expected_router": "routr-video",
+      "expected_child": "media-use",
+      "expected_reference": "references/media.md",
+      "expected_behaviors": [
+        "Run the sign-in status check and relay its output verbatim",
+        "Stop and wait for the user to choose sign-in or local before generating any audio",
+        "Pin the provider alongside any pinned voice id"
+      ],
+      "boundary": "no silent local fallback; the credential question is a user decision point, not a passing note"
+    },
+    {
+      "prompt": "I want a presenter reading this announcement on camera",
+      "expected_router": "routr-video",
+      "expected_reference": "references/media.md",
+      "expected_behaviors": [
+        "Use the HeyGen avatar CLI, script-driven, not a generative clip and not the raw API",
+        "Confirm the paid call with the user before initiating it"
+      ],
+      "boundary": "avatar presenter is deterministic and script-driven; agent-initiated paid calls need confirmation"
+    },
+    {
+      "prompt": "Build me a pitch deck with presenter mode",
+      "expected_router": "routr-video",
+      "expected_child": "slideshow",
+      "must_not_load": ["general-video", "motion-graphics"],
+      "boundary": "deliverable is a navigable deck, not a rendered MP4"
+    },
+    {
+      "prompt": "The scene renders as just the background, nothing else shows up",
+      "expected_router": "routr-video",
+      "expected_reference": "references/hyperframes.md",
+      "expected_behaviors": [
+        "Recognize a sub-composition mount failure that lint and validate cannot catch",
+        "Run a seek-based snapshot pass rather than re-running the static gates"
+      ],
+      "boundary": "static gates evaluate compositions in isolation; only a seek-based pass catches cross-file mounts"
+    },
+    {
+      "prompt": "Looks good, ship it to our YouTube channel",
+      "expected_router": "routr-video",
+      "expected_behaviors": [
+        "Render only after explicit approval, not because checks passed",
+        "Hand over the file and share copy rather than publishing"
+      ],
+      "boundary": "rendering is not publishing; posting publicly is always the user's action"
     },
     {
       "prompt": "We have 5 minutes before the demo and the render just failed",

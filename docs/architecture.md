@@ -51,7 +51,12 @@ Routers route. They do not replace child skills — but they stay useful without
 
 ## Video stack (v2)
 
-Single entry: `routr-video` with `references/launch.md` and `references/remotion.md`. Old `video-*-playbook` folders were removed in v2.
+Single entry: `routr-video`. It routes on two axes:
+
+- **Workflow** — owns the deliverable end to end (`brag`, `product-launch-video`, `pr-to-video`, `website-to-video`, `faceless-explainer`, `motion-graphics`, `music-to-video`, `talking-head-recut`, `embedded-captions`, `slideshow`, `general-video`, or a Remotion project). Exactly one per task.
+- **Capability layer** — pulled in mid-flight, never owns the task (`media-use`, `hyperframes-core`, `hyperframes-animation`, `hyperframes-keyframes`, `hyperframes-creative`, `hyperframes-registry`). Several per task is normal.
+
+References: `launch.md`, `product-marketing.md`, `data-video.md`, `remotion.md`, `hyperframes.md`, `media.md`, plus the standard fallback/gotchas/examples/boundaries set. Old `video-*-playbook` folders were removed in v2.
 
 ## Naming
 

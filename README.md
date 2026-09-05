@@ -72,7 +72,7 @@ Hover text = YAML `description` in each `SKILL.md`:
 | `routr-frontend` | Build or redesign UI |
 | `routr-motion` | Animate existing UI |
 | `routr-plan` | Plan, PRD, grill ideas |
-| `routr-video` | Video — launch, Remotion, HyperFrames |
+| `routr-video` | Video — launch, product marketing, data-driven, Remotion, HyperFrames |
 | `routr-ai` | AI SDK chat, agents, RAG |
 | `routr-mobile` | Expo / React Native |
 | `routr-marketing` | SEO, copy, growth |
@@ -110,7 +110,7 @@ Multi-agent architecture → `routr-agents`
 
 | Router | Child skills |
 |--------|--------------|
-| [`routr-video`](skills/routr-video/) | `brag`, `remotion-best-practices`, `hyperframes` |
+| [`routr-video`](skills/routr-video/) | `brag`, `remotion-best-practices`, `hyperframes`, `media-use` |
 
 Single entry — `references/launch.md` and `references/remotion.md` for sub-paths.
 
@@ -151,7 +151,7 @@ Single entry — `references/launch.md` and `references/remotion.md` for sub-pat
 | [`routr-mobile`](skills/routr-mobile/) | Expo, RN | `building-native-ui` |
 | [`routr-marketing`](skills/routr-marketing/) | SEO, copy | `seo-audit`, `copywriting` |
 | [`routr-ai`](skills/routr-ai/) | chatbot, AI SDK | `ai-sdk` |
-| [`routr-video`](skills/routr-video/) | video, /brag | `brag`, `remotion-best-practices` |
+| [`routr-video`](skills/routr-video/) | video, /brag, promo, captions | `brag`, `remotion-best-practices`, `media-use` |
 
 </details>
 

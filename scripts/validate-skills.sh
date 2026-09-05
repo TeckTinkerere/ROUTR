@@ -69,7 +69,7 @@ grep -rhoP '`\K[a-z][a-z0-9-]{2,}(?=`)' skills --include='*.md' \
 # map/lines/signatures: lean-ctx read modes, not skill names.
 # grilling: deliberately-cited non-canonical alias (routr-plan gotchas warns against it).
 # remotion: npm package name / registry namespace label, not a skill itself.
-# ffmpeg/npm/node: system binaries/runtimes referenced as prerequisites, not skills.
+# ffmpeg/ffprobe/npm/node: system binaries/runtimes referenced as prerequisites, not skills.
 cat > /tmp/routr_stopwords.txt <<'EOF'
 canonical
 aliases
@@ -95,6 +95,7 @@ lines
 grilling
 remotion
 ffmpeg
+ffprobe
 npm
 node
 EOF
