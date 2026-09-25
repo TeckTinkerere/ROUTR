@@ -1,0 +1,40 @@
+{
+  "skill_name": "routr-agents",
+  "description": "Multi-agent architecture, operating loops, and eval harness workflow adherence",
+  "prompts": [
+    {
+      "prompt": "design the agent's operating loop with error recovery and an eval gate before we ship it",
+      "expected_router": "routr-agents",
+      "expected_child": "harness-engineering"
+    },
+    {
+      "prompt": "my agent keeps drifting off task and re-reading the same files, help debug the loop",
+      "expected_router": "routr-agents",
+      "expected_child": "reasoning-trace-optimizer"
+    },
+    {
+      "prompt": "we need a memory system so the agent remembers context across sessions",
+      "expected_router": "routr-agents"
+    },
+    {
+      "prompt": "set up a research agent that self-corrects and calls tools across multiple steps",
+      "expected_router": "routr-agents"
+    },
+    {
+      "prompt": "context engineering for our long-running coding agent, it's blowing its budget",
+      "expected_router": "routr-agents"
+    },
+    {
+      "prompt": "just add a chatbot with tool calling for order lookups, single feature, no loop design needed",
+      "expected_router": "routr-ai",
+      "must_not_load": ["routr-agents"],
+      "boundary": "agents vs ai — single AI SDK chat/RAG feature, no architecture question"
+    },
+    {
+      "prompt": "build the chat window UI for our existing agent, controls and message list only",
+      "expected_router": "routr-frontend",
+      "must_not_load": ["routr-agents"],
+      "boundary": "agents vs frontend — UI chrome around an agent, not the agent's architecture"
+    }
+  ]
+}

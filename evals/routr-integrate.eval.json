@@ -1,0 +1,38 @@
+{
+  "skill_name": "routr-integrate",
+  "description": "Third-party library integration workflow adherence — up-to-date docs",
+  "prompts": [
+    {
+      "prompt": "how do I configure the Stripe SDK for subscriptions",
+      "expected_router": "routr-integrate"
+    },
+    {
+      "prompt": "set up the Prisma client and generate types for our schema",
+      "expected_router": "routr-integrate"
+    },
+    {
+      "prompt": "we need to migrate off the old Twilio SDK version to the new one",
+      "expected_router": "routr-integrate"
+    },
+    {
+      "prompt": "what's the syntax for the new Next.js middleware API",
+      "expected_router": "routr-integrate"
+    },
+    {
+      "prompt": "add the Resend email SDK and send a welcome email on signup",
+      "expected_router": "routr-integrate"
+    },
+    {
+      "prompt": "show me where our existing Stripe webhook handler lives and how it's wired up",
+      "expected_router": "routr-explore",
+      "must_not_load": ["routr-integrate"],
+      "boundary": "integrate vs explore — internal codebase exploration, no new library setup"
+    },
+    {
+      "prompt": "the Stripe webhook handler throws an error I don't understand, help me figure out why",
+      "expected_router": "routr-debug",
+      "must_not_load": ["routr-integrate"],
+      "boundary": "integrate vs debug — debugging a library error, not initial setup"
+    }
+  ]
+}

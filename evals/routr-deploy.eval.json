@@ -1,0 +1,39 @@
+{
+  "skill_name": "routr-deploy",
+  "description": "Deploy workflow adherence — Vercel and preview environments",
+  "prompts": [
+    {
+      "prompt": "deploy this to Vercel production",
+      "expected_router": "routr-deploy"
+    },
+    {
+      "prompt": "push a preview URL so the client can look at it",
+      "expected_router": "routr-deploy"
+    },
+    {
+      "prompt": "go live with the new pricing page today",
+      "expected_router": "routr-deploy"
+    },
+    {
+      "prompt": "cut an EAS build and submit to TestFlight",
+      "expected_router": "routr-deploy"
+    },
+    {
+      "prompt": "deploy to Vercel and smoke test the preview URL once it's up",
+      "expected_router": "routr-deploy",
+      "expected_chain": ["routr-deploy", "routr-qa"]
+    },
+    {
+      "prompt": "write the fix for the broken build first, then we can talk about deploying",
+      "expected_router": "routr-ship",
+      "must_not_load": ["routr-deploy"],
+      "boundary": "deploy vs ship — writing the code/fix itself comes first"
+    },
+    {
+      "prompt": "after it's live, click through the signup flow in a real browser and confirm it works",
+      "expected_router": "routr-qa",
+      "must_not_load": ["routr-deploy"],
+      "boundary": "deploy vs qa — post-deploy browser verification, not the deploy step itself"
+    }
+  ]
+}

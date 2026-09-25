@@ -1,0 +1,39 @@
+{
+  "skill_name": "routr-refactor",
+  "description": "Refactor workflow adherence — structure change with behavior preserved",
+  "prompts": [
+    {
+      "prompt": "extract the pricing logic into its own module, behavior should stay identical",
+      "expected_router": "routr-refactor"
+    },
+    {
+      "prompt": "this file has grown to 2000 lines, help me clean it up",
+      "expected_router": "routr-refactor"
+    },
+    {
+      "prompt": "pay down some tech debt in the payments module before we add more features there",
+      "expected_router": "routr-refactor"
+    },
+    {
+      "prompt": "restructure this into smaller components, no behavior change",
+      "expected_router": "routr-refactor",
+      "expected_behaviors": ["Ensure tests or characterization tests exist before restructuring"]
+    },
+    {
+      "prompt": "consolidate these three near-duplicate utility functions into one",
+      "expected_router": "routr-refactor"
+    },
+    {
+      "prompt": "the discount calculation gives the wrong total, fix the logic",
+      "expected_router": "routr-debug",
+      "must_not_load": ["routr-refactor"],
+      "boundary": "refactor vs debug — behavior is wrong, not just structure"
+    },
+    {
+      "prompt": "I already cleaned up the module structure locally, just commit it",
+      "expected_router": "routr-ship",
+      "must_not_load": ["routr-refactor"],
+      "boundary": "refactor vs ship — restructuring is done, now it's a commit-ready diff"
+    }
+  ]
+}
