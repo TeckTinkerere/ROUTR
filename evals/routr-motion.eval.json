@@ -1,0 +1,39 @@
+{
+  "skill_name": "routr-motion",
+  "description": "Animation and motion polish workflow adherence — existing UI only",
+  "prompts": [
+    {
+      "prompt": "make the button hover animation smoother",
+      "expected_router": "routr-motion"
+    },
+    {
+      "prompt": "add a parallax scroll effect to the hero section",
+      "expected_router": "routr-motion"
+    },
+    {
+      "prompt": "the page transitions feel jarring, add Framer Motion transitions between routes",
+      "expected_router": "routr-motion"
+    },
+    {
+      "prompt": "add subtle micro-interactions when the cart item count updates",
+      "expected_router": "routr-motion",
+      "expected_behaviors": ["useReducedMotion() guard included"]
+    },
+    {
+      "prompt": "the modal open/close feels abrupt, give it a spring animation",
+      "expected_router": "routr-motion"
+    },
+    {
+      "prompt": "build a brand new pricing page from scratch with three tiers",
+      "expected_router": "routr-frontend",
+      "must_not_load": ["routr-motion"],
+      "boundary": "motion vs frontend — new component/page, not polish on existing UI"
+    },
+    {
+      "prompt": "our animations are janky and dropping frames, profile why and fix the render performance",
+      "expected_router": "routr-perf",
+      "must_not_load": ["routr-motion"],
+      "boundary": "motion vs perf — this is a rendering-performance investigation (frame drops, profiling), not adding/polishing an animation"
+    }
+  ]
+}

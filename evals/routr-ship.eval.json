@@ -1,0 +1,54 @@
+{
+  "skill_name": "routr-ship",
+  "description": "Ship workflow adherence — small scoped fix through commit/PR",
+  "prompts": [
+    {
+      "prompt": "Fix this typo in the header copy and open a PR",
+      "expected_router": "routr-ship",
+      "expected_behaviors": [
+        "Minimal scoped diff",
+        "Verify before commit",
+        "Commit or open PR with clear message"
+      ]
+    },
+    {
+      "prompt": "tests pass now, just commit it",
+      "expected_router": "routr-ship",
+      "expected_behaviors": [
+        "Re-run tests before commit",
+        "Do not skip verification even when told it already passes"
+      ]
+    },
+    {
+      "prompt": "I know the fix — change the timeout from 5000 to 15000 in api/client.ts and ship it",
+      "expected_router": "routr-ship",
+      "expected_behaviors": [
+        "Apply the known, scoped change",
+        "Verify then commit"
+      ]
+    },
+    {
+      "prompt": "merge this change, CI is green",
+      "expected_router": "routr-ship"
+    },
+    {
+      "prompt": "the checkout button throws a 500 sometimes and I don't know why",
+      "expected_router": "routr-debug",
+      "must_not_load": ["routr-ship"],
+      "boundary": "ship vs debug — root cause unknown, needs investigation first"
+    },
+    {
+      "prompt": "patch this quick, no time to investigate — just make the error go away",
+      "expected_router": "routr-debug",
+      "must_not_load": ["routr-ship"],
+      "boundary": "ship vs debug — user wants speed but cause is unknown, debug's iron law still applies before a commit-ready diff exists"
+    },
+    {
+      "prompt": "build a whole new onboarding flow with three screens",
+      "expected_router": "routr-plan",
+      "expected_chain": ["routr-plan", "routr-frontend"],
+      "must_not_load": ["routr-ship"],
+      "boundary": "ship vs plan — large greenfield feature, not a small scoped fix"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "skill_name": "routr-explore",
+  "description": "Codebase explanation workflow adherence — no code changes",
+  "prompts": [
+    {
+      "prompt": "how does authentication work in this repo?",
+      "expected_router": "routr-explore"
+    },
+    {
+      "prompt": "walk me through the request lifecycle for the checkout API",
+      "expected_router": "routr-explore"
+    },
+    {
+      "prompt": "where is the rate limiter defined and what calls it",
+      "expected_router": "routr-explore"
+    },
+    {
+      "prompt": "I'm new here, give me the lay of the land for this codebase",
+      "expected_router": "routr-explore",
+      "expected_behaviors": ["Accurate mental model with minimal file reads"]
+    },
+    {
+      "prompt": "why does the billing module import from three different places for the same config",
+      "expected_router": "routr-explore"
+    },
+    {
+      "prompt": "the login page throws a 401 for some users and I need to know why",
+      "expected_router": "routr-debug",
+      "must_not_load": ["routr-explore"],
+      "boundary": "explore vs debug — has a concrete symptom, not just curiosity"
+    },
+    {
+      "prompt": "now that I understand the auth flow, add a magic-link login option",
+      "expected_router": "routr-ship",
+      "must_not_load": ["routr-explore"],
+      "boundary": "explore vs ship — understanding phase is over, this is a code change request"
+    }
+  ]
+}

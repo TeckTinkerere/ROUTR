@@ -12,7 +12,7 @@
   <sub>Repo: <a href="https://github.com/TeckTinkerere/ROUTR"><code>ROUTR</code></a> · v2 · by <a href="https://github.com/TeckTinkerere">TeckTinkerere</a></sub></p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/routers-25-blue?style=flat-square" alt="25 skills" />
+  <img src="https://img.shields.io/badge/routers-28-blue?style=flat-square" alt="28 skills" />
   <img src="https://img.shields.io/badge/agents-70%2B-green?style=flat-square" alt="70+ agents" />
   <img src="https://img.shields.io/badge/v2-routr--prefix-orange?style=flat-square" alt="routr-*" />
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="MIT" />
@@ -76,6 +76,7 @@ Hover text = YAML `description` in each `SKILL.md`:
 | `routr-ai` | AI SDK chat, agents, RAG |
 | `routr-mobile` | Expo / React Native |
 | `routr-marketing` | SEO, copy, growth |
+| `routr-perf` | Core Web Vitals, bundle size, re-renders, N+1, leaks, caching |
 | … | [Full list in INSTALL.md](INSTALL.md) |
 
 ---
@@ -121,7 +122,7 @@ Single entry — `references/launch.md` and `references/remotion.md` for sub-pat
 ## All routers
 
 <details>
-<summary><b>Core engineering (13)</b></summary>
+<summary><b>Core engineering (14)</b></summary>
 
 | Router | Triggers | Top children |
 |--------|----------|--------------|
@@ -135,6 +136,7 @@ Single entry — `references/launch.md` and `references/remotion.md` for sub-pat
 | [`routr-database`](skills/routr-database/) | SQL, Supabase | `supabase-postgres-best-practices` |
 | [`routr-qa`](skills/routr-qa/) | browser QA | `agent-browser` |
 | [`routr-security`](skills/routr-security/) | security audit | `semgrep` |
+| [`routr-perf`](skills/routr-perf/) | slow page, bundle, N+1, leaks | `vercel-react-best-practices`, `webapp-testing` |
 | [`routr-explore`](skills/routr-explore/) | how does X work | symdex → lean-ctx |
 | [`routr-integrate`](skills/routr-integrate/) | library API | `find-docs` |
 | [`routr-agents`](skills/routr-agents/) | agent systems | context-engineering bundle |
@@ -167,6 +169,7 @@ Single entry — `references/launch.md` and `references/remotion.md` for sub-pat
 | `routr-depth-plan` | Fallback when `brainstorming` missing |
 | `routr-depth-ship` | Fallback when `caveman-commit` missing |
 | `routr-depth-test` | Fallback when `webapp-testing` missing |
+| `routr-depth-security` | Fallback when `semgrep`/rules-auditor missing |
 
 Old `*-playbook` folders were removed in v2 — use `routr-*`.
 
@@ -233,7 +236,15 @@ routr-marketing → ai-seo
 
 ## Evals
 
-Trigger/workflow tests in `evals/` for `routr-router`, `routr-debug`, `routr-frontend`.
+Trigger/workflow tests in `evals/`, one file per router plus core router/chain tests.
+
+---
+
+## Quality & upkeep
+
+- `python scripts/run-evals.py` — runs every `evals/*.eval.json` prompt against the router menu. `--mode static` (default) is an offline lexical check of `Use when:`/`Not for:` boundaries; `--mode claude` shells out to an actual model call. Non-zero exit under `--min-accuracy` for CI gating.
+- `bash scripts/validate-skills.sh` — mechanical checks: frontmatter/folder name match, `Use when:` presence, description length budget, `Not for:` presence, SKILL.md line caps, broken relative links, eval JSON validity, and router-tree/resolution.md registration.
+- `bash scripts/sync-installed.sh` (or `scripts/sync-installed.ps1` on Windows) — diffs this repo's `skills/routr-*` against your installed copies (`~/.claude/skills`, `~/.agents/skills`, etc.) and reports drift. `--apply` copies the repo version in; `--prune-legacy` moves removed `*-playbook` stubs to a dated backup folder instead of deleting them.
 
 ---
 

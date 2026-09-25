@@ -1,0 +1,48 @@
+{
+  "skill_name": "routr-plan",
+  "description": "Plan workflow adherence — requirements and stress-testing before implementation",
+  "prompts": [
+    {
+      "prompt": "we want to add a whole referrals system, help me think it through before we build anything",
+      "expected_router": "routr-plan",
+      "expected_behaviors": [
+        "Draft requirements/PRD before code",
+        "Surface open questions and tradeoffs"
+      ]
+    },
+    {
+      "prompt": "grill my plan for the new billing flow, here's my doc",
+      "expected_router": "routr-plan",
+      "expected_behaviors": [
+        "Stress-test assumptions",
+        "Identify gaps and risks"
+      ]
+    },
+    {
+      "prompt": "should we use a queue or cron for this background job? architecture decision needed",
+      "expected_router": "routr-plan"
+    },
+    {
+      "prompt": "PRD for the multi-tenant workspace feature",
+      "expected_router": "routr-plan"
+    },
+    {
+      "prompt": "just fix the null pointer in checkout.ts line 42, I already know the one-line change",
+      "expected_router": "routr-ship",
+      "must_not_load": ["routr-plan"],
+      "boundary": "plan vs ship — known one-line fix, no planning needed"
+    },
+    {
+      "prompt": "design the multi-agent architecture for our research pipeline before we start coding",
+      "expected_router": "routr-agents",
+      "must_not_load": ["routr-plan"],
+      "boundary": "plan vs agents — agent/loop architecture is routr-agents' specialty even pre-code"
+    },
+    {
+      "prompt": "sketch out the new dashboard UI, what should the layout look like",
+      "expected_router": "routr-frontend",
+      "must_not_load": ["routr-plan"],
+      "boundary": "plan vs frontend — visual/layout design work, not requirements planning"
+    }
+  ]
+}

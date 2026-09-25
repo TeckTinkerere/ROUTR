@@ -49,12 +49,13 @@ When multiple `routr-*` skills could apply, use the **most specific** match:
 11. `routr-deploy` — Vercel and shipping
 12. `routr-database` — Postgres / Supabase
 13. `routr-refactor` — structure without behavior change
-14. `routr-qa` — browser QA
-15. `routr-security` — security pass
-16. `routr-mobile` — Expo / React Native
-17. `routr-marketing` — SEO, copy
-18. `routr-ai` — AI SDK apps
-19. `routr-video` — all video workflows
+14. `routr-perf` — measured performance work (Core Web Vitals, bundle, renders, N+1, leaks, caching)
+15. `routr-qa` — browser QA
+16. `routr-security` — security pass
+17. `routr-mobile` — Expo / React Native
+18. `routr-marketing` — SEO, copy
+19. `routr-ai` — AI SDK apps
+20. `routr-video` — all video workflows
 
 When unsure, read `routr-router/SKILL.md` first.
 
