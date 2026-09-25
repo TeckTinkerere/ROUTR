@@ -33,7 +33,7 @@ See `routr-catalog/references/skill-registry.md`:
 | 2 | `firebase-security-rules-auditor` | optional — Firebase & Firestore rules |
 | 3 | `requesting-code-review` | recommended — review discipline |
 
-If `semgrep` missing → [references/fallback.md](./references/fallback.md).
+If `semgrep` and any rules-auditor skill are both missing → read `routr-depth-security` OR [references/fallback.md](./references/fallback.md).
 
 Data layer → `routr-database` (Postgres/Supabase RLS). Firebase → rules auditors above.
 
@@ -78,6 +78,7 @@ Supabase/Postgres → `routr-database` + RLS. Firebase → rules auditors.
 
 ## References
 
+- `routr-depth-security` — full OWASP-style audit process when `semgrep`/rules-auditor missing
 - [fallback](./references/fallback.md) — when `semgrep` is missing
 - [gotchas](./references/gotchas.md)
 - [examples](./references/examples.md)

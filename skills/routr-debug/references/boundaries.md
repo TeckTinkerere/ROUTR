@@ -9,6 +9,7 @@
 | Security vulnerability report | `routr-security` |
 | Layout looks wrong, no error | `routr-frontend` (visual) or `routr-debug` (logic) |
 | Animation jank | `routr-motion` |
+| Slow, not wrong (Core Web Vitals, bundle, N+1, leak) | `routr-perf` |
 
 ## vs routr-ship
 

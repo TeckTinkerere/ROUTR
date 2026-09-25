@@ -68,7 +68,29 @@ Top routers include `references/` (workflow, fallback, gotchas, examples, bounda
 
 ## Quality loop
 
-Eval prompts in `evals/` for `routr-router`, `routr-debug`, `routr-frontend`. Run before releases.
+Two mechanical gates run before release, both callable from CI:
+
+**Validator** (`scripts/validate-skills.sh`), 11 checks:
+
+1. Frontmatter `name:` matches folder name
+2. Router description contains `Use when:`
+3. Every backticked child-skill reference resolves to a `skill-registry.md` row (canonical name or alias)
+4. No duplicate canonical rows in the registry
+5. Every situational router is listed in `routr-router`'s decision tree and `resolution.md`'s precedence list
+6. Description ≤ 320 chars (FAIL), > 280 chars (WARN)
+7. Situational routers include `Not for:` (FAIL); depth/catalog skills exempt
+8. `SKILL.md` ≤ 150 lines for routers, ≤ 200 lines for `routr-depth-*` (FAIL)
+9. Every relative markdown link under `skills/**.md` resolves to a real file (FAIL)
+10. Every `evals/*.eval.json` parses, and every `expected_router`/`expected_chain`/`must_not_load` entry names an existing `skills/routr-*` folder (FAIL)
+11. Every situational router has at least one eval prompt as `expected_router` somewhere in `evals/` (WARN)
+
+**Eval runner** (`scripts/run-evals.py`, stdlib only): builds the router menu from each `SKILL.md` frontmatter, then scores every prompt in `evals/`.
+
+- `--mode static` (default): offline, deterministic — a lexical scorer over `Use when:` triggers minus `Not for:` phrases. A smoke test for description overlap, no model call.
+- `--mode claude`: shells out to `claude -p --model <model>` with the router menu + prompt, parses the chosen router, scores against `expected_router`/`expected_chain`.
+- Reports accuracy per file, per-boundary failures, and `must_not_load` violations. `--json` for machine output; non-zero exit under `--min-accuracy` gates CI.
+
+Evals in `evals/` now cover every situational router (one `*.eval.json` file per router, plus `routr-router` for cross-cutting chain tests) — not just the original three.
 
 ## Compatibility
 

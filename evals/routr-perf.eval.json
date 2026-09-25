@@ -1,0 +1,48 @@
+{
+  "skill_name": "routr-perf",
+  "description": "Performance workflow adherence — Core Web Vitals, bundle size, render profiling, slow endpoints, memory leaks, caching",
+  "prompts": [
+    {
+      "prompt": "our LCP is 4.2s on mobile, need to get it under 2.5s",
+      "expected_router": "routr-perf"
+    },
+    {
+      "prompt": "bundle size ballooned to 3MB after the last few features, help me trim it",
+      "expected_router": "routr-perf"
+    },
+    {
+      "prompt": "this component re-renders like 40 times on a single keystroke, profile it",
+      "expected_router": "routr-perf"
+    },
+    {
+      "prompt": "the /api/dashboard endpoint is slow under load, seems like general latency not one query",
+      "expected_router": "routr-perf"
+    },
+    {
+      "prompt": "memory usage keeps climbing in prod and eventually the server OOMs",
+      "expected_router": "routr-perf"
+    },
+    {
+      "prompt": "set up caching so we stop re-fetching the same data on every request",
+      "expected_router": "routr-perf"
+    },
+    {
+      "prompt": "the checkout total is calculated wrong for orders with discounts applied",
+      "expected_router": "routr-debug",
+      "must_not_load": ["routr-perf"],
+      "boundary": "perf vs debug — functional bug with wrong output, not a speed/resource problem"
+    },
+    {
+      "prompt": "this one query joining orders and users takes 8 seconds, needs an index",
+      "expected_router": "routr-database",
+      "must_not_load": ["routr-perf"],
+      "boundary": "perf vs database — single slow SQL query / index design, not app-wide performance"
+    },
+    {
+      "prompt": "the dashboard just looks dated, redesign it with a cleaner visual style",
+      "expected_router": "routr-frontend",
+      "must_not_load": ["routr-perf"],
+      "boundary": "perf vs frontend — visual redesign request, not a speed/resource problem"
+    }
+  ]
+}

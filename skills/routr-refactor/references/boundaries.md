@@ -5,3 +5,4 @@
 | Fixing a bug — behavior must change | `routr-debug` then `routr-ship` |
 | Feature work mixed in with the structure change | Split it — do the feature in `routr-ship`/`routr-frontend` separately |
 | Reviewing someone else's refactor PR | `routr-review` |
+| Goal is speed, backed by a measured baseline number | `routr-perf` (structure-only, no perf claim, stays here) |

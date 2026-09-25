@@ -11,6 +11,18 @@
 #   5. Every routr-{domain} router (excluding routr-router, routr-catalog,
 #      routr-depth-*) is listed in routr-router's decision tree AND in
 #      resolution.md's router precedence list.
+#   6. Description length budget: FAIL > 320 chars, WARN > 280 chars.
+#   7. Situational routers' description contains "Not for:" (depth/catalog exempt).
+#   8. SKILL.md line cap: FAIL > 150 lines for routers, > 200 for depth fallbacks.
+#   9. Every relative markdown link under skills/**.md resolves to a real file.
+#   10. Every evals/*.eval.json parses, and every expected_router /
+#       expected_chain / must_not_load entry names an existing skills/routr-*
+#       folder.
+#   11. Every situational router has >=1 eval prompt naming it as
+#       expected_router somewhere in evals/ (WARN only).
+#
+# Checks 9-11 are implemented in scripts/_validate_helpers.py (stdlib-only
+# Python) because bash JSON/link parsing gets unreadable fast.
 #
 # Exits non-zero on any failure so it can gate CI.
 
@@ -26,6 +38,15 @@ note_warn() { echo "WARN: $1"; warn=$((warn + 1)); }
 REGISTRY="skills/routr-catalog/references/skill-registry.md"
 ROUTER_TREE="skills/routr-router/SKILL.md"
 RESOLUTION="skills/routr-catalog/references/resolution.md"
+
+TMP_DIR="$(mktemp -d)"
+trap 'rm -rf "$TMP_DIR"' EXIT
+
+PYTHON="$(command -v python3 || command -v python || true)"
+if [ -z "$PYTHON" ]; then
+  echo "FAIL: no python3/python on PATH — checks 9-11 (links, eval JSON) skipped"
+  fail=$((fail + 1))
+fi
 
 echo "== 1. Frontmatter name == folder name =="
 for dir in skills/*/; do
@@ -55,22 +76,22 @@ done
 echo
 echo "== 3. Child-skill references resolve to the registry =="
 # Canonical names + aliases from every `name` / `alias` markdown-table cell.
-: > /tmp/routr_registry_names.txt
-grep -oP '^\|\s*`\K[a-z0-9._-]+' "$REGISTRY" | sort -u >> /tmp/routr_registry_names.txt
+: > $TMP_DIR/routr_registry_names.txt
+grep -oP '^\|\s*`\K[a-z0-9._-]+' "$REGISTRY" | sort -u >> $TMP_DIR/routr_registry_names.txt
 # alias column (2nd cell) may hold bare words, not backticked — collect those too.
-awk -F'|' '/^\|[[:space:]]*`/{gsub(/^[[:space:]]+|[[:space:]]+$/,"",$3); if ($3!="" && $3!="—" && $3!="aliases") print $3}' "$REGISTRY" >> /tmp/routr_registry_names.txt
-sort -u -o /tmp/routr_registry_names.txt /tmp/routr_registry_names.txt
+awk -F'|' '/^\|[[:space:]]*`/{gsub(/^[[:space:]]+|[[:space:]]+$/,"",$3); if ($3!="" && $3!="—" && $3!="aliases") print $3}' "$REGISTRY" >> $TMP_DIR/routr_registry_names.txt
+sort -u -o $TMP_DIR/routr_registry_names.txt $TMP_DIR/routr_registry_names.txt
 
 grep -rhoP '`\K[a-z][a-z0-9-]{2,}(?=`)' skills --include='*.md' \
   | grep -v '^routr-' \
-  | sort -u > /tmp/routr_referenced_names.txt
+  | sort -u > $TMP_DIR/routr_referenced_names.txt
 
 # Words that are markdown/table furniture or prose, not skill names.
 # map/lines/signatures: lean-ctx read modes, not skill names.
 # grilling: deliberately-cited non-canonical alias (routr-plan gotchas warns against it).
 # remotion: npm package name / registry namespace label, not a skill itself.
 # ffmpeg/ffprobe/npm/node: system binaries/runtimes referenced as prerequisites, not skills.
-cat > /tmp/routr_stopwords.txt <<'EOF'
+cat > $TMP_DIR/routr_stopwords.txt <<'EOF'
 canonical
 aliases
 namespace
@@ -100,13 +121,13 @@ npm
 node
 EOF
 
-comm -23 /tmp/routr_referenced_names.txt <(sort -u /tmp/routr_registry_names.txt) \
-  | grep -vxFf /tmp/routr_stopwords.txt > /tmp/routr_unresolved.txt || true
+comm -23 $TMP_DIR/routr_referenced_names.txt <(sort -u $TMP_DIR/routr_registry_names.txt) \
+  | grep -vxFf $TMP_DIR/routr_stopwords.txt > $TMP_DIR/routr_unresolved.txt || true
 
-if [ -s /tmp/routr_unresolved.txt ]; then
+if [ -s $TMP_DIR/routr_unresolved.txt ]; then
   while IFS= read -r n; do
     note_fail "child skill '$n' is referenced in skills/ but has no row in $REGISTRY"
-  done < /tmp/routr_unresolved.txt
+  done < $TMP_DIR/routr_unresolved.txt
 fi
 
 echo
@@ -132,6 +153,88 @@ for dir in skills/routr-*/; do
     note_warn "$name: not listed in $RESOLUTION router precedence list"
   fi
 done
+
+echo
+echo "== 6. Description length budget (FAIL > 320 chars, WARN > 280 chars) =="
+for dir in skills/routr-*/; do
+  name=$(basename "$dir")
+  skill_md="${dir}SKILL.md"
+  [ -f "$skill_md" ] || continue
+  desc=$(grep -m1 '^description:' "$skill_md" | sed 's/^description:[[:space:]]*//' | tr -d '\r')
+  # strip one layer of surrounding quotes, if present
+  desc="${desc%\"}"
+  desc="${desc#\"}"
+  len=${#desc}
+  if [ "$len" -gt 320 ]; then
+    note_fail "$skill_md: description is $len chars (> 320 limit)"
+  elif [ "$len" -gt 280 ]; then
+    note_warn "$skill_md: description is $len chars (> 280 soft budget)"
+  fi
+done
+
+echo
+echo "== 7. Situational router descriptions contain 'Not for:' =="
+for dir in skills/routr-*/; do
+  name=$(basename "$dir")
+  skill_md="${dir}SKILL.md"
+  [ -f "$skill_md" ] || continue
+  case "$name" in
+    routr-router|routr-catalog|routr-depth-*) continue ;;
+  esac
+  if ! grep -q 'Not for:' "$skill_md"; then
+    note_fail "$skill_md: description missing 'Not for:' boundary phrase"
+  fi
+done
+
+echo
+echo "== 8. SKILL.md line cap (routers <= 150, depth fallbacks <= 200) =="
+for dir in skills/routr-*/; do
+  name=$(basename "$dir")
+  skill_md="${dir}SKILL.md"
+  [ -f "$skill_md" ] || continue
+  case "$name" in
+    routr-catalog) continue ;; # catalog has its own (unchecked here) budget
+  esac
+  lines=$(wc -l < "$skill_md" | tr -d ' ')
+  case "$name" in
+    routr-depth-*)
+      if [ "$lines" -gt 200 ]; then
+        note_fail "$skill_md: $lines lines (> 200 line cap for depth fallbacks)"
+      fi
+      ;;
+    *)
+      if [ "$lines" -gt 150 ]; then
+        note_fail "$skill_md: $lines lines (> 150 line cap for routers)"
+      fi
+      ;;
+  esac
+done
+
+echo
+echo "== 9. Relative markdown links in skills/**.md resolve =="
+"$PYTHON" scripts/_validate_helpers.py links skills > "$TMP_DIR/check9_out.txt" 2>&1 || true
+if [ -s "$TMP_DIR/check9_out.txt" ]; then
+  while IFS= read -r line; do
+    case "$line" in
+      FAIL:*) fail=$((fail + 1)); echo "$line" ;;
+      WARN:*) warn=$((warn + 1)); echo "$line" ;;
+      *) echo "$line" ;;
+    esac
+  done < "$TMP_DIR/check9_out.txt"
+fi
+
+echo
+echo "== 10/11. evals/*.eval.json validity, router-name references, and coverage =="
+"$PYTHON" scripts/_validate_helpers.py evals evals skills > "$TMP_DIR/check10_out.txt" 2>&1 || true
+if [ -s "$TMP_DIR/check10_out.txt" ]; then
+  while IFS= read -r line; do
+    case "$line" in
+      FAIL:*) fail=$((fail + 1)); echo "$line" ;;
+      WARN:*) warn=$((warn + 1)); echo "$line" ;;
+      *) echo "$line" ;;
+    esac
+  done < "$TMP_DIR/check10_out.txt"
+fi
 
 echo
 echo "================================"

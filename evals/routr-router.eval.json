@@ -127,6 +127,30 @@
       "expected_router": "routr-agents",
       "expected_child": "reasoning-trace-optimizer",
       "boundary": "loop debugging routes to loop-engineering child"
+    },
+    {
+      "prompt": "our LCP score tanked after the last deploy, need to get it back under 2.5s",
+      "expected_router": "routr-perf",
+      "must_not_load": ["routr-debug", "routr-frontend"],
+      "boundary": "perf vs debug/frontend — Core Web Vitals regression, not a functional bug or a visual redesign"
+    },
+    {
+      "prompt": "this component re-renders dozens of times per keystroke, help me profile and cut it down",
+      "expected_router": "routr-perf",
+      "must_not_load": ["routr-debug"],
+      "boundary": "perf vs debug — React re-render profiling is a performance task, not a wrong-output bug"
+    },
+    {
+      "prompt": "the discount total is wrong on orders with two coupons stacked, need to find why",
+      "expected_router": "routr-debug",
+      "must_not_load": ["routr-perf"],
+      "boundary": "perf vs debug — functional bug with wrong output routes to debug even though it's in the checkout hot path"
+    },
+    {
+      "prompt": "this one query joining orders, users, and refunds takes 9 seconds and needs an index",
+      "expected_router": "routr-database",
+      "must_not_load": ["routr-perf"],
+      "boundary": "perf vs database — single slow SQL query / index design stays with database, not the app-wide perf router"
     }
   ]
 }

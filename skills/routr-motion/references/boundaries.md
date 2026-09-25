@@ -5,3 +5,4 @@
 | Building new pages or components | `routr-frontend` |
 | Jank traced to a logic/state bug, not the animation itself | `routr-debug` |
 | Exported MP4 / rendered video, not in-app motion | `routr-video` |
+| Diagnosing *why* an animation is janky/dropping frames (profiling) | `routr-perf` — then back here to author the fix |
