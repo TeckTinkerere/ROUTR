@@ -7,8 +7,10 @@ no cost, always available) — it estimates whether a router's description
 gives enough signal to win the right prompts, not whether an LLM would
 actually pick it. `--mode claude` shells out to the real `claude -p` CLI and
 is a closer (but slower, non-free, non-deterministic) approximation of real
-routing behavior. Treat both as regression smoke tests for description
-quality, not as a certification that routing is "correct".
+routing behavior. `--mode predictions` scores a predictions file you (or an
+external model) produced out-of-band — see `--export-prompts` below. Treat
+all three as regression smoke tests for description quality, not as a
+certification that routing is "correct".
 
 Usage:
     python scripts/run-evals.py                         # static mode, all evals
@@ -16,6 +18,12 @@ Usage:
     python scripts/run-evals.py --mode claude --model claude-haiku-4-5-20251001
     python scripts/run-evals.py --file evals/routr-router.eval.json
     python scripts/run-evals.py --json out.json --min-accuracy 0.8
+
+    # Score with an external model when the `claude` CLI isn't usable:
+    python scripts/run-evals.py --export-prompts prompts.json
+    #   -> hand prompts.json's "menu" + "prompts" to any model, collect its
+    #      routing choice per prompt id, then:
+    python scripts/run-evals.py --mode predictions --predictions preds.json
 
 Only prompts carrying an `expected_router` field are scored for routing
 accuracy; prompts that test in-skill behavior only (`expected_behaviors`,
@@ -25,6 +33,22 @@ this script judges router *selection*, not in-skill behavior adherence.
 Candidate routers = skills/routr-*/SKILL.md, EXCLUDING routr-catalog,
 routr-depth-*, and routr-router itself (evals expect the concrete situational
 router, not the meta-router that would dispatch to it).
+
+--export-prompts PATH
+    Write a JSON file `{"menu": [{"name","description"}...], "prompts":
+    [{"id": "<eval-file>#<prompt-index>", "prompt": "..."}...]}` covering
+    every scorable prompt (i.e. every prompt with an `expected_router`)
+    across the selected eval files (respects `--file`), with NO expected
+    answers included, then exits 0 without running any scoring. Feed this
+    to an external model/judge to produce a predictions file.
+
+--mode predictions --predictions PATH
+    Read a JSON object `{"<id>": "routr-xxx", ...}` (ids matching
+    `--export-prompts`'s `<eval-file>#<prompt-index>` scheme) and score it
+    exactly like `--mode static`/`--mode claude`: same results table, same
+    misses list, same `must_not_load` violation counting, same `--json` and
+    `--min-accuracy` behavior. An id missing from the predictions file is
+    scored as a miss with got=None.
 """
 from __future__ import annotations
 
@@ -265,19 +289,79 @@ def main() -> int:
         description=__doc__,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    parser.add_argument("--mode", choices=["static", "claude"], default="static")
+    parser.add_argument("--mode", choices=["static", "claude", "predictions"], default="static")
     parser.add_argument("--model", default=DEFAULT_MODEL, help="model for --mode claude")
     parser.add_argument("--concurrency", type=int, default=4, help="parallel claude -p calls")
     parser.add_argument("--timeout", type=int, default=60, help="per-call timeout (seconds) for --mode claude")
     parser.add_argument("--file", help="run only this eval file")
     parser.add_argument("--json", dest="json_path", help="write machine-readable results here")
     parser.add_argument("--min-accuracy", type=float, default=None, help="exit 1 if overall accuracy is below this")
+    parser.add_argument(
+        "--export-prompts",
+        dest="export_prompts",
+        help="write {menu, prompts} JSON (no expected answers) for every scorable "
+        "prompt and exit, for scoring by an external model (respects --file)",
+    )
+    parser.add_argument(
+        "--predictions",
+        dest="predictions_path",
+        help="with --mode predictions: JSON file {\"<id>\": \"routr-xxx\", ...} "
+        "mapping prompt ids (as produced by --export-prompts) to predicted routers",
+    )
     args = parser.parse_args()
+
+    if args.mode == "predictions" and not args.predictions_path:
+        print("--mode predictions requires --predictions PATH", file=sys.stderr)
+        return 2
 
     routers = load_candidate_routers()
     if not routers:
         print("No candidate routers found under skills/routr-*", file=sys.stderr)
         return 2
+
+    if args.file:
+        candidate = Path(args.file)
+        if not candidate.exists():
+            candidate = EVALS_DIR / Path(args.file).name
+        eval_files = [candidate]
+    else:
+        eval_files = sorted(EVALS_DIR.glob("*.eval.json"))
+
+    if not eval_files:
+        print("No eval files found.", file=sys.stderr)
+        return 2
+
+    if args.export_prompts:
+        menu = [{"name": r.name, "description": r.description} for r in routers]
+        export_prompts = []
+        for ef in eval_files:
+            try:
+                data = json.loads(ef.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError) as exc:
+                print(f"SKIP {ef}: invalid JSON ({exc})", file=sys.stderr)
+                continue
+            prompts = data.get("prompts", [])
+            for i, p in enumerate(prompts):
+                if isinstance(p, dict) and p.get("expected_router"):
+                    export_prompts.append({"id": f"{ef.name}#{i}", "prompt": p["prompt"]})
+        Path(args.export_prompts).write_text(
+            json.dumps({"menu": menu, "prompts": export_prompts}, indent=2),
+            encoding="utf-8",
+        )
+        print(f"Wrote {len(export_prompts)} prompt(s) and a {len(menu)}-router menu to {args.export_prompts}")
+        return 0
+
+    predictions_by_id: dict[str, str | None] = {}
+    if args.mode == "predictions":
+        try:
+            raw = json.loads(Path(args.predictions_path).read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            print(f"Could not read --predictions {args.predictions_path}: {exc}", file=sys.stderr)
+            return 2
+        if not isinstance(raw, dict):
+            print(f"--predictions {args.predictions_path} must be a JSON object of id -> router name", file=sys.stderr)
+            return 2
+        predictions_by_id = raw
 
     if args.mode == "claude":
         # Preflight: a signed-out or broken CLI would otherwise score every
@@ -305,18 +389,6 @@ def main() -> int:
             )
             return 2
 
-    if args.file:
-        candidate = Path(args.file)
-        if not candidate.exists():
-            candidate = EVALS_DIR / Path(args.file).name
-        eval_files = [candidate]
-    else:
-        eval_files = sorted(EVALS_DIR.glob("*.eval.json"))
-
-    if not eval_files:
-        print("No eval files found.", file=sys.stderr)
-        return 2
-
     all_results = []
     total_scored = 0
     total_correct = 0
@@ -334,7 +406,7 @@ def main() -> int:
             continue
 
         prompts = data.get("prompts", [])
-        scorable = [p for p in prompts if isinstance(p, dict) and p.get("expected_router")]
+        scorable = [(i, p) for i, p in enumerate(prompts) if isinstance(p, dict) and p.get("expected_router")]
         skipped = len(prompts) - len(scorable)
         total_skipped += skipped
 
@@ -344,19 +416,22 @@ def main() -> int:
 
         if args.mode == "static":
             predictions = {}
-            for p in scorable:
+            for i, p in scorable:
                 pred, _scores = pick_static(p["prompt"], routers)
-                predictions[p["prompt"]] = pred
-        else:
-            predictions = pick_claude_batch(
-                [p["prompt"] for p in scorable], routers, args.model, args.concurrency, args.timeout
+                predictions[i] = pred
+        elif args.mode == "claude":
+            by_prompt_text = pick_claude_batch(
+                [p["prompt"] for _, p in scorable], routers, args.model, args.concurrency, args.timeout
             )
+            predictions = {i: by_prompt_text.get(p["prompt"]) for i, p in scorable}
+        else:  # predictions
+            predictions = {i: predictions_by_id.get(f"{ef.name}#{i}") for i, p in scorable}
 
         file_correct = 0
         file_violations = 0
-        for p in scorable:
+        for i, p in scorable:
             expected = p["expected_router"]
-            got = predictions.get(p["prompt"])
+            got = predictions.get(i)
             must_not_load = set(p.get("must_not_load", []) or [])
             hit = got == expected
             violation = got in must_not_load if got else False

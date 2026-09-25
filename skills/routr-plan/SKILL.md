@@ -1,6 +1,6 @@
 ---
 name: routr-plan
-description: "Plan before coding: brainstorm, PRD, stress-test ideas. Use when: new feature, spec, PRD, 'grill my plan', brainstorm, architecture decision, before big implementation. Not for: writing code now (→ routr-ship or routr-frontend)."
+description: "Plan before coding: brainstorm, PRD, stress-test ideas. Use when: new multi-screen feature, spec, PRD, 'grill my plan', brainstorm, architecture decision, before big implementation. Not for: writing code now (→ routr-ship); sketching UI layout or visuals (→ routr-frontend)."
 ---
 
 # routr-plan

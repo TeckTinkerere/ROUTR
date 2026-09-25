@@ -1,6 +1,6 @@
 ---
 name: routr-debug
-description: "Find and fix bugs step by step (reproduce → locate → fix). Use when: errors, crashes, test failures, 'debug this', 'why is this broken', stack trace, root cause, flaky test. Not for: a known fix ready to commit (→ routr-ship); understanding code with no bug (→ routr-explore)."
+description: "Find and fix bugs: reproduce → locate → fix. Use when: errors, crashes, failing or flaky tests, stack trace, 'why is this broken', root cause. Not for: known fix ready to commit (→ routr-ship); no bug, just understanding (→ routr-explore); failed video render (→ routr-video)."
 ---
 
 # routr-debug
