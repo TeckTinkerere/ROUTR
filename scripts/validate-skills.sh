@@ -24,6 +24,13 @@
 # Checks 9-11 are implemented in scripts/_validate_helpers.py (stdlib-only
 # Python) because bash JSON/link parsing gets unreadable fast.
 #
+# Checks 1, 2, 5, 6, 7, 8 all loop over every skills/routr-* directory; doing
+# that in bash means forking grep/sed/wc/basename per skill (~0.15s per fork
+# on Windows/Git Bash * ~28 skills * several forks each == most of this
+# script's runtime). They're implemented as one `skills` subcommand in
+# scripts/_validate_helpers.py instead, called ONCE, so bash pays a single
+# python startup cost instead of forking per skill per check.
+#
 # Exits non-zero on any failure so it can gate CI.
 
 set -uo pipefail
@@ -44,34 +51,33 @@ trap 'rm -rf "$TMP_DIR"' EXIT
 
 PYTHON="$(command -v python3 || command -v python || true)"
 if [ -z "$PYTHON" ]; then
-  echo "FAIL: no python3/python on PATH — checks 9-11 (links, eval JSON) skipped"
+  echo "FAIL: no python3/python on PATH — checks 1,2,5-11 (links, eval JSON, per-skill checks) skipped"
   fail=$((fail + 1))
 fi
 
+# Run checks 1, 2, 5, 6, 7, 8 in a single python pass. Output lines look like
+# "1:FAIL: msg" / "5:WARN: msg" — the leading "N:" says which section header
+# the line belongs under; emit_section() below strips it and prints the rest.
+"$PYTHON" scripts/_validate_helpers.py skills skills "$ROUTER_TREE" "$RESOLUTION" > "$TMP_DIR/check_skills_out.txt" 2>&1 || true
+
+emit_section() {
+  # $1 = check number to filter for
+  local n="$1"
+  local prefix="${n}:"
+  while IFS= read -r line; do
+    case "$line" in
+      "${prefix}FAIL:"*) fail=$((fail + 1)); echo "${line#"$prefix"}" ;;
+      "${prefix}WARN:"*) warn=$((warn + 1)); echo "${line#"$prefix"}" ;;
+    esac
+  done < "$TMP_DIR/check_skills_out.txt"
+}
+
 echo "== 1. Frontmatter name == folder name =="
-for dir in skills/*/; do
-  name=$(basename "$dir")
-  skill_md="${dir}SKILL.md"
-  [ -f "$skill_md" ] || continue
-  fm_name=$(grep -m1 '^name:' "$skill_md" | sed 's/^name:[[:space:]]*//' | tr -d '"' | tr -d '\r')
-  if [ "$fm_name" != "$name" ]; then
-    note_fail "$skill_md: frontmatter name '$fm_name' != folder name '$name'"
-  fi
-done
+emit_section 1
 
 echo
 echo "== 2. Router descriptions contain 'Use when:' =="
-for dir in skills/routr-*/; do
-  name=$(basename "$dir")
-  skill_md="${dir}SKILL.md"
-  [ -f "$skill_md" ] || continue
-  case "$name" in
-    routr-catalog) continue ;; # reference skill, not a situational router
-  esac
-  if ! grep -q 'Use when:' "$skill_md"; then
-    note_fail "$skill_md: description missing 'Use when:' trigger phrase"
-  fi
-done
+emit_section 2
 
 echo
 echo "== 3. Child-skill references resolve to the registry =="
@@ -141,74 +147,19 @@ fi
 
 echo
 echo "== 5. Every router is in routr-router's tree and resolution.md precedence =="
-for dir in skills/routr-*/; do
-  name=$(basename "$dir")
-  case "$name" in
-    routr-router|routr-catalog|routr-depth-*) continue ;;
-  esac
-  if ! grep -q -- "$name\$\|$name \|$name)" "$ROUTER_TREE" 2>/dev/null && ! grep -q "$name" "$ROUTER_TREE"; then
-    note_fail "$name: not referenced anywhere in $ROUTER_TREE decision tree"
-  fi
-  if ! grep -q "\`$name\`" "$RESOLUTION"; then
-    note_warn "$name: not listed in $RESOLUTION router precedence list"
-  fi
-done
+emit_section 5
 
 echo
 echo "== 6. Description length budget (FAIL > 320 chars, WARN > 280 chars) =="
-for dir in skills/routr-*/; do
-  name=$(basename "$dir")
-  skill_md="${dir}SKILL.md"
-  [ -f "$skill_md" ] || continue
-  desc=$(grep -m1 '^description:' "$skill_md" | sed 's/^description:[[:space:]]*//' | tr -d '\r')
-  # strip one layer of surrounding quotes, if present
-  desc="${desc%\"}"
-  desc="${desc#\"}"
-  len=${#desc}
-  if [ "$len" -gt 320 ]; then
-    note_fail "$skill_md: description is $len chars (> 320 limit)"
-  elif [ "$len" -gt 280 ]; then
-    note_warn "$skill_md: description is $len chars (> 280 soft budget)"
-  fi
-done
+emit_section 6
 
 echo
 echo "== 7. Situational router descriptions contain 'Not for:' =="
-for dir in skills/routr-*/; do
-  name=$(basename "$dir")
-  skill_md="${dir}SKILL.md"
-  [ -f "$skill_md" ] || continue
-  case "$name" in
-    routr-router|routr-catalog|routr-depth-*) continue ;;
-  esac
-  if ! grep -q 'Not for:' "$skill_md"; then
-    note_fail "$skill_md: description missing 'Not for:' boundary phrase"
-  fi
-done
+emit_section 7
 
 echo
 echo "== 8. SKILL.md line cap (routers <= 150, depth fallbacks <= 200) =="
-for dir in skills/routr-*/; do
-  name=$(basename "$dir")
-  skill_md="${dir}SKILL.md"
-  [ -f "$skill_md" ] || continue
-  case "$name" in
-    routr-catalog) continue ;; # catalog has its own (unchecked here) budget
-  esac
-  lines=$(wc -l < "$skill_md" | tr -d ' ')
-  case "$name" in
-    routr-depth-*)
-      if [ "$lines" -gt 200 ]; then
-        note_fail "$skill_md: $lines lines (> 200 line cap for depth fallbacks)"
-      fi
-      ;;
-    *)
-      if [ "$lines" -gt 150 ]; then
-        note_fail "$skill_md: $lines lines (> 150 line cap for routers)"
-      fi
-      ;;
-  esac
-done
+emit_section 8
 
 echo
 echo "== 9. Relative markdown links in skills/**.md resolve =="
