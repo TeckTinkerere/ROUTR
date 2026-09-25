@@ -1,0 +1,38 @@
+{
+  "skill_name": "routr-mobile",
+  "description": "Expo/React Native workflow adherence — screens, navigation, native UI",
+  "prompts": [
+    {
+      "prompt": "build the settings screen in our Expo app",
+      "expected_router": "routr-mobile"
+    },
+    {
+      "prompt": "set up React Native navigation with a bottom tab bar",
+      "expected_router": "routr-mobile"
+    },
+    {
+      "prompt": "EAS build is failing for iOS, need a native screen fix too",
+      "expected_router": "routr-mobile"
+    },
+    {
+      "prompt": "add push notifications support for Android",
+      "expected_router": "routr-mobile"
+    },
+    {
+      "prompt": "make this list scroll natively with pull-to-refresh on our Expo app",
+      "expected_router": "routr-mobile"
+    },
+    {
+      "prompt": "build the same settings page but for our web dashboard, no mobile app involved",
+      "expected_router": "routr-frontend",
+      "must_not_load": ["routr-mobile"],
+      "boundary": "mobile vs frontend — web-only UI"
+    },
+    {
+      "prompt": "submit the built app to TestFlight and the Play Store",
+      "expected_router": "routr-deploy",
+      "must_not_load": ["routr-mobile"],
+      "boundary": "mobile vs deploy — EAS submit/release step, not building the screen"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 ---
 name: routr-frontend
-description: "Build or redesign UI (pages, components, design system). Use when: new screen, landing page, layout, Tailwind, shadcn, 'make it look good', redesign, hero section, dashboard UI. Not for: animating existing UI (→ routr-motion); a visual bug from broken logic (→ routr-debug)."
+description: "Build or redesign UI (pages, components, design system). Use when: new screen, landing page, layout, Tailwind, shadcn, 'make it look good', redesign, dashboard UI. Not for: animation (→ routr-motion); logic bugs (→ routr-debug); multi-screen feature with no spec (→ routr-plan)."
 ---
 
 # routr-frontend

@@ -1,0 +1,38 @@
+{
+  "skill_name": "routr-marketing",
+  "description": "Marketing copy, SEO, and growth content workflow adherence",
+  "prompts": [
+    {
+      "prompt": "rewrite the landing page copy and improve its SEO",
+      "expected_router": "routr-marketing"
+    },
+    {
+      "prompt": "write meta tags and og:image copy for our blog posts",
+      "expected_router": "routr-marketing"
+    },
+    {
+      "prompt": "draft an App Store listing description that converts better",
+      "expected_router": "routr-marketing"
+    },
+    {
+      "prompt": "we need ad copy for a CRO test on the pricing page",
+      "expected_router": "routr-marketing"
+    },
+    {
+      "prompt": "write a blog post announcing the new feature for growth",
+      "expected_router": "routr-marketing"
+    },
+    {
+      "prompt": "build the actual landing page UI, the copy is already written",
+      "expected_router": "routr-frontend",
+      "must_not_load": ["routr-marketing"],
+      "boundary": "marketing vs frontend — building the UI, not writing copy/SEO"
+    },
+    {
+      "prompt": "the SEO copy is done, add a subtle fade-in animation to the hero headline",
+      "expected_router": "routr-motion",
+      "must_not_load": ["routr-marketing"],
+      "boundary": "marketing vs motion — animation polish on existing UI, not copy/SEO"
+    }
+  ]
+}

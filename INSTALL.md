@@ -124,7 +124,7 @@ npx skills update TeckTinkerere/ROUTR -g -y
 Remove all v2 routers:
 
 ```bash
-npx skills remove routr-router routr-catalog routr-debug routr-ship routr-plan routr-test routr-review routr-refactor routr-deploy routr-database routr-qa routr-security routr-explore routr-integrate routr-agents routr-frontend routr-motion routr-mobile routr-marketing routr-ai routr-video routr-depth-debug routr-depth-frontend routr-depth-plan routr-depth-ship routr-depth-test -g -y
+npx skills remove routr-router routr-catalog routr-debug routr-ship routr-plan routr-test routr-review routr-refactor routr-deploy routr-database routr-qa routr-security routr-perf routr-explore routr-integrate routr-agents routr-frontend routr-motion routr-mobile routr-marketing routr-ai routr-video routr-depth-debug routr-depth-frontend routr-depth-plan routr-depth-ship routr-depth-test routr-depth-security -g -y
 ```
 
 ---
@@ -137,6 +137,31 @@ npx skills remove routr-router routr-catalog routr-debug routr-ship routr-plan r
 | Old playbook names | Use `routr-*` (old names removed in v2) |
 | Skill not in menu | Restart agent; `-g --copy` |
 | Child missing | `routr-catalog/references/skill-registry.md` |
+
+---
+
+## Keep installed copies in sync
+
+Installed skill folders (`~/.claude/skills`, `~/.agents/skills`, etc.) can drift from this repo after you pull updates. Check and fix drift:
+
+```bash
+# Dry run — report what's out of date, no changes made
+bash scripts/sync-installed.sh
+
+# Apply — copy the repo's routr-* skills over the installed copies
+bash scripts/sync-installed.sh --apply
+
+# Apply + prune legacy *-playbook stubs (moved to a dated backup, never deleted)
+bash scripts/sync-installed.sh --apply --prune-legacy
+```
+
+PowerShell equivalent:
+
+```powershell
+scripts\sync-installed.ps1 -Apply -PruneLegacy
+```
+
+Run this after `npx skills update` or after pulling repo changes, before trusting a router's behavior matches what's in this repo.
 
 ---
 

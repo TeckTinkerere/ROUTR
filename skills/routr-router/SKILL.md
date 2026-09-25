@@ -33,6 +33,7 @@ User intent?
 ├─ Write tests / TDD / Playwright              → routr-test
 ├─ Review PR / code review                     → routr-review
 ├─ Security audit / vuln                       → routr-security
+├─ Slow page / bundle size / high INP / leak   → routr-perf
 ├─ Refactor / tech debt                        → routr-refactor
 ├─ Deploy / Vercel / go live                   → routr-deploy
 ├─ SQL / Supabase / migrations                 → routr-database
@@ -66,6 +67,7 @@ Run **sequentially** — finish one, then re-route for the next (see each router
 | Expo app + store listing | `routr-mobile` → `routr-marketing` → `routr-deploy` |
 | Fix bug in production | `routr-debug` → `routr-ship` → `routr-deploy` |
 | Deploy + verify | `routr-deploy` → `routr-qa` |
+| Fix a slow page/endpoint | `routr-perf` → `routr-ship` → `routr-deploy` |
 
 ## After routing
 
