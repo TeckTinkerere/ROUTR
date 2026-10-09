@@ -1,0 +1,255 @@
+{
+  "skill_name": "routr-router",
+  "description": "Held-out multi-intent route plans (not for tuning): first router plus expected chain; companion documented only",
+  "prompts": [
+    {
+      "prompt": "npm audit flagged nothing but I pasted our /api/export handler into a scanner and it says user-supplied table names go straight into the query. Confirm it's actually exploitable, patch it, and then roll the patch out to prod today.",
+      "expected_router": "routr-security",
+      "expected_chain": [
+        "routr-security",
+        "routr-ship",
+        "routr-deploy"
+      ],
+      "boundary": "audit finding with exploit check, then commit the patch, then release"
+    },
+    {
+      "prompt": "Orders list query takes 6s once a tenant has >50k rows. EXPLAIN shows a seq scan on order_items. I want the right index added via a migration, committed, and the migration run on production tonight.",
+      "expected_router": "routr-database",
+      "expected_chain": [
+        "routr-database",
+        "routr-ship",
+        "routr-deploy"
+      ],
+      "boundary": "schema change authored first, then commit, then run in prod"
+    },
+    {
+      "prompt": "our expo app is basically done (onboarding, feed, profile all working). need the App Store blurb + screenshots text written and then get a TestFlight build out to the beta testers",
+      "expected_router": "routr-mobile",
+      "expected_chain": [
+        "routr-mobile",
+        "routr-marketing",
+        "routr-deploy"
+      ],
+      "boundary": "app work, then store listing copy, then store release"
+    },
+    {
+      "prompt": "PR #318 touches the session refresh logic in middleware.ts. Go through it, make sure nothing about token handling is off, and then land the corrections on the branch.",
+      "expected_router": "routr-review",
+      "expected_chain": [
+        "routr-review",
+        "routr-security",
+        "routr-ship"
+      ],
+      "boundary": "review diff first, token handling needs a security pass, then commit fixes"
+    },
+    {
+      "prompt": "Dashboard feels sluggish and I suspect the /api/metrics route is firing a query per widget (N+1?). Profile it, sort out the queries behind it, and commit whatever you change.",
+      "expected_router": "routr-perf",
+      "expected_chain": [
+        "routr-perf",
+        "routr-database",
+        "routr-ship"
+      ],
+      "acceptable_chains": [
+        [
+          "routr-perf",
+          "routr-ship"
+        ]
+      ],
+      "boundary": "measure the slowness first, hand the query fix to database, then commit"
+    },
+    {
+      "prompt": "I want to build a support chatbot for our docs from nothing: not sure about the scope, retrieval vs. fine-tune, and then the whole streaming chat panel too.",
+      "expected_router": "routr-plan",
+      "expected_chain": [
+        "routr-plan",
+        "routr-ai",
+        "routr-frontend"
+      ],
+      "boundary": "no spec: plan first, then AI SDK wiring, then chat UI"
+    },
+    {
+      "prompt": "Add a 'summarize this ticket' feature to the admin app using GPT. Right now the ticket page is just a table, there's nowhere to trigger it or show the result.",
+      "expected_router": "routr-ai",
+      "expected_chain": [
+        "routr-ai",
+        "routr-frontend"
+      ],
+      "boundary": "AI feature first; the missing trigger/result UI is an implied second step"
+    },
+    {
+      "prompt": "Landing page for our CLI tool please. Hero should have a looping terminal demo, we don't have any footage at all yet.",
+      "expected_router": "routr-frontend",
+      "expected_chain": [
+        "routr-frontend",
+        "routr-video"
+      ],
+      "boundary": "page first; the missing demo asset is an implied video step"
+    },
+    {
+      "prompt": "pushed the branch, get a Vercel preview up and then click through signup + password reset on it to make sure nothing's busted",
+      "expected_router": "routr-deploy",
+      "expected_chain": [
+        "routr-deploy",
+        "routr-qa"
+      ],
+      "boundary": "deploy, then browser check of the live preview"
+    },
+    {
+      "prompt": "Write the Product Hunt launch copy and tagline, and cut a 30 second teaser to go with it.",
+      "expected_router": "routr-marketing",
+      "expected_chain": [
+        "routr-marketing",
+        "routr-video"
+      ],
+      "boundary": "copy first, teaser video uses the messaging"
+    },
+    {
+      "prompt": "Design the bookings schema (rooms, reservations, overlapping-slot constraint) and then set up the Drizzle client in our Next app so the API routes can use it.",
+      "expected_router": "routr-database",
+      "expected_chain": [
+        "routr-database",
+        "routr-integrate"
+      ],
+      "boundary": "schema before client wiring"
+    },
+    {
+      "prompt": "No idea how the job retry queue in worker/queue.ts decides to requeue, walk me through it. I have a feeling that's why we get duplicate emails, so dig into that after.",
+      "expected_router": "routr-explore",
+      "expected_chain": [
+        "routr-explore",
+        "routr-debug"
+      ],
+      "boundary": "understanding first, then a bug hunt on that area"
+    },
+    {
+      "prompt": "services/OrdersService.ts is 900 lines of everything. Split it into sensible modules, and I'd like the result looked over before it goes anywhere.",
+      "expected_router": "routr-refactor",
+      "expected_chain": [
+        "routr-refactor",
+        "routr-review"
+      ],
+      "boundary": "restructure then review the diff"
+    },
+    {
+      "prompt": "Wire up the Stripe customer portal session endpoint and put a 'Manage billing' button on the account page.",
+      "expected_router": "routr-integrate",
+      "expected_chain": [
+        "routr-integrate",
+        "routr-frontend"
+      ],
+      "boundary": "library wiring, then the UI that uses it"
+    },
+    {
+      "prompt": "The pricing cards stutter when they animate in on cheap android phones. Make it silky.",
+      "expected_router": "routr-perf",
+      "expected_chain": [
+        "routr-perf",
+        "routr-motion"
+      ],
+      "must_not_load": [
+        "routr-ship"
+      ],
+      "boundary": "diagnose before polish: measure why it janks before touching the animation"
+    },
+    {
+      "prompt": "Write Playwright specs for the checkout flow, and after that open the staging site and sanity check it by hand in a browser.",
+      "expected_router": "routr-test",
+      "expected_chain": [
+        "routr-test",
+        "routr-qa"
+      ],
+      "boundary": "tests first, then the browser smoke test; qa first would skip the test authoring"
+    },
+    {
+      "prompt": "Here's PR #77 (adds CSV import). Tell me what's wrong with it, then fix it.",
+      "expected_router": "routr-review",
+      "expected_chain": [
+        "routr-review",
+        "routr-ship"
+      ],
+      "boundary": "review before fix; fixing without findings is the naive order"
+    },
+    {
+      "prompt": "Need an onboarding wizard for new workspaces. Nobody has written a spec and there are like 5 screens, so figure out the flow and then build it.",
+      "expected_router": "routr-plan",
+      "expected_chain": [
+        "routr-plan",
+        "routr-frontend"
+      ],
+      "acceptable_chains": [
+        [
+          "routr-frontend"
+        ]
+      ],
+      "boundary": "plan before build for a multi-screen feature with no spec"
+    },
+    {
+      "prompt": "Fix the off-by-one in utils/paginate.ts, run the tests, and commit it. We'll deploy later this week, not now.",
+      "expected_router": "routr-ship",
+      "expected_chain": [
+        "routr-ship"
+      ],
+      "must_not_load": [
+        "routr-deploy"
+      ],
+      "boundary": "single intent: deploy is explicitly deferred"
+    },
+    {
+      "prompt": "How does our CI deploy pipeline decide which env to push to? Just explain it, I'm not changing anything and not deploying.",
+      "expected_router": "routr-explore",
+      "expected_chain": [
+        "routr-explore"
+      ],
+      "must_not_load": [
+        "routr-deploy",
+        "routr-ship"
+      ],
+      "boundary": "explain only; deploy is the topic, not a task"
+    },
+    {
+      "prompt": "Redo the account settings page layout in Tailwind and shadcn. A promo video may come later but that's a separate thing.",
+      "expected_router": "routr-frontend",
+      "expected_chain": [
+        "routr-frontend"
+      ],
+      "must_not_load": [
+        "routr-video"
+      ],
+      "boundary": "single UI build; video is mentioned as a possible later concern"
+    },
+    {
+      "prompt": "Build the Expo feed screen with infinite scroll. The list janks badly on older phones, so keep it smooth.",
+      "expected_router": "routr-mobile",
+      "expected_chain": [
+        "routr-mobile"
+      ],
+      "companion": "routr-perf",
+      "must_not_load": [
+        "routr-motion"
+      ],
+      "boundary": "mobile build; jank signal calls the perf checklist, not a chain step"
+    },
+    {
+      "prompt": "Create the projects and project_members tables for our multi-tenant app, with RLS so members only see their own org's rows.",
+      "expected_router": "routr-database",
+      "expected_chain": [
+        "routr-database"
+      ],
+      "companion": "routr-security",
+      "must_not_load": [
+        "routr-ship"
+      ],
+      "boundary": "schema work; multi-tenant RLS signal calls the security checklist"
+    },
+    {
+      "prompt": "Set up the streamText route for our recipe assistant and add a scoring harness that grades answer quality against a golden set.",
+      "expected_router": "routr-ai",
+      "expected_chain": [
+        "routr-ai"
+      ],
+      "companion": "routr-agents",
+      "boundary": "AI SDK wiring; the quality-scoring harness is the agents checklist"
+    }
+  ]
+}

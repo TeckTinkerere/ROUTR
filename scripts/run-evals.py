@@ -112,7 +112,8 @@ EXPORT_INSTRUCTIONS = (
     "Each menu entry lists `next` (routers it usually hands off to) and `companions` "
     "(checklists that run INSIDE that router's step when their signal fires). Add a `next` "
     "router to the chain only when the request also asks for that job; never add a "
-    "companion as a chain step."
+    "companion as a chain step. If the file has a `route_guide`, compose chains with its "
+    "`composition_rules` and `step_signals`, and reuse a matching entry in `plans`."
 )
 
 DEFAULT_MODEL = "claude-haiku-4-5-20251001"
@@ -285,6 +286,42 @@ def load_route_hints() -> dict:
     return hints
 
 
+def load_route_guide() -> dict:
+    """Composition rules, step signals and known plans from routes.json.
+
+    This is what routr-router reads when it composes a multi-router plan, so
+    model evals see the same guidance (disable with --no-route-guide to
+    measure its effect).
+    """
+    try:
+        data = json.loads(ROUTES_JSON.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return {
+        "composition_rules": data.get("composition_rules", []),
+        "step_signals": data.get("step_signals", []),
+        "plans": [
+            {"when": c.get("when", ""), "steps": c.get("steps", [])}
+            for c in data.get("chains", []) or []
+            if isinstance(c, dict)
+        ],
+    }
+
+
+def format_route_guide(guide: dict) -> str:
+    if not guide:
+        return ""
+    lines = ["Composing a route plan:"]
+    lines += [f"- {r}" for r in guide.get("composition_rules", [])]
+    if guide.get("step_signals"):
+        lines.append("Step signals (job -> router):")
+        lines += [f"- {x['signal']} -> {x['router']}" for x in guide["step_signals"]]
+    if guide.get("plans"):
+        lines.append("Known plans:")
+        lines += [f"- {x['when']}: {' > '.join(x['steps'])}" for x in guide["plans"]]
+    return "\n".join(lines)
+
+
 def load_handoffs() -> dict:
     try:
         data = json.loads(ROUTES_JSON.read_text(encoding="utf-8"))
@@ -336,7 +373,7 @@ def chain_scores(expected: list, got, acceptable: list | None = None) -> tuple:
 # claude mode
 # --------------------------------------------------------------------------
 
-def build_menu(routers: list) -> str:
+def build_menu(routers: list, route_guide: bool = True) -> str:
     hints = load_route_hints()
     lines = []
     for r in routers:
@@ -349,6 +386,10 @@ def build_menu(routers: list) -> str:
                 f"{c['name']} when {c['signal']}" for c in h["companions"]
             ) + "]"
         lines.append(line)
+    if route_guide:
+        guide_text = format_route_guide(load_route_guide())
+        if guide_text:
+            lines += ["", guide_text]
     return "\n".join(lines)
 
 
@@ -393,8 +434,10 @@ def ask_claude(prompt: str, menu: str, model: str, timeout: int) -> tuple | None
     return None
 
 
-def pick_claude_batch(prompts: list, routers: list, model: str, concurrency: int, timeout: int) -> dict:
-    menu = build_menu(routers)
+def pick_claude_batch(
+    prompts: list, routers: list, model: str, concurrency: int, timeout: int, route_guide: bool = True
+) -> dict:
+    menu = build_menu(routers, route_guide=route_guide)
     results = {}
     with ThreadPoolExecutor(max_workers=max(1, concurrency)) as ex:
         futures = {
@@ -424,6 +467,11 @@ def main() -> int:
     parser.add_argument("--concurrency", type=int, default=4, help="parallel claude -p calls")
     parser.add_argument("--timeout", type=int, default=60, help="per-call timeout (seconds) for --mode claude")
     parser.add_argument("--file", help="run only this eval file")
+    parser.add_argument(
+        "--no-route-guide",
+        action="store_true",
+        help="omit routes.json composition rules, step signals and plans from model-facing menus (ablation)",
+    )
     parser.add_argument("--json", dest="json_path", help="write machine-readable results here")
     parser.add_argument("--min-accuracy", type=float, default=None, help="exit 1 if overall accuracy is below this")
     parser.add_argument(
@@ -485,7 +533,12 @@ def main() -> int:
                     export_prompts.append({"id": f"{ef.name}#{i}", "prompt": p["prompt"]})
         Path(args.export_prompts).write_text(
             json.dumps(
-                {"instructions": EXPORT_INSTRUCTIONS, "menu": menu, "prompts": export_prompts},
+                {
+                    "instructions": EXPORT_INSTRUCTIONS,
+                    "menu": menu,
+                    **({} if args.no_route_guide else {"route_guide": load_route_guide()}),
+                    "prompts": export_prompts,
+                },
                 indent=2,
             ),
             encoding="utf-8",
@@ -549,6 +602,7 @@ def main() -> int:
     chain_prefix = 0
     handoffs = load_handoffs()
     misses = []
+    chain_misses = []
 
     per_file_rows = []
 
@@ -575,7 +629,8 @@ def main() -> int:
                 predictions[i] = (pred, static_chain(p["prompt"], pred, handoffs))
         elif args.mode == "claude":
             by_prompt_text = pick_claude_batch(
-                [p["prompt"] for _, p in scorable], routers, args.model, args.concurrency, args.timeout
+                [p["prompt"] for _, p in scorable], routers, args.model, args.concurrency, args.timeout,
+                    route_guide=not args.no_route_guide,
             )
             predictions = {i: by_prompt_text.get(p["prompt"]) for i, p in scorable}
         else:  # predictions
@@ -601,6 +656,10 @@ def main() -> int:
                 chain_exact += int(exact)
                 chain_prefix += int(prefix)
             violation = got in must_not_load if got else False
+            if exact is False:
+                chain_misses.append(
+                    {"file": ef.name, "prompt": p["prompt"], "expected": expected_chain, "got": got_chain}
+                )
 
             if hit:
                 file_correct += 1
@@ -659,6 +718,13 @@ def main() -> int:
         print(f"Chain prefix-match: {chain_prefix}/{total_chain} ({chain_prefix / total_chain * 100:.1f}%)")
     print(f"Prompts skipped (no expected_router): {total_skipped}")
     print(f"must_not_load violations: {total_violations}")
+
+    if chain_misses:
+        print()
+        print("Chain misses:")
+        for m in chain_misses:
+            got_txt = " > ".join(m["got"]) if m["got"] else None
+            print(f"  - {m['file']}: \"{m['prompt']}\" expected={' > '.join(m['expected'])} got={got_txt}")
 
     if misses:
         print()

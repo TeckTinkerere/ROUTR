@@ -1,6 +1,77 @@
 {
   "version": 1,
   "max_chain": 3,
+  "step_signals": [
+    {
+      "signal": "plan, spec, PRD, multi-screen feature with no spec",
+      "router": "routr-plan"
+    },
+    {
+      "signal": "find the cause, why is it broken, error, crash",
+      "router": "routr-debug"
+    },
+    {
+      "signal": "slow, find out why it's slow, frame drops, bundle, leak",
+      "router": "routr-perf"
+    },
+    {
+      "signal": "audit, vulnerabilities, is this secure",
+      "router": "routr-security"
+    },
+    {
+      "signal": "review the PR or diff",
+      "router": "routr-review"
+    },
+    {
+      "signal": "migration, schema, RLS, query design",
+      "router": "routr-database"
+    },
+    {
+      "signal": "build or redesign UI, page, screen, chat UI",
+      "router": "routr-frontend"
+    },
+    {
+      "signal": "AI SDK wiring, streaming chat, RAG, tool calling",
+      "router": "routr-ai"
+    },
+    {
+      "signal": "write tests, TDD",
+      "router": "routr-test"
+    },
+    {
+      "signal": "fix it, patch, commit, open a PR, merge",
+      "router": "routr-ship"
+    },
+    {
+      "signal": "deploy, release, get it live, push to prod, submit to store",
+      "router": "routr-deploy"
+    },
+    {
+      "signal": "check it in a real browser, smoke test the live site",
+      "router": "routr-qa"
+    },
+    {
+      "signal": "animate, smooth it out, polish motion",
+      "router": "routr-motion"
+    },
+    {
+      "signal": "make a video, demo or launch clip, video asset",
+      "router": "routr-video"
+    },
+    {
+      "signal": "launch copy, SEO, store listing, announce it",
+      "router": "routr-marketing"
+    }
+  ],
+  "composition_rules": [
+    "Make one step per distinct job the request asks for, in the order the work must happen: plan -> diagnose or build -> fix and commit (routr-ship) -> release (routr-deploy) -> verify live (routr-qa) or promote (routr-video, routr-marketing).",
+    "A fix that must go live passes through routr-ship before routr-deploy. Never go straight from routr-debug, routr-perf or routr-security to routr-deploy.",
+    "Diagnose before you polish or fix: routr-perf before routr-motion, routr-review before routr-ship, routr-test before routr-qa, routr-plan before building.",
+    "Add an unstated step only when the deliverable cannot exist without it: an AI chat feature added to an app with no chat UI yet needs routr-frontend; a page that embeds a video nobody has made yet needs routr-video.",
+    "Work the user defers ('deploy later', 'not now', 'we'll handle X separately') is not a step.",
+    "A companion is never a step. If a second concern fits a companion signal of the active router, keep a one-router plan and run the companion's checklist inside it.",
+    "Each next step must appear in the previous router's handoff list, and a plan has at most max_chain steps."
+  ],
   "routers": {
     "routr-agents": {
       "handoff": [
@@ -236,7 +307,7 @@
   "chains": [
     {
       "id": "new-feature",
-      "when": "new feature end to end, no spec yet",
+      "when": "build a new multi-screen feature end to end with no spec yet",
       "steps": [
         "routr-plan",
         "routr-frontend",
@@ -250,7 +321,7 @@
     },
     {
       "id": "ai-chat-product",
-      "when": "AI chat product from scratch",
+      "when": "a new AI chat product from scratch: plan it, wire the AI SDK, build the chat UI",
       "steps": [
         "routr-plan",
         "routr-ai",
@@ -263,7 +334,7 @@
     },
     {
       "id": "ai-chat-ui",
-      "when": "AI feature plus its chat UI",
+      "when": "add AI chat or streaming responses to an app that has no chat UI for it yet",
       "steps": [
         "routr-ai",
         "routr-frontend"
@@ -274,7 +345,7 @@
     },
     {
       "id": "ship-and-brag",
-      "when": "ship a change then make a launch video",
+      "when": "ship a change, then make a launch video (and launch copy)",
       "steps": [
         "routr-ship",
         "routr-video",
@@ -287,7 +358,7 @@
     },
     {
       "id": "expo-store-launch",
-      "when": "Expo app plus store listing and release",
+      "when": "build an Expo app screen, write the store listing, then submit the release",
       "steps": [
         "routr-mobile",
         "routr-marketing",
@@ -300,7 +371,7 @@
     },
     {
       "id": "prod-bugfix",
-      "when": "bug in production",
+      "when": "production bug: find the cause, fix and commit, then get it live",
       "steps": [
         "routr-debug",
         "routr-ship",
@@ -313,7 +384,7 @@
     },
     {
       "id": "deploy-verify",
-      "when": "deploy then check the live preview",
+      "when": "deploy, then check the live preview in a real browser",
       "steps": [
         "routr-deploy",
         "routr-qa"
@@ -324,7 +395,7 @@
     },
     {
       "id": "perf-fix",
-      "when": "slow page or endpoint",
+      "when": "slow page or endpoint: find out why, fix and commit, then release",
       "steps": [
         "routr-perf",
         "routr-ship",
@@ -337,7 +408,7 @@
     },
     {
       "id": "janky-animation",
-      "when": "janky animation: diagnose then polish",
+      "when": "janky or frame-dropping animation: diagnose the cause, then smooth the motion",
       "steps": [
         "routr-perf",
         "routr-motion"
@@ -348,7 +419,7 @@
     },
     {
       "id": "landing-with-video",
-      "when": "landing page with an embedded video",
+      "when": "build a page that embeds a demo or hero video that has not been made yet",
       "steps": [
         "routr-frontend",
         "routr-video"
@@ -359,7 +430,7 @@
     },
     {
       "id": "test-then-qa",
-      "when": "write tests then smoke test in the browser",
+      "when": "write tests, then smoke test the app in the browser",
       "steps": [
         "routr-test",
         "routr-qa"
@@ -370,7 +441,7 @@
     },
     {
       "id": "security-fix",
-      "when": "audit then fix findings and release",
+      "when": "security audit, fix and commit the findings, then release",
       "steps": [
         "routr-security",
         "routr-ship",
@@ -383,7 +454,7 @@
     },
     {
       "id": "db-migration",
-      "when": "write a migration then release it",
+      "when": "write a migration, commit it, then release",
       "steps": [
         "routr-database",
         "routr-ship",
@@ -396,7 +467,7 @@
     },
     {
       "id": "review-fix",
-      "when": "review a PR then fix the findings",
+      "when": "review a PR, then fix and commit the findings",
       "steps": [
         "routr-review",
         "routr-ship"
