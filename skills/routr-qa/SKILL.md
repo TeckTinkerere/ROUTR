@@ -72,6 +72,15 @@ Visual → `routr-frontend` / `routr-motion`. a11y → `web-design-guidelines`.
 **Verified:** yes/no
 ```
 
+## Companion checklist
+
+Read only when `routr-deploy` names you as companion (user asked to verify the deployed preview). No bootstrap, no children.
+
+- [ ] Open the actual preview URL, not localhost
+- [ ] Walk the critical path once; screenshot or console log for any failure
+- [ ] Check the console and network tab for errors on first load
+- [ ] Report pass/fail per item to the active router; a bug found → `routr-debug`
+
 ## Handoff
 
 | Need | Router |

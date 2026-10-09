@@ -6,3 +6,4 @@
 | Backend API work | `routr-integrate` |
 | Store listing copy (ASO) | `routr-marketing` |
 | EAS build succeeded but app crashes | `routr-debug` |
+| EAS build / Expo config / Metro failing | stays `routr-mobile` (domain machinery); app logic bug → `routr-debug` |

@@ -85,6 +85,15 @@ No dedicated `routr-depth-perf` fallback exists — if every child skill above i
 **After:** … (number, same method) — delta
 ```
 
+## Companion checklist
+
+Read only when another router (`routr-frontend`, `routr-mobile`) names you as companion. No bootstrap, no children, no report.
+
+- [ ] State the budget or complaint (LCP/INP target, startup time, list FPS) before building
+- [ ] Heavy media: sized, lazy-loaded, modern format (images/video); mobile lists virtualized
+- [ ] No new large dependency without checking its bundle cost
+- [ ] Measure once after the build and report before/after; deeper work → hand back for a full `routr-perf` pass
+
 ## Handoff
 
 | Need | Router |
@@ -93,6 +102,7 @@ No dedicated `routr-depth-perf` fallback exists — if every child skill above i
 | Root cause of slowness is actually a bug (wrong query, infinite loop) | `routr-debug` |
 | Single query needs an index/rewrite | `routr-database` |
 | Deploy the fix | `routr-deploy` |
+| Janky animation: cause found, polish the fix | `routr-motion` |
 
 ## References
 

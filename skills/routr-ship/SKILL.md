@@ -65,6 +65,7 @@ Committed → **STOP and re-route** for the next stage (do not deploy or polish 
 
 - Motion polish → `routr-motion` (short pass)
 - Deploy → `routr-deploy`
+- Launch or brag video → `routr-video`
 
 ## References
 

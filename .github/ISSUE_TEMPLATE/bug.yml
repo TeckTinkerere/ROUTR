@@ -1,0 +1,53 @@
+name: Bug in scripts, validator or sync
+description: Something broke in scripts/, the eval runner, the validator, the installers or sync-installed.
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - scripts/validate-skills.sh
+        - scripts/run-evals.py
+        - scripts/sync-installed (sh or ps1)
+        - scripts/install-routr (sh or ps1)
+        - CI workflow
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Command you ran
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected vs actual
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Output
+      description: Paste the relevant output. Remove personal paths if you prefer.
+      render: text
+    validations:
+      required: false
+  - type: input
+    id: os
+    attributes:
+      label: OS and shell
+      placeholder: Windows 11 + PowerShell 7, macOS 15 + zsh, Ubuntu 24.04 + bash
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Python and Git versions
+      placeholder: Python 3.12, git 2.45
+    validations:
+      required: false

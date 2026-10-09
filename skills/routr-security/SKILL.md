@@ -68,6 +68,16 @@ Supabase/Postgres → `routr-database` + RLS. Firebase → rules auditors.
 **Verified:** yes/no — static analysis run, manual review of auth paths
 ```
 
+## Companion checklist
+
+Read only when another router (`routr-ship`, `routr-database`) names you as companion. No bootstrap, no children, no report.
+
+- [ ] Auth, session, or token handling in the diff: is every entry point checked server-side?
+- [ ] RLS/grants: policy exists for every operation, and no `USING (true)` or service-role key reaching the client
+- [ ] Multi-tenant data: every query scoped by tenant or user id
+- [ ] Secrets, keys, or payment data: none in code, logs, or client bundles
+- [ ] Report findings as a short list to the active router; do not take over the task
+
 ## Handoff
 
 | Need | Router |

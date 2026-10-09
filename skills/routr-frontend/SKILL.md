@@ -81,6 +81,7 @@ See design brief template in [workflow.md](./references/workflow.md).
 - Motion weak → `routr-motion`
 - Bug → `routr-debug`
 - Ship → `routr-ship`
+- Video asset for the page → `routr-video`
 
 ## References
 

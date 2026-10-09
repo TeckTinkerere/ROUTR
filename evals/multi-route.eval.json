@@ -1,0 +1,192 @@
+{
+  "skill_name": "routr-router",
+  "description": "Multi-intent requests: first router plus expected route plan (chain); companion noted but not scored yet",
+  "prompts": [
+    {
+      "prompt": "The checkout page throws a 500 in production. Find the cause, fix it, and get it live.",
+      "expected_router": "routr-debug",
+      "expected_chain": [
+        "routr-debug",
+        "routr-ship",
+        "routr-deploy"
+      ],
+      "boundary": "prod bugfix: unknown root cause starts at debug, never ship first"
+    },
+    {
+      "prompt": "Our product page is painfully slow. Find out why, fix it, and deploy the fix.",
+      "expected_router": "routr-perf",
+      "expected_chain": [
+        "routr-perf",
+        "routr-ship",
+        "routr-deploy"
+      ],
+      "boundary": "perf fix chain: measured slowness starts at perf, not debug"
+    },
+    {
+      "prompt": "Plan and build a settings page with profile, billing and notification tabs.",
+      "expected_router": "routr-plan",
+      "expected_chain": [
+        "routr-plan",
+        "routr-frontend"
+      ],
+      "acceptable_routers": [
+        "routr-frontend"
+      ],
+      "boundary": "new multi-screen feature: plan first, then build UI"
+    },
+    {
+      "prompt": "CI is failing on the cart tests and I don't know why. Work out the cause and then push the fix.",
+      "expected_router": "routr-debug",
+      "expected_chain": [
+        "routr-debug",
+        "routr-ship"
+      ],
+      "boundary": "unknown root cause then commit: debug before ship"
+    },
+    {
+      "prompt": "Commit this change, then make a launch video about it.",
+      "expected_router": "routr-ship",
+      "expected_chain": [
+        "routr-ship",
+        "routr-video"
+      ],
+      "boundary": "ship then brag video; video is the second step, not the first"
+    },
+    {
+      "prompt": "Deploy the preview to Vercel and then check the signup flow in a real browser.",
+      "expected_router": "routr-deploy",
+      "expected_chain": [
+        "routr-deploy",
+        "routr-qa"
+      ],
+      "boundary": "deploy-verify: qa starts only once the deployment is live"
+    },
+    {
+      "prompt": "Build a support chatbot with streaming responses and a polished chat UI.",
+      "expected_router": "routr-ai",
+      "expected_chain": [
+        "routr-ai",
+        "routr-frontend"
+      ],
+      "boundary": "AI SDK wiring first, UI second"
+    },
+    {
+      "prompt": "Add a Supabase migration for the orders table with row level security, then ship it.",
+      "expected_router": "routr-database",
+      "expected_chain": [
+        "routr-database",
+        "routr-ship"
+      ],
+      "companion": "routr-security",
+      "boundary": "migration then commit; RLS adds a security checklist"
+    },
+    {
+      "prompt": "Build the Expo onboarding screens, write the App Store listing, and submit the build with EAS.",
+      "expected_router": "routr-mobile",
+      "expected_chain": [
+        "routr-mobile",
+        "routr-marketing",
+        "routr-deploy"
+      ],
+      "boundary": "expo store launch: build, listing copy, then release"
+    },
+    {
+      "prompt": "Review this PR and then fix whatever you find.",
+      "expected_router": "routr-review",
+      "expected_chain": [
+        "routr-review",
+        "routr-ship"
+      ],
+      "boundary": "review findings are fixed by ship, not by review"
+    },
+    {
+      "prompt": "Audit our auth code for vulnerabilities, fix what you find, and release it.",
+      "expected_router": "routr-security",
+      "expected_chain": [
+        "routr-security",
+        "routr-ship",
+        "routr-deploy"
+      ],
+      "boundary": "security findings handed to ship, then deploy"
+    },
+    {
+      "prompt": "Build a launch landing page with a hero demo video, and keep LCP under 2.5 seconds.",
+      "expected_router": "routr-frontend",
+      "expected_chain": [
+        "routr-frontend",
+        "routr-video"
+      ],
+      "companion": "routr-perf",
+      "boundary": "page first, video asset second; a stated LCP budget calls the perf companion"
+    },
+    {
+      "prompt": "The hero animation drops frames on scroll. Work out what is causing it and then smooth it out.",
+      "expected_router": "routr-perf",
+      "expected_chain": [
+        "routr-perf",
+        "routr-motion"
+      ],
+      "boundary": "janky animation: diagnose (perf) then author the fix (motion)"
+    },
+    {
+      "prompt": "Write tests for the invoice module and then smoke test it in the browser.",
+      "expected_router": "routr-test",
+      "expected_chain": [
+        "routr-test",
+        "routr-qa"
+      ],
+      "boundary": "test files first, browser smoke test second"
+    },
+    {
+      "prompt": "Fix the typo in the pricing header, commit it, and push it live.",
+      "expected_router": "routr-ship",
+      "expected_chain": [
+        "routr-ship",
+        "routr-deploy"
+      ],
+      "boundary": "small scoped fix then go live"
+    },
+    {
+      "prompt": "Fix the Stripe webhook signature check and ship it.",
+      "expected_router": "routr-ship",
+      "expected_chain": [
+        "routr-ship"
+      ],
+      "companion": "routr-security",
+      "boundary": "single router; payments in the diff call the security companion"
+    },
+    {
+      "prompt": "Wire up a RAG support chatbot with the AI SDK and score its answer quality against a test set.",
+      "expected_router": "routr-ai",
+      "expected_chain": [
+        "routr-ai"
+      ],
+      "companion": "routr-agents",
+      "boundary": "AI SDK wiring is ai; the scoring harness is borrowed from the agents companion"
+    },
+    {
+      "prompt": "How does the auth middleware work?",
+      "expected_router": "routr-explore",
+      "expected_chain": [
+        "routr-explore"
+      ],
+      "boundary": "control: single intent, no chain"
+    },
+    {
+      "prompt": "The dropdown shows the wrong data when I select an item.",
+      "expected_router": "routr-debug",
+      "expected_chain": [
+        "routr-debug"
+      ],
+      "boundary": "control: single intent, no chain"
+    },
+    {
+      "prompt": "Write a PRD for the new analytics dashboard.",
+      "expected_router": "routr-plan",
+      "expected_chain": [
+        "routr-plan"
+      ],
+      "boundary": "control: single intent, no chain"
+    }
+  ]
+}

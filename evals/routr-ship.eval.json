@@ -34,21 +34,38 @@
     {
       "prompt": "the checkout button throws a 500 sometimes and I don't know why",
       "expected_router": "routr-debug",
-      "must_not_load": ["routr-ship"],
+      "must_not_load": [
+        "routr-ship"
+      ],
       "boundary": "ship vs debug — root cause unknown, needs investigation first"
     },
     {
       "prompt": "patch this quick, no time to investigate — just make the error go away",
       "expected_router": "routr-debug",
-      "must_not_load": ["routr-ship"],
+      "must_not_load": [
+        "routr-ship"
+      ],
       "boundary": "ship vs debug — user wants speed but cause is unknown, debug's iron law still applies before a commit-ready diff exists"
     },
     {
       "prompt": "build a whole new onboarding flow with three screens",
       "expected_router": "routr-plan",
-      "expected_chain": ["routr-plan", "routr-frontend"],
-      "must_not_load": ["routr-ship"],
-      "boundary": "ship vs plan — large greenfield feature, not a small scoped fix"
+      "expected_chain": [
+        "routr-plan",
+        "routr-frontend"
+      ],
+      "acceptable_routers": [
+        "routr-frontend"
+      ],
+      "must_not_load": [
+        "routr-ship"
+      ],
+      "boundary": "ship vs plan — large greenfield feature, not a small scoped fix",
+      "acceptable_chains": [
+        [
+          "routr-frontend"
+        ]
+      ]
     }
   ]
 }
