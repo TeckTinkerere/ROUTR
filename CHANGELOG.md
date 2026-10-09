@@ -46,21 +46,21 @@ Blind Haiku 4.5 runs (a subagent that could only read the exported prompts file)
 - All 19 situational `routr-*` routers brought to the authoring spec, with a registry validator (`scripts/validate-skills.sh`).
 - `routr-video` gained HeyGen, Remotion, product-marketing and data-driven configuration.
 
-## [2.0.0] - 2026-07-03
+## [2.0.0] - 2026-07-07
 
 ### Changed
 
 - **Breaking:** `*-playbook` skills renamed to `routr-*`. See `docs/naming.md`.
 - Skill registry and depth fallbacks (`routr-depth-debug`, `-frontend`, `-plan`, `-ship`, `-test`) introduced for when child skills are missing.
-- Router selection sharpened and `routr-router` slimmed to a decision tree (2026-07-07).
+- Router selection sharpened and `routr-router` slimmed to a decision tree.
 
 ### Removed
 
-- **Breaking:** deprecated `*-playbook` redirect stubs (2026-07-07).
+- **Breaking:** deprecated `*-playbook` redirect stubs.
 
 ### Added
 
-- GitHub Discussions welcome template (2026-07-07).
+- GitHub Discussions welcome template.
 
 ## [1.3.0] - 2026-07-01
 
