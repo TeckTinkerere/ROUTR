@@ -163,6 +163,8 @@ scripts\sync-installed.ps1 -Apply -PruneLegacy
 
 Run this after `npx skills update` or after pulling repo changes, before trusting a router's behavior matches what's in this repo.
 
+The sync scripts only touch `routr-*` folders in the skill roots they find. Repo-only files such as `.gitattributes`, `.editorconfig`, `.github/` and `CHANGELOG.md` are for contributors and are never copied to your machine, so you can ignore them.
+
 ---
 
 ## Per-agent paths

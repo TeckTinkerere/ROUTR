@@ -68,6 +68,7 @@ See PRD template in [workflow.md](./references/workflow.md).
 |------|-------|
 | Build UI | `routr-frontend` |
 | Implement fix | `routr-ship` |
+| AI SDK feature (chat, RAG, tools) | `routr-ai` |
 | Agent system | `routr-agents` |
 | Execute written plan | `executing-plans` (Obra) |
 

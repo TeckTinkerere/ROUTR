@@ -35,6 +35,12 @@
       "expected_router": "routr-frontend",
       "must_not_load": ["routr-agents"],
       "boundary": "agents vs frontend — UI chrome around an agent, not the agent's architecture"
+    },
+    {
+      "prompt": "my agent loop keeps drifting off task after a few tool calls and repeats the same step",
+      "expected_router": "routr-agents",
+      "must_not_load": ["routr-debug"],
+      "boundary": "domain machinery beats generic debug: the agent loop itself is failing"
     }
   ]
 }

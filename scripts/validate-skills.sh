@@ -20,8 +20,12 @@
 #       folder.
 #   11. Every situational router has >=1 eval prompt naming it as
 #       expected_router somewhere in evals/ (WARN only).
+#   12. skills/routr-catalog/references/routes.json parses; every router named
+#       exists; every situational router has an entry; chains <= max_chain;
+#       companion `section` anchors resolve to a heading (GitHub slug);
+#       handoff targets appear in the router's `## Handoff` section (WARN).
 #
-# Checks 9-11 are implemented in scripts/_validate_helpers.py (stdlib-only
+# Checks 9-12 are implemented in scripts/_validate_helpers.py (stdlib-only
 # Python) because bash JSON/link parsing gets unreadable fast.
 #
 # Checks 1, 2, 5, 6, 7, 8 all loop over every skills/routr-* directory; doing
@@ -51,7 +55,7 @@ trap 'rm -rf "$TMP_DIR"' EXIT
 
 PYTHON="$(command -v python3 || command -v python || true)"
 if [ -z "$PYTHON" ]; then
-  echo "FAIL: no python3/python on PATH — checks 1,2,5-11 (links, eval JSON, per-skill checks) skipped"
+  echo "FAIL: no python3/python on PATH — checks 1,2,5-12 (links, eval JSON, routes.json, per-skill checks) skipped"
   fail=$((fail + 1))
 fi
 
@@ -185,6 +189,19 @@ if [ -s "$TMP_DIR/check10_out.txt" ]; then
       *) echo "$line" ;;
     esac
   done < "$TMP_DIR/check10_out.txt"
+fi
+
+echo
+echo "== 12. routes.json: routers, chains, companions, handoff consistency =="
+"$PYTHON" scripts/_validate_helpers.py routes skills > "$TMP_DIR/check12_out.txt" 2>&1 || true
+if [ -s "$TMP_DIR/check12_out.txt" ]; then
+  while IFS= read -r line; do
+    case "$line" in
+      FAIL:*) fail=$((fail + 1)); echo "$line" ;;
+      WARN:*) warn=$((warn + 1)); echo "$line" ;;
+      *) echo "$line" ;;
+    esac
+  done < "$TMP_DIR/check12_out.txt"
 fi
 
 echo

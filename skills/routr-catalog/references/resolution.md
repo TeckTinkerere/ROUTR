@@ -57,6 +57,14 @@ When multiple `routr-*` skills could apply, use the **most specific** match:
 19. `routr-ai` — AI SDK apps
 20. `routr-video` — all video workflows
 
+### Tie-break: domain machinery beats generic debug
+
+If the thing failing is a domain's **own machinery** (a render pipeline, an agent loop, an AI SDK stream, an EAS build, a migration runner), the domain router owns it and uses its own gotchas. It hands to `routr-debug` only if the root cause turns out to be outside the domain. If the failure is in **application logic** that merely uses the domain (e.g. a query returning the wrong rows), use `routr-debug`.
+
+### Multi-router requests
+
+Precedence picks the *first* router. For requests spanning several, plan the route (max 3 steps) per `routr-router`; chains and companions are defined in [routes.json](routes.json).
+
 When unsure, read `routr-router/SKILL.md` first.
 
 ## Stack entry points vs workflow selectors

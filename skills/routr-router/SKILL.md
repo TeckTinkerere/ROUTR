@@ -49,25 +49,35 @@ User intent?
 └─ Animate / motion / scroll (UI exists)       → routr-motion
 ```
 
+Domain machinery beats generic debug: if the thing failing is a domain's *own machinery* (render pipeline, agent loop, AI SDK stream, EAS build, migration runner), that domain router owns it. Wrong *application* logic that merely uses the domain → `routr-debug`.
+
 Tie-break by **most specific wins** — single source of truth in [routr-catalog/references/resolution.md](../routr-catalog/references/resolution.md#router-precedence). Overlap edge cases (fix-the-UI, ship-the-feature, video-vs-frontend, AI-feature): [references/decision-tree.md](./references/decision-tree.md).
 
 ## Frontend detection
 
 Touches `.tsx`/`.jsx`/`.vue`/`.svelte`, CSS/Tailwind, layout, components, pages: build/redesign → `routr-frontend`; motion only → `routr-motion`; visual bug → `routr-debug`; post-deploy check → `routr-qa`.
 
-## Multi-router chains
+## Route plans
 
-Run **sequentially** — finish one, then re-route for the next (see each router's Handoff):
+Real requests often span routers. Plan the whole route upfront, then run it **one router at a time**. Known chains and their exit conditions live in [routes.json](../routr-catalog/references/routes.json) (source of truth) — use a matching chain entry or compose your own from each router's handoff list.
 
-| User goal | Chain |
-|-----------|-------|
-| New feature end-to-end | `routr-plan` → `routr-frontend` → `routr-ship` |
-| AI chat product | `routr-plan` → `routr-ai` → `routr-frontend` → `routr-ship` |
-| Ship + brag video | `routr-ship` → `routr-video` → `routr-marketing` |
-| Expo app + store listing | `routr-mobile` → `routr-marketing` → `routr-deploy` |
-| Fix bug in production | `routr-debug` → `routr-ship` → `routr-deploy` |
-| Deploy + verify | `routr-deploy` → `routr-qa` |
-| Fix a slow page/endpoint | `routr-perf` → `routr-ship` → `routr-deploy` |
+Announce before starting:
+
+```
+ROUTR plan: routr-debug → routr-ship → routr-deploy
+Now: routr-debug — 500 on checkout, root cause unknown
+Next: routr-ship once root cause is fixed and verified
+```
+
+- **At most 3 steps.** Anything longer: make `routr-plan` the first step, then re-plan after it.
+- **Exit condition per step:** the point where you stop and hand off (e.g. "root cause fixed + verified"). A single-router task announces one line, as before.
+- **Re-route at each handoff.** Re-read the plan; if the next step no longer applies, drop it. Never skip ahead or load the next router early.
+- **User overrides win.** "Skip", "stop after debug", "just ship" edit the plan immediately; restate it in one line.
+- Run `Next:` only after the current router's own Handoff says it is done.
+
+## Companions
+
+A **companion** lends one checklist to the active router without taking the task. At most one per step, only on its named signal (pairings in routes.json, e.g. `routr-ship` + `routr-security` when the diff touches auth, RLS, secrets, or payments). Read only the section the entry names; never run its bootstrap or load its children.
 
 ## After routing
 

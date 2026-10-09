@@ -42,8 +42,27 @@ router, not the meta-router that would dispatch to it).
     answers included, then exits 0 without running any scoring. Feed this
     to an external model/judge to produce a predictions file.
 
+Route plans and alternatives (multi-route design, docs/routing.md):
+    * `acceptable_routers: [...]` on a prompt: the prompt is a hit if the chosen
+      router is `expected_router` OR any listed alternative (all modes).
+    * `expected_chain: [...]`: besides router accuracy, the runner reports
+      chain exact-match (predicted chain == expected_chain) and chain
+      prefix-match (first min(2, len) steps agree) over prompts that carry
+      `expected_chain`. In claude mode the model is asked for one line
+      `routr-a > routr-b > routr-c`; the first item is the chosen router.
+    * `acceptable_chains: [[...], ...]`: alternative route plans that also
+      count as exact/prefix matches for genuinely contested prompts.
+    * Model-facing menus (claude mode and --export-prompts) carry each
+      router's `next` handoffs and `companions` from routes.json, matching
+      what an agent sees after routr-router loads the route map.
+    * Predictions values may be `"routr-x"` (chain = [routr-x]) or
+      `{"router": "routr-x", "chain": ["routr-x", "routr-y"]}`.
+    * Static mode is a baseline: chain = [router] plus the first `handoff`
+      from skills/routr-catalog/references/routes.json when the prompt
+      contains a multi-intent connector (" and then ", " then ", " and ship"...).
+
 --mode predictions --predictions PATH
-    Read a JSON object `{"<id>": "routr-xxx", ...}` (ids matching
+    Read a JSON object `{"<id>": "routr-xxx" | {"router","chain"}, ...}` (ids matching
     `--export-prompts`'s `<eval-file>#<prompt-index>` scheme) and score it
     exactly like `--mode static`/`--mode claude`: same results table, same
     misses list, same `must_not_load` violation counting, same `--json` and
@@ -74,6 +93,27 @@ for _stream in (sys.stdout, sys.stderr):
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SKILLS_DIR = REPO_ROOT / "skills"
 EVALS_DIR = REPO_ROOT / "evals"
+
+ROUTES_JSON = SKILLS_DIR / "routr-catalog" / "references" / "routes.json"
+
+# Connectors that signal a multi-intent request (static-mode chain baseline).
+MULTI_INTENT_MARKERS = (
+    " and then ", " then ", " and ship", " and deploy", " and commit",
+    " and open a pr", " and release", " and publish", " and verify",
+    " and make a video", " and write tests",
+)
+
+EXPORT_INSTRUCTIONS = (
+    "For each prompt, choose exactly one router from `menu` as the FIRST router to load. "
+    "If the request clearly spans several routers, you may also give a route plan of at "
+    "most 3 routers in order. Write predictions as {\"<id>\": \"routr-x\"} or "
+    "{\"<id>\": {\"router\": \"routr-x\", \"chain\": [\"routr-x\", \"routr-y\"]}}. "
+    "The chain's first item must equal `router`. A plain string means a single-router plan. "
+    "Each menu entry lists `next` (routers it usually hands off to) and `companions` "
+    "(checklists that run INSIDE that router's step when their signal fires). Add a `next` "
+    "router to the chain only when the request also asks for that job; never add a "
+    "companion as a chain step."
+)
 
 DEFAULT_MODEL = "claude-haiku-4-5-20251001"
 
@@ -222,24 +262,111 @@ def pick_static(prompt: str, routers: list) -> tuple:
     return best_name, {name: s for s, name in scored}
 
 
+def load_route_hints() -> dict:
+    """{router: {"next": [...], "companions": [{"name", "signal"}]}} from routes.json.
+
+    Mirrors what an agent sees after routr-router loads routes.json, so model
+    evals can judge chains with the same information a real agent has.
+    """
+    try:
+        data = json.loads(ROUTES_JSON.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    hints = {
+        k: {"next": v.get("handoff", []), "companions": []}
+        for k, v in (data.get("routers") or {}).items()
+        if isinstance(v, dict)
+    }
+    for c in data.get("companions") or []:
+        if isinstance(c, dict) and c.get("active") in hints:
+            hints[c["active"]]["companions"].append(
+                {"name": c.get("companion"), "signal": c.get("signal", "")}
+            )
+    return hints
+
+
+def load_handoffs() -> dict:
+    try:
+        data = json.loads(ROUTES_JSON.read_text(encoding="utf-8"))
+        return {k: v.get("handoff", []) for k, v in data.get("routers", {}).items()}
+    except (OSError, json.JSONDecodeError, AttributeError):
+        return {}
+
+
+def static_chain(prompt: str, router: str, handoffs: dict) -> list:
+    padded = f" {prompt.lower()} "
+    if any(m in padded for m in MULTI_INTENT_MARKERS):
+        nxt = handoffs.get(router) or []
+        if nxt:
+            return [router, nxt[0]]
+    return [router]
+
+
+def normalize_prediction(value) -> tuple:
+    """Return (router, chain) from a string or {"router","chain"} prediction."""
+    if isinstance(value, str):
+        return value, [value]
+    if isinstance(value, dict):
+        chain = value.get("chain")
+        router = value.get("router") or (chain[0] if isinstance(chain, list) and chain else None)
+        if not isinstance(chain, list) or not chain:
+            chain = [router] if router else None
+        return router, chain
+    return None, None
+
+
+def chain_scores(expected: list, got, acceptable: list | None = None) -> tuple:
+    """(exact, prefix) booleans; prefix compares the first min(2, len) steps.
+
+    `acceptable` holds alternative chains (eval `acceptable_chains`) that also
+    count as correct for genuinely contested prompts.
+    """
+    if not got:
+        return False, False
+    got = list(got)
+    exact = prefix = False
+    for chain in [expected] + [c for c in (acceptable or []) if isinstance(c, list) and c]:
+        n = min(2, len(chain))
+        exact = exact or got == list(chain)
+        prefix = prefix or got[:n] == list(chain)[:n]
+    return exact, prefix
+
+
 # --------------------------------------------------------------------------
 # claude mode
 # --------------------------------------------------------------------------
 
 def build_menu(routers: list) -> str:
-    lines = [f"- {r.name}: {r.description}" for r in routers]
+    hints = load_route_hints()
+    lines = []
+    for r in routers:
+        line = f"- {r.name}: {r.description}"
+        h = hints.get(r.name)
+        if h and h["next"]:
+            line += f" [next: {', '.join(h['next'])}]"
+        if h and h["companions"]:
+            line += " [companions: " + "; ".join(
+                f"{c['name']} when {c['signal']}" for c in h["companions"]
+            ) + "]"
+        lines.append(line)
     return "\n".join(lines)
 
 
-def ask_claude(prompt: str, menu: str, model: str, timeout: int) -> str | None:
+def ask_claude(prompt: str, menu: str, model: str, timeout: int) -> tuple | None:
     claude_prompt = (
         "You are a router that picks exactly one workflow skill for a coding "
         "agent to load, given a user request.\n\n"
         "Available routers (name: description):\n"
         f"{menu}\n\n"
         f'User request: "{prompt}"\n\n'
-        "Reply with ONLY the chosen router's name (e.g. routr-debug). "
-        "No explanation, no punctuation, nothing else."
+        "Pick the router to load FIRST. If the request clearly spans several "
+        "routers, give the whole route plan of at most 3 routers in order. "
+        "[next: ...] lists usual follow-on routers; include one only if the request "
+        "asks for that job too. [companions: ...] run inside a step and are never "
+        "chain steps. "
+        "Reply with ONE line only: routers separated by ' > ' "
+        "(e.g. routr-debug > routr-ship > routr-deploy; a single router is just routr-debug). "
+        "No explanation, nothing else."
     )
     try:
         result = subprocess.run(
@@ -259,8 +386,11 @@ def ask_claude(prompt: str, menu: str, model: str, timeout: int) -> str | None:
         print(f"  ! claude CLI exited {result.returncode}: {first}", file=sys.stderr)
         return None
     out =(result.stdout or "") + " " + (result.stderr or "")
-    m = re.search(r"\broutr-[a-z-]+\b", out)
-    return m.group(0) if m else None
+    for line in out.splitlines():
+        names = re.findall(r"\broutr-[a-z-]+\b", line)
+        if names:
+            return names[0], names
+    return None
 
 
 def pick_claude_batch(prompts: list, routers: list, model: str, concurrency: int, timeout: int) -> dict:
@@ -332,7 +462,16 @@ def main() -> int:
         return 2
 
     if args.export_prompts:
-        menu = [{"name": r.name, "description": r.description} for r in routers]
+        hints = load_route_hints()
+        menu = [
+            {
+                "name": r.name,
+                "description": r.description,
+                "next": hints.get(r.name, {}).get("next", []),
+                "companions": hints.get(r.name, {}).get("companions", []),
+            }
+            for r in routers
+        ]
         export_prompts = []
         for ef in eval_files:
             try:
@@ -345,21 +484,32 @@ def main() -> int:
                 if isinstance(p, dict) and p.get("expected_router"):
                     export_prompts.append({"id": f"{ef.name}#{i}", "prompt": p["prompt"]})
         Path(args.export_prompts).write_text(
-            json.dumps({"menu": menu, "prompts": export_prompts}, indent=2),
+            json.dumps(
+                {"instructions": EXPORT_INSTRUCTIONS, "menu": menu, "prompts": export_prompts},
+                indent=2,
+            ),
             encoding="utf-8",
         )
         print(f"Wrote {len(export_prompts)} prompt(s) and a {len(menu)}-router menu to {args.export_prompts}")
         return 0
 
-    predictions_by_id: dict[str, str | None] = {}
+    predictions_by_id: dict = {}
     if args.mode == "predictions":
         try:
             raw = json.loads(Path(args.predictions_path).read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError) as exc:
             print(f"Could not read --predictions {args.predictions_path}: {exc}", file=sys.stderr)
             return 2
+        # Models often return a list of {"id", "router", "chain"} records
+        # instead of an id-keyed object; accept both.
+        if isinstance(raw, list) and all(isinstance(r, dict) and "id" in r for r in raw):
+            raw = {r["id"]: {k: v for k, v in r.items() if k != "id"} for r in raw}
         if not isinstance(raw, dict):
-            print(f"--predictions {args.predictions_path} must be a JSON object of id -> router name", file=sys.stderr)
+            print(
+                f"--predictions {args.predictions_path} must be a JSON object of "
+                "id -> router name or {router, chain}, or a list of {id, router, chain}",
+                file=sys.stderr,
+            )
             return 2
         predictions_by_id = raw
 
@@ -394,6 +544,10 @@ def main() -> int:
     total_correct = 0
     total_skipped = 0
     total_violations = 0
+    total_chain = 0
+    chain_exact = 0
+    chain_prefix = 0
+    handoffs = load_handoffs()
     misses = []
 
     per_file_rows = []
@@ -418,22 +572,34 @@ def main() -> int:
             predictions = {}
             for i, p in scorable:
                 pred, _scores = pick_static(p["prompt"], routers)
-                predictions[i] = pred
+                predictions[i] = (pred, static_chain(p["prompt"], pred, handoffs))
         elif args.mode == "claude":
             by_prompt_text = pick_claude_batch(
                 [p["prompt"] for _, p in scorable], routers, args.model, args.concurrency, args.timeout
             )
             predictions = {i: by_prompt_text.get(p["prompt"]) for i, p in scorable}
         else:  # predictions
-            predictions = {i: predictions_by_id.get(f"{ef.name}#{i}") for i, p in scorable}
+            predictions = {
+                i: (normalize_prediction(predictions_by_id[f"{ef.name}#{i}"])
+                    if f"{ef.name}#{i}" in predictions_by_id else None)
+                for i, p in scorable
+            }
 
         file_correct = 0
         file_violations = 0
         for i, p in scorable:
             expected = p["expected_router"]
-            got = predictions.get(i)
+            got, got_chain = predictions.get(i) or (None, None)
             must_not_load = set(p.get("must_not_load", []) or [])
-            hit = got == expected
+            acceptable = {expected} | set(p.get("acceptable_routers", []) or [])
+            hit = got in acceptable
+            expected_chain = p.get("expected_chain")
+            exact = prefix = None
+            if isinstance(expected_chain, list) and expected_chain:
+                exact, prefix = chain_scores(expected_chain, got_chain, p.get("acceptable_chains"))
+                total_chain += 1
+                chain_exact += int(exact)
+                chain_prefix += int(prefix)
             violation = got in must_not_load if got else False
 
             if hit:
@@ -458,6 +624,11 @@ def main() -> int:
                     "expected_router": expected,
                     "predicted_router": got,
                     "hit": hit,
+                    "acceptable_routers": p.get("acceptable_routers"),
+                    "expected_chain": expected_chain,
+                    "predicted_chain": got_chain,
+                    "chain_exact": exact,
+                    "chain_prefix": prefix,
                     "must_not_load_violation": violation,
                     "boundary": p.get("boundary"),
                 }
@@ -480,6 +651,12 @@ def main() -> int:
     overall_acc = (total_correct / total_scored) if total_scored else 0.0
     print()
     print(f"Overall accuracy: {total_correct}/{total_scored} ({overall_acc * 100:.1f}%)")
+    if total_chain:
+        print(
+            f"Chain exact-match:  {chain_exact}/{total_chain} ({chain_exact / total_chain * 100:.1f}%)"
+            f"  (prompts with expected_chain)"
+        )
+        print(f"Chain prefix-match: {chain_prefix}/{total_chain} ({chain_prefix / total_chain * 100:.1f}%)")
     print(f"Prompts skipped (no expected_router): {total_skipped}")
     print(f"must_not_load violations: {total_violations}")
 
@@ -501,6 +678,9 @@ def main() -> int:
                     "total_correct": total_correct,
                     "total_skipped": total_skipped,
                     "total_violations": total_violations,
+                    "chain_scored": total_chain,
+                    "chain_exact": chain_exact,
+                    "chain_prefix": chain_prefix,
                     "results": all_results,
                     "misses": misses,
                 },

@@ -6,6 +6,7 @@
 | Agent UI (chat window, controls, transcript view) | `routr-frontend` |
 | Wrong file reads mid-implementation | `routr-debug` |
 | Wiring the RAG pipeline itself (retrieval, chunking, prompt) | `routr-ai` — the eval harness/scoring layer on top stays here |
+| Own machinery failing: agent loop drifting, stalling, or repeating | stays `routr-agents` (domain machinery beats `routr-debug`) |
 
 ## routr-agents vs routr-ai
 

@@ -37,6 +37,21 @@
 - Janky/dropped-frame animation: diagnose the cause → `routr-perf`; author/polish the fix → `routr-motion`
 - Layout/visual only, no speed complaint → `routr-frontend`
 
+## Domain machinery vs generic debug
+
+The domain's own machinery beats generic debug; the domain router uses its own gotchas and hands to `routr-debug` only if the root cause turns out to be outside the domain.
+
+- Agent loop drifting or stalling → `routr-agents`
+- AI SDK stream or `useChat` stuck/looping → `routr-ai`
+- Blank or failed video render → `routr-video`
+- EAS build or Expo config failing → `routr-mobile`
+- Migration runner or RLS policy misbehaving → `routr-database`
+- Application logic merely using the domain (a query returning wrong rows, a component with a bad prop) → `routr-debug`
+
+## Multi-intent requests
+
+Plan the route (max 3 steps) per [SKILL.md](../SKILL.md#route-plans). Chains: [routes.json](../../routr-catalog/references/routes.json). "Feature with a planning gap and a build" starts at `routr-plan`; a contested start (plan vs frontend) is acceptable either way as long as the plan is announced.
+
 ## Deprecated names
 
 If a user references an old `*-playbook` name (removed in v2), use the `routr-*` equivalent. See [docs/naming.md](../../../docs/naming.md).

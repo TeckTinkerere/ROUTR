@@ -10,6 +10,7 @@
 | Manual screen recording | Out of scope — no router |
 | Re-editing footage: re-timing, recolor, reframe, reorder, audio surgery | Out of scope — that is NLE work |
 | Unclear video vs design | Ask two questions max, then pick a reference |
+| Blank, black or failed video render | stays `routr-video` (domain machinery beats `routr-debug`) |
 
 ## Internal splits
 

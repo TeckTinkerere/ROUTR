@@ -77,6 +77,15 @@ Prototype harness before scaling prompts.
 **Prototype status:** proven on one path / not yet
 ```
 
+## Companion checklist
+
+Read only when `routr-ai` names you as companion (output-quality scoring or an eval harness). No bootstrap, no children.
+
+- [ ] Define pass/fail criteria for outputs before writing the harness
+- [ ] Fixed eval set with expected answers; include known-hard and adversarial cases
+- [ ] Score per case and keep the raw outputs, not just an average
+- [ ] Wiring the feature stays with `routr-ai`; only the harness and scoring come from here
+
 ## Handoff
 
 - Wrong file reads → `routr-debug` + symdex
