@@ -1,6 +1,6 @@
 ---
 name: routr-mobile
-description: "Build Expo or React Native apps (screens, navigation, native UI). Use when: mobile app, Expo, React Native, iOS, Android, EAS, native screen. Not for: web-only UI (→ routr-frontend)."
+description: "Build Expo or React Native apps (screens, navigation, native UI). Use when: mobile app, Expo, React Native, iOS, Android, native screen. Not for: web-only UI (→ routr-frontend); EAS build/submit, TestFlight or Play Store release (→ routr-deploy)."
 ---
 
 # routr-mobile
@@ -9,7 +9,7 @@ description: "Build Expo or React Native apps (screens, navigation, native UI). 
 
 ## When to activate
 
-- Mobile app, Expo, React Native, iOS, Android, EAS
+- Mobile app, Expo, React Native, iOS, Android (EAS build/submit → `routr-deploy`)
 - Native screen, navigation, mobile-specific UI
 
 ## Do not activate

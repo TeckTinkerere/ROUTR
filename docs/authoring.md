@@ -78,11 +78,18 @@ Always use **canonical** names from `skill-registry.md`. Never invent aliases in
 
 - [ ] `name` matches folder name
 - [ ] Description is third person with `Use when:`
+- [ ] Description ≤ 280 chars (hard fail at 320)
+- [ ] Situational routers include `Not for:` with at least one concrete redirect
+- [ ] `SKILL.md` ≤ 150 lines for routers, ≤ 200 lines for `routr-depth-*`
 - [ ] Registered in `routr-router`
+- [ ] Entry in `skills/routr-catalog/references/routes.json` (`routers.<name>` with `handoff`, `companions`, `owns_domain_failures`); add a chain or companion pairing if the router belongs to one
+- [ ] `handoff` in `routes.json` matches the router's `## Handoff` section (the validator WARNs on drift); chains stay at 3 steps or fewer
+- [ ] A companion `section` anchor points at a real heading (e.g. a short "Companion checklist" section)
 - [ ] Row in `skill-registry.md`
 - [ ] `references/boundaries.md` if overlaps siblings
 - [ ] Deprecated redirect if renaming existing skill
-- [ ] Eval prompt in `evals/` for high-traffic routers
+- [ ] Eval prompt required for every router — not just high-traffic ones; `evals/*.eval.json` must include at least one `expected_router` entry
+- [ ] Run `python scripts/run-evals.py` and check it reports your router's prompts scoring as expected
 - [ ] `bash scripts/validate-skills.sh` passes locally — CI runs it on every PR
 
-The validator mechanically checks the first four items above (name/folder match, `Use when:` presence, router-tree + resolution.md listing, every referenced child skill resolving to a `skill-registry.md` row). It cannot check design quality — boundaries, evals, and redirect correctness are still a human review job.
+The validator mechanically checks 12 items: name/folder match, `Use when:` presence, referenced child skills resolving to a `skill-registry.md` row, no duplicate registry rows, router-tree + resolution.md listing, description length budget, `Not for:` presence, SKILL.md line caps, broken relative links in `references/`, eval JSON validity, eval coverage per router, and `routes.json` integrity (see [routing.md](routing.md)). It cannot check design quality — boundaries, eval prompt quality, and redirect correctness are still a human review job. See [architecture.md](architecture.md#quality-loop) for the full list.

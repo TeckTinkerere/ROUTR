@@ -49,12 +49,21 @@ When multiple `routr-*` skills could apply, use the **most specific** match:
 11. `routr-deploy` — Vercel and shipping
 12. `routr-database` — Postgres / Supabase
 13. `routr-refactor` — structure without behavior change
-14. `routr-qa` — browser QA
-15. `routr-security` — security pass
-16. `routr-mobile` — Expo / React Native
-17. `routr-marketing` — SEO, copy
-18. `routr-ai` — AI SDK apps
-19. `routr-video` — all video workflows
+14. `routr-perf` — measured performance work (Core Web Vitals, bundle, renders, N+1, leaks, caching)
+15. `routr-qa` — browser QA
+16. `routr-security` — security pass
+17. `routr-mobile` — Expo / React Native
+18. `routr-marketing` — SEO, copy
+19. `routr-ai` — AI SDK apps
+20. `routr-video` — all video workflows
+
+### Tie-break: domain machinery beats generic debug
+
+If the thing failing is a domain's **own machinery** (a render pipeline, an agent loop, an AI SDK stream, an EAS build, a migration runner), the domain router owns it and uses its own gotchas. It hands to `routr-debug` only if the root cause turns out to be outside the domain. If the failure is in **application logic** that merely uses the domain (e.g. a query returning the wrong rows), use `routr-debug`.
+
+### Multi-router requests
+
+Precedence picks the *first* router. For requests spanning several, plan the route (max 3 steps) per `routr-router`; chains and companions are defined in [routes.json](routes.json).
 
 When unsure, read `routr-router/SKILL.md` first.
 

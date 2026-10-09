@@ -1,6 +1,6 @@
 # Security fallback (no child skills installed)
 
-Use when `semgrep` and any rules-auditor skill are both unavailable.
+Use when `semgrep` and any rules-auditor skill are both unavailable. Prefer `routr-depth-security` if it's installed — it carries the full phased OWASP-style process; this file is the condensed version.
 
 ## Iron law
 

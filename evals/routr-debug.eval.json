@@ -48,6 +48,12 @@
         "Check recent git changes",
         "SymDex or narrow read for route handler"
       ]
+    },
+    {
+      "prompt": "my Supabase query returns the wrong rows for archived orders",
+      "expected_router": "routr-debug",
+      "must_not_load": ["routr-database"],
+      "boundary": "application logic using the domain goes to debug; only the migration runner or policy engine itself stays with database"
     }
   ]
 }

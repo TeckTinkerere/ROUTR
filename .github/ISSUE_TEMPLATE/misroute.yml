@@ -1,0 +1,63 @@
+name: Misroute report
+description: An agent picked the wrong ROUTR router for your request. These become eval prompts.
+title: "[misroute] "
+labels: ["misroute"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks. A good misroute report turns directly into a regression test in `evals/`.
+        Please paste the prompt exactly as you wrote it, and remove anything private.
+  - type: textarea
+    id: prompt
+    attributes:
+      label: Prompt
+      description: The exact request you gave the agent.
+      placeholder: "Fix the 500 on checkout and ship it"
+    validations:
+      required: true
+  - type: input
+    id: chosen
+    attributes:
+      label: Router chosen
+      description: The router the agent actually loaded.
+      placeholder: routr-frontend
+    validations:
+      required: true
+  - type: input
+    id: expected
+    attributes:
+      label: Router expected
+      description: The router that should have handled it. If more than one is reasonable, list them.
+      placeholder: routr-debug
+    validations:
+      required: true
+  - type: input
+    id: host
+    attributes:
+      label: Agent / host
+      description: Which agent and version ran it.
+      placeholder: Claude Code, Cursor, Codex CLI
+    validations:
+      required: true
+  - type: input
+    id: model
+    attributes:
+      label: Model
+      placeholder: claude-haiku-4-5, gpt-5, gemini-2.5-pro
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why is the expected router right?
+      description: Point at the `Use when:` / `Not for:` wording that should have decided it, if you can.
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: Other routers installed, whether a route plan was announced, links to a transcript.
+    validations:
+      required: false

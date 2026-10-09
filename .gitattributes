@@ -1,0 +1,21 @@
+# Normalise line endings: LF in the repo and on checkout, so shell scripts and
+# JSON never break on Windows. PowerShell scripts stay CRLF.
+* text=auto eol=lf
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.mp4 binary
+*.mov binary
+*.woff binary
+*.woff2 binary
+*.zip binary
+*.gz binary

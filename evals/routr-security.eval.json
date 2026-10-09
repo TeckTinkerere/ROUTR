@@ -1,0 +1,39 @@
+{
+  "skill_name": "routr-security",
+  "description": "Security audit workflow adherence — auth, secrets, injection, RLS",
+  "prompts": [
+    {
+      "prompt": "audit the codebase for secrets and injection risks before we go public",
+      "expected_router": "routr-security"
+    },
+    {
+      "prompt": "is this login flow secure? we roll our own JWT handling",
+      "expected_router": "routr-security"
+    },
+    {
+      "prompt": "check our RLS policies for holes before launch",
+      "expected_router": "routr-security"
+    },
+    {
+      "prompt": "someone found they can access another user's data by changing the URL id",
+      "expected_router": "routr-security",
+      "expected_behaviors": ["Treat as authorization vulnerability, rank by exploitability"]
+    },
+    {
+      "prompt": "security review before we open this up to the public",
+      "expected_router": "routr-security"
+    },
+    {
+      "prompt": "the app crashes with a null pointer when I log in, nothing to do with auth permissions",
+      "expected_router": "routr-debug",
+      "must_not_load": ["routr-security"],
+      "boundary": "security vs debug — crash bug, no security angle"
+    },
+    {
+      "prompt": "general feedback on this PR before merge — style, naming, obvious bugs",
+      "expected_router": "routr-review",
+      "must_not_load": ["routr-security"],
+      "boundary": "security vs review — general PR feedback with no security-specific angle"
+    }
+  ]
+}
