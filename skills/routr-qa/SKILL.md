@@ -1,6 +1,6 @@
 ---
 name: routr-qa
-description: "Test the app in a real browser (click, screenshot, smoke test). Use when: QA, E2E, 'open the site and check', preview verification, smoke test. Not for: writing test files (→ routr-test); fixing a bug you find (→ routr-debug)."
+description: "Test the app in a real browser (click, screenshot, smoke test). Use when: QA, E2E, 'open the site and check', smoke test of an already-deployed preview. Not for: deploying first (→ routr-deploy); writing test files (→ routr-test); fixing a bug you find (→ routr-debug)."
 ---
 
 # routr-qa
@@ -71,6 +71,15 @@ Visual → `routr-frontend` / `routr-motion`. a11y → `web-design-guidelines`.
 **Bugs found:** … (hand off to routr-debug)
 **Verified:** yes/no
 ```
+
+## Companion checklist
+
+Read only when `routr-deploy` names you as companion (user asked to verify the deployed preview). No bootstrap, no children.
+
+- [ ] Open the actual preview URL, not localhost
+- [ ] Walk the critical path once; screenshot or console log for any failure
+- [ ] Check the console and network tab for errors on first load
+- [ ] Report pass/fail per item to the active router; a bug found → `routr-debug`
 
 ## Handoff
 

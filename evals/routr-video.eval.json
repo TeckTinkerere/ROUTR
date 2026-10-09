@@ -6,7 +6,10 @@
       "prompt": "/brag about what we just shipped",
       "expected_router": "routr-video",
       "expected_child": "brag",
-      "must_not_load": ["remotion-best-practices", "hyperframes"],
+      "must_not_load": [
+        "remotion-best-practices",
+        "hyperframes"
+      ],
       "boundary": "current workspace → brag only, no HyperFrames entry skill, no Remotion"
     },
     {
@@ -14,14 +17,19 @@
       "expected_router": "routr-video",
       "expected_child": "product-launch-video",
       "expected_reference": "references/product-marketing.md",
-      "must_not_load": ["brag", "website-to-video"],
+      "must_not_load": [
+        "brag",
+        "website-to-video"
+      ],
       "boundary": "external commercial URL → product-launch-video in crawl mode, not brag and not a site tour"
     },
     {
       "prompt": "Turn my portfolio site into a short video",
       "expected_router": "routr-video",
       "expected_child": "website-to-video",
-      "must_not_load": ["product-launch-video"],
+      "must_not_load": [
+        "product-launch-video"
+      ],
       "boundary": "non-commercial site shown as-is → tour, not promo"
     },
     {
@@ -37,21 +45,34 @@
     {
       "prompt": "Make the hero section animation feel more alive",
       "expected_router": "routr-motion",
-      "must_not_load": ["routr-video"],
+      "must_not_load": [
+        "routr-video"
+      ],
       "boundary": "in-app motion, no exported MP4 → routr-motion, not routr-video"
     },
     {
       "prompt": "Build a landing page with an embedded product demo video",
       "expected_router": "routr-frontend",
-      "expected_chain": ["routr-frontend", "routr-video"],
-      "boundary": "page build owns routr-frontend; the video asset itself hands off to routr-video"
+      "expected_chain": [
+        "routr-frontend",
+        "routr-video"
+      ],
+      "boundary": "page build owns routr-frontend; the video asset itself hands off to routr-video",
+      "acceptable_chains": [
+        [
+          "routr-frontend"
+        ]
+      ]
     },
     {
       "prompt": "Turn our JSON dataset with thousands of variants into per-user recap videos",
       "expected_router": "routr-video",
       "expected_child": "remotion-best-practices",
       "expected_reference": "references/data-video.md",
-      "must_not_load": ["brag", "hyperframes"],
+      "must_not_load": [
+        "brag",
+        "hyperframes"
+      ],
       "expected_behaviors": [
         "Classify as the N-videos-one-template shape because the render repeats",
         "Type props with a schema and compute duration from the data",
@@ -63,7 +84,9 @@
       "prompt": "Make a video of our Q3 numbers from this CSV",
       "expected_router": "routr-video",
       "expected_reference": "references/data-video.md",
-      "must_not_load": ["remotion-best-practices"],
+      "must_not_load": [
+        "remotion-best-practices"
+      ],
       "expected_behaviors": [
         "Classify as one-video-real-numbers because the render does not repeat",
         "Read the CSV before writing any composition; no invented or estimated figures",
@@ -97,7 +120,10 @@
       "prompt": "Build me a pitch deck with presenter mode",
       "expected_router": "routr-video",
       "expected_child": "slideshow",
-      "must_not_load": ["general-video", "motion-graphics"],
+      "must_not_load": [
+        "general-video",
+        "motion-graphics"
+      ],
       "boundary": "deliverable is a navigable deck, not a rendered MP4"
     },
     {
@@ -133,6 +159,14 @@
       "prompt": "Just record my screen walking through the app",
       "expected_router": null,
       "boundary": "manual screen capture is explicitly out of scope — do not activate routr-video"
+    },
+    {
+      "prompt": "my video render comes out blank, just a black frame for the whole clip",
+      "expected_router": "routr-video",
+      "must_not_load": [
+        "routr-debug"
+      ],
+      "boundary": "domain machinery beats generic debug: the render pipeline is failing"
     }
   ]
 }

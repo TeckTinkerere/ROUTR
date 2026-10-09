@@ -1,0 +1,38 @@
+{
+  "skill_name": "routr-database",
+  "description": "Database schema, migrations, RLS, and query workflow adherence",
+  "prompts": [
+    {
+      "prompt": "add an RLS policy so users only see their own orders",
+      "expected_router": "routr-database"
+    },
+    {
+      "prompt": "write a migration to add a soft-delete column to invoices",
+      "expected_router": "routr-database"
+    },
+    {
+      "prompt": "this query is slow, can you add an index",
+      "expected_router": "routr-database"
+    },
+    {
+      "prompt": "design the schema for a multi-tenant workspace model in Supabase",
+      "expected_router": "routr-database"
+    },
+    {
+      "prompt": "connection pool keeps exhausting under load, Supabase",
+      "expected_router": "routr-database"
+    },
+    {
+      "prompt": "just need to set up the Prisma client and generate types, schema is already fine",
+      "expected_router": "routr-integrate",
+      "must_not_load": ["routr-database"],
+      "boundary": "database vs integrate — ORM/client-library setup only, no schema/query work"
+    },
+    {
+      "prompt": "this SQL query returns wrong results and I have no idea why, it worked yesterday",
+      "expected_router": "routr-debug",
+      "must_not_load": ["routr-database"],
+      "boundary": "database vs debug — unknown root cause, not a design/perf task"
+    }
+  ]
+}

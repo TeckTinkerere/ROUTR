@@ -1,0 +1,42 @@
+{
+  "skill_name": "routr-ai",
+  "description": "AI SDK feature workflow adherence — chat, RAG, tools, streaming",
+  "prompts": [
+    {
+      "prompt": "add streaming chat to the app using the AI SDK",
+      "expected_router": "routr-ai",
+      "expected_chain": ["routr-ai", "routr-frontend"]
+    },
+    {
+      "prompt": "wire up embeddings + RAG over our docs",
+      "expected_router": "routr-ai"
+    },
+    {
+      "prompt": "useChat is stuck loading forever, why won't it stream tokens",
+      "expected_router": "routr-ai",
+      "expected_behaviors": ["Check provider/tool-call setup and streaming config"]
+    },
+    {
+      "prompt": "need tool calling so the model can look up order status",
+      "expected_router": "routr-ai"
+    },
+    {
+      "prompt": "just restyle the chat bubbles, the AI logic is already working fine",
+      "expected_router": "routr-frontend",
+      "must_not_load": ["routr-ai"],
+      "boundary": "ai vs frontend — styling only, chat logic unchanged"
+    },
+    {
+      "prompt": "our agent keeps looping and re-reading the same files, help design a better operating loop with self-correction",
+      "expected_router": "routr-agents",
+      "must_not_load": ["routr-ai"],
+      "boundary": "ai vs agents — multi-agent/loop architecture, not a single SDK feature"
+    },
+    {
+      "prompt": "set up an eval harness to score our RAG pipeline's answer quality over time",
+      "expected_router": "routr-agents",
+      "must_not_load": ["routr-ai"],
+      "boundary": "ai vs agents — eval harness is routr-agents' territory even though it touches RAG"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 ---
 name: routr-deploy
-description: "Deploy to Vercel or preview environments. Use when: deploy, go live, preview URL, production release, push to Vercel. Not for: writing the code (→ routr-ship); post-deploy browser QA (→ routr-qa)."
+description: "Deploy to Vercel, preview environments, or app stores. Use when: deploy, go live, preview URL, production release, EAS submit, TestFlight; deploy-then-verify requests start here. Not for: writing the code (→ routr-ship); QA of an already-live site (→ routr-qa)."
 ---
 
 # routr-deploy

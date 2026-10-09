@@ -1,0 +1,41 @@
+{
+  "skill_name": "routr-review",
+  "description": "Code review workflow adherence — actionable feedback with fixes",
+  "prompts": [
+    {
+      "prompt": "review my changes before I merge",
+      "expected_router": "routr-review"
+    },
+    {
+      "prompt": "PR feedback please, especially on the React patterns used",
+      "expected_router": "routr-review"
+    },
+    {
+      "prompt": "can you look over this diff for bugs and style issues",
+      "expected_router": "routr-review",
+      "expected_behaviors": ["Every flagged issue ships with a suggested fix"]
+    },
+    {
+      "prompt": "sanity check this branch before I open the PR",
+      "expected_router": "routr-review"
+    },
+    {
+      "prompt": "review the auth middleware diff specifically for security holes",
+      "expected_router": "routr-security",
+      "must_not_load": ["routr-review"],
+      "boundary": "review vs security — security-specific angle takes precedence over general review"
+    },
+    {
+      "prompt": "you found a bug in review, now go fix it and commit",
+      "expected_router": "routr-ship",
+      "must_not_load": ["routr-review"],
+      "boundary": "review vs ship — writing the fix yourself is out of scope for review"
+    },
+    {
+      "prompt": "diff looks fine to me structurally, but explain why we chose this approach over the alternative",
+      "expected_router": "routr-explore",
+      "must_not_load": ["routr-review"],
+      "boundary": "review vs explore — understanding existing code/decisions, not judging a pending diff"
+    }
+  ]
+}

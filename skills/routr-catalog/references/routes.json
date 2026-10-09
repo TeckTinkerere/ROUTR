@@ -1,0 +1,409 @@
+{
+  "version": 1,
+  "max_chain": 3,
+  "routers": {
+    "routr-agents": {
+      "handoff": [
+        "routr-debug",
+        "routr-frontend"
+      ],
+      "companions": [],
+      "owns_domain_failures": true
+    },
+    "routr-ai": {
+      "handoff": [
+        "routr-debug",
+        "routr-agents",
+        "routr-frontend",
+        "routr-deploy",
+        "routr-marketing"
+      ],
+      "companions": [
+        "routr-agents"
+      ],
+      "owns_domain_failures": true
+    },
+    "routr-database": {
+      "handoff": [
+        "routr-integrate",
+        "routr-debug",
+        "routr-ship"
+      ],
+      "companions": [
+        "routr-security"
+      ],
+      "owns_domain_failures": true
+    },
+    "routr-debug": {
+      "handoff": [
+        "routr-ship"
+      ],
+      "companions": [],
+      "owns_domain_failures": false
+    },
+    "routr-deploy": {
+      "handoff": [
+        "routr-debug",
+        "routr-qa"
+      ],
+      "companions": [
+        "routr-qa"
+      ],
+      "owns_domain_failures": false
+    },
+    "routr-explore": {
+      "handoff": [
+        "routr-frontend",
+        "routr-debug"
+      ],
+      "companions": [],
+      "owns_domain_failures": false
+    },
+    "routr-frontend": {
+      "handoff": [
+        "routr-motion",
+        "routr-debug",
+        "routr-ship",
+        "routr-video"
+      ],
+      "companions": [
+        "routr-perf"
+      ],
+      "owns_domain_failures": false
+    },
+    "routr-integrate": {
+      "handoff": [
+        "routr-frontend",
+        "routr-motion"
+      ],
+      "companions": [],
+      "owns_domain_failures": false
+    },
+    "routr-marketing": {
+      "handoff": [
+        "routr-video",
+        "routr-frontend",
+        "routr-deploy",
+        "routr-debug"
+      ],
+      "companions": [],
+      "owns_domain_failures": false
+    },
+    "routr-mobile": {
+      "handoff": [
+        "routr-frontend",
+        "routr-marketing",
+        "routr-integrate",
+        "routr-debug"
+      ],
+      "companions": [
+        "routr-perf"
+      ],
+      "owns_domain_failures": true
+    },
+    "routr-motion": {
+      "handoff": [
+        "routr-frontend",
+        "routr-debug"
+      ],
+      "companions": [],
+      "owns_domain_failures": false
+    },
+    "routr-perf": {
+      "handoff": [
+        "routr-ship",
+        "routr-debug",
+        "routr-database",
+        "routr-deploy",
+        "routr-motion"
+      ],
+      "companions": [],
+      "owns_domain_failures": false
+    },
+    "routr-plan": {
+      "handoff": [
+        "routr-frontend",
+        "routr-ship",
+        "routr-ai",
+        "routr-agents"
+      ],
+      "companions": [],
+      "owns_domain_failures": false
+    },
+    "routr-qa": {
+      "handoff": [
+        "routr-debug",
+        "routr-test"
+      ],
+      "companions": [],
+      "owns_domain_failures": false
+    },
+    "routr-refactor": {
+      "handoff": [
+        "routr-review",
+        "routr-debug"
+      ],
+      "companions": [],
+      "owns_domain_failures": false
+    },
+    "routr-review": {
+      "handoff": [
+        "routr-ship",
+        "routr-security"
+      ],
+      "companions": [],
+      "owns_domain_failures": false
+    },
+    "routr-security": {
+      "handoff": [
+        "routr-ship",
+        "routr-review",
+        "routr-database"
+      ],
+      "companions": [],
+      "owns_domain_failures": false
+    },
+    "routr-ship": {
+      "handoff": [
+        "routr-motion",
+        "routr-deploy",
+        "routr-video"
+      ],
+      "companions": [
+        "routr-security"
+      ],
+      "owns_domain_failures": false
+    },
+    "routr-test": {
+      "handoff": [
+        "routr-ship",
+        "routr-review",
+        "routr-debug",
+        "routr-qa"
+      ],
+      "companions": [],
+      "owns_domain_failures": false
+    },
+    "routr-video": {
+      "handoff": [
+        "routr-marketing",
+        "routr-frontend",
+        "routr-deploy",
+        "routr-debug"
+      ],
+      "companions": [],
+      "owns_domain_failures": true
+    }
+  },
+  "companions": [
+    {
+      "active": "routr-ship",
+      "companion": "routr-security",
+      "signal": "diff touches auth, sessions, RLS, secrets, payments",
+      "section": "skills/routr-security/SKILL.md#companion-checklist"
+    },
+    {
+      "active": "routr-frontend",
+      "companion": "routr-perf",
+      "signal": "stated perf budget, LCP/INP complaint, heavy media",
+      "section": "skills/routr-perf/SKILL.md#companion-checklist"
+    },
+    {
+      "active": "routr-ai",
+      "companion": "routr-agents",
+      "signal": "output-quality scoring or an eval harness",
+      "section": "skills/routr-agents/SKILL.md#companion-checklist"
+    },
+    {
+      "active": "routr-database",
+      "companion": "routr-security",
+      "signal": "RLS policies, grants, multi-tenant data",
+      "section": "skills/routr-security/SKILL.md#companion-checklist"
+    },
+    {
+      "active": "routr-deploy",
+      "companion": "routr-qa",
+      "signal": "the user asks to verify the deployed preview",
+      "section": "skills/routr-qa/SKILL.md#companion-checklist"
+    },
+    {
+      "active": "routr-mobile",
+      "companion": "routr-perf",
+      "signal": "jank, slow startup, list performance",
+      "section": "skills/routr-perf/SKILL.md#companion-checklist"
+    }
+  ],
+  "chains": [
+    {
+      "id": "new-feature",
+      "when": "new feature end to end, no spec yet",
+      "steps": [
+        "routr-plan",
+        "routr-frontend",
+        "routr-ship"
+      ],
+      "exits": [
+        "plan approved",
+        "UI built and checked",
+        "committed or PR open"
+      ]
+    },
+    {
+      "id": "ai-chat-product",
+      "when": "AI chat product from scratch",
+      "steps": [
+        "routr-plan",
+        "routr-ai",
+        "routr-frontend"
+      ],
+      "exits": [
+        "plan approved",
+        "AI SDK wiring works end to end"
+      ]
+    },
+    {
+      "id": "ai-chat-ui",
+      "when": "AI feature plus its chat UI",
+      "steps": [
+        "routr-ai",
+        "routr-frontend"
+      ],
+      "exits": [
+        "streaming and tools work"
+      ]
+    },
+    {
+      "id": "ship-and-brag",
+      "when": "ship a change then make a launch video",
+      "steps": [
+        "routr-ship",
+        "routr-video",
+        "routr-marketing"
+      ],
+      "exits": [
+        "committed or PR open",
+        "video rendered"
+      ]
+    },
+    {
+      "id": "expo-store-launch",
+      "when": "Expo app plus store listing and release",
+      "steps": [
+        "routr-mobile",
+        "routr-marketing",
+        "routr-deploy"
+      ],
+      "exits": [
+        "app screens working",
+        "listing copy approved"
+      ]
+    },
+    {
+      "id": "prod-bugfix",
+      "when": "bug in production",
+      "steps": [
+        "routr-debug",
+        "routr-ship",
+        "routr-deploy"
+      ],
+      "exits": [
+        "root cause fixed + verified",
+        "PR merged / commit pushed"
+      ]
+    },
+    {
+      "id": "deploy-verify",
+      "when": "deploy then check the live preview",
+      "steps": [
+        "routr-deploy",
+        "routr-qa"
+      ],
+      "exits": [
+        "deployment URL is live"
+      ]
+    },
+    {
+      "id": "perf-fix",
+      "when": "slow page or endpoint",
+      "steps": [
+        "routr-perf",
+        "routr-ship",
+        "routr-deploy"
+      ],
+      "exits": [
+        "before/after numbers recorded",
+        "committed or PR open"
+      ]
+    },
+    {
+      "id": "janky-animation",
+      "when": "janky animation: diagnose then polish",
+      "steps": [
+        "routr-perf",
+        "routr-motion"
+      ],
+      "exits": [
+        "cause measured and identified"
+      ]
+    },
+    {
+      "id": "landing-with-video",
+      "when": "landing page with an embedded video",
+      "steps": [
+        "routr-frontend",
+        "routr-video"
+      ],
+      "exits": [
+        "page built; video asset needed"
+      ]
+    },
+    {
+      "id": "test-then-qa",
+      "when": "write tests then smoke test in the browser",
+      "steps": [
+        "routr-test",
+        "routr-qa"
+      ],
+      "exits": [
+        "tests written and green"
+      ]
+    },
+    {
+      "id": "security-fix",
+      "when": "audit then fix findings and release",
+      "steps": [
+        "routr-security",
+        "routr-ship",
+        "routr-deploy"
+      ],
+      "exits": [
+        "findings triaged with exploit scenarios",
+        "fix committed"
+      ]
+    },
+    {
+      "id": "db-migration",
+      "when": "write a migration then release it",
+      "steps": [
+        "routr-database",
+        "routr-ship",
+        "routr-deploy"
+      ],
+      "exits": [
+        "migration written and tested",
+        "committed or PR open"
+      ]
+    },
+    {
+      "id": "review-fix",
+      "when": "review a PR then fix the findings",
+      "steps": [
+        "routr-review",
+        "routr-ship"
+      ],
+      "exits": [
+        "findings listed"
+      ]
+    }
+  ]
+}

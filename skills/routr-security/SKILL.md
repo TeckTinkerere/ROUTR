@@ -33,7 +33,7 @@ See `routr-catalog/references/skill-registry.md`:
 | 2 | `firebase-security-rules-auditor` | optional — Firebase & Firestore rules |
 | 3 | `requesting-code-review` | recommended — review discipline |
 
-If `semgrep` missing → [references/fallback.md](./references/fallback.md).
+If `semgrep` and any rules-auditor skill are both missing → read `routr-depth-security` OR [references/fallback.md](./references/fallback.md).
 
 Data layer → `routr-database` (Postgres/Supabase RLS). Firebase → rules auditors above.
 
@@ -68,6 +68,16 @@ Supabase/Postgres → `routr-database` + RLS. Firebase → rules auditors.
 **Verified:** yes/no — static analysis run, manual review of auth paths
 ```
 
+## Companion checklist
+
+Read only when another router (`routr-ship`, `routr-database`) names you as companion. No bootstrap, no children, no report.
+
+- [ ] Auth, session, or token handling in the diff: is every entry point checked server-side?
+- [ ] RLS/grants: policy exists for every operation, and no `USING (true)` or service-role key reaching the client
+- [ ] Multi-tenant data: every query scoped by tenant or user id
+- [ ] Secrets, keys, or payment data: none in code, logs, or client bundles
+- [ ] Report findings as a short list to the active router; do not take over the task
+
 ## Handoff
 
 | Need | Router |
@@ -78,6 +88,7 @@ Supabase/Postgres → `routr-database` + RLS. Firebase → rules auditors.
 
 ## References
 
+- `routr-depth-security` — full OWASP-style audit process when `semgrep`/rules-auditor missing
 - [fallback](./references/fallback.md) — when `semgrep` is missing
 - [gotchas](./references/gotchas.md)
 - [examples](./references/examples.md)

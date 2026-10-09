@@ -79,7 +79,7 @@ npx skills add husnainpk/SymDex yvgude/lean-ctx -g -y --copy
 | canonical | aliases | namespace | tier | routers | source |
 |-----------|---------|-----------|------|---------|--------|
 | `find-skills` | — | vercel | optional | routr-plan | vercel-labs/skills |
-| `symdex-code-search` | symdex | routr | recommended | routr-debug, routr-ship, routr-explore, routr-frontend, routr-database, routr-refactor | husnainpk/SymDex |
+| `symdex-code-search` | symdex | routr | recommended | routr-debug, routr-ship, routr-explore, routr-frontend, routr-database, routr-refactor, routr-perf | husnainpk/SymDex |
 | `lean-ctx` | — | routr | recommended | all code routers | yvgude/lean-ctx |
 | `find-docs` | context7 | vercel | recommended | routr-integrate, routr-frontend | upstash/context7 |
 | `caveman` | — | routr | optional | routr-debug | JuliusBrussee/caveman |
@@ -115,7 +115,7 @@ npx skills add husnainpk/SymDex yvgude/lean-ctx -g -y --copy
 
 | canonical | aliases | namespace | tier | routers | source |
 |-----------|---------|-----------|------|---------|--------|
-| `webapp-testing` | — | anthropic | recommended | routr-test, routr-qa | anthropics/skills |
+| `webapp-testing` | — | anthropic | recommended | routr-test, routr-qa, routr-perf | anthropics/skills |
 | `tdd` | — | mattpocock | recommended | routr-test | mattpocock/skills |
 | `playwright-cli` | — | microsoft | optional | routr-test, routr-qa | microsoft/playwright-cli |
 | `playwright-best-practices` | — | currents | optional | routr-test, routr-qa | currents-dev/playwright-best-practices-skill |
@@ -131,7 +131,7 @@ npx skills add husnainpk/SymDex yvgude/lean-ctx -g -y --copy
 | `receiving-code-review` | — | obra | optional | routr-review | obra/superpowers |
 | `code-review-excellence` | — | wshobson | optional | routr-review | wshobson/agents |
 | `review-since` | — | mattpocock | optional | routr-review | mattpocock/skills |
-| `vercel-react-best-practices` | — | vercel | recommended | routr-review, routr-refactor, routr-frontend | vercel-labs/agent-skills |
+| `vercel-react-best-practices` | — | vercel | recommended | routr-review, routr-refactor, routr-frontend, routr-perf | vercel-labs/agent-skills |
 | `vercel-composition-patterns` | — | vercel | optional | routr-refactor, routr-frontend | vercel-labs/agent-skills |
 
 ## Deploy
@@ -140,7 +140,7 @@ npx skills add husnainpk/SymDex yvgude/lean-ctx -g -y --copy
 |-----------|---------|-----------|------|---------|--------|
 | `deploy-to-vercel` | — | vercel | required | routr-deploy | vercel-labs/agent-skills |
 | `vercel-cli-with-tokens` | — | vercel | optional | routr-deploy | vercel-labs/agent-skills |
-| `vercel-optimize` | — | vercel | optional | routr-deploy | vercel-labs/agent-skills |
+| `vercel-optimize` | — | vercel | optional | routr-deploy, routr-perf | vercel-labs/agent-skills |
 | `expo-deployment` | — | expo | optional | routr-deploy, routr-mobile | expo/skills |
 
 ## Frontend — visual
@@ -168,7 +168,7 @@ npx skills add husnainpk/SymDex yvgude/lean-ctx -g -y --copy
 
 | canonical | aliases | namespace | tier | routers | source |
 |-----------|---------|-----------|------|---------|--------|
-| `supabase-postgres-best-practices` | — | supabase | required | routr-database | supabase/agent-skills |
+| `supabase-postgres-best-practices` | — | supabase | required | routr-database, routr-perf | supabase/agent-skills |
 | `supabase` | — | supabase | recommended | routr-database | supabase/agent-skills |
 
 ## Security
@@ -177,6 +177,8 @@ npx skills add husnainpk/SymDex yvgude/lean-ctx -g -y --copy
 |-----------|---------|-----------|------|---------|--------|
 | `semgrep` | — | trailofbits | recommended | routr-security | trailofbits/skills |
 | `firebase-security-rules-auditor` | — | firebase | optional | routr-security | firebase/agent-skills |
+
+**ROUTR fallback:** `routr-depth-security` when `semgrep`/rules-auditor missing.
 
 ## Mobile
 
@@ -292,6 +294,7 @@ npx skills add obra/superpowers -g --skill subagent-driven-development -y --copy
 | `routr-refactor` | improve-codebase-architecture, vercel-composition-patterns |
 | `routr-qa` | agent-browser, playwright-best-practices |
 | `routr-security` | semgrep |
+| `routr-perf` | vercel-react-best-practices, webapp-testing, supabase-postgres-best-practices |
 | `routr-frontend` | frontend-design, web-design-guidelines, shadcn |
 | `routr-motion` | framer-motion-animator, review-animations |
 | `routr-mobile` | building-native-ui, vercel-react-native-skills |

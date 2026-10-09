@@ -68,7 +68,36 @@ Top routers include `references/` (workflow, fallback, gotchas, examples, bounda
 
 ## Quality loop
 
-Eval prompts in `evals/` for `routr-router`, `routr-debug`, `routr-frontend`. Run before releases.
+Two mechanical gates run before release, both callable from CI:
+
+**Validator** (`scripts/validate-skills.sh`), 12 checks:
+
+1. Frontmatter `name:` matches folder name
+2. Router description contains `Use when:`
+3. Every backticked child-skill reference resolves to a `skill-registry.md` row (canonical name or alias)
+4. No duplicate canonical rows in the registry
+5. Every situational router is listed in `routr-router`'s decision tree and `resolution.md`'s precedence list
+6. Description ≤ 320 chars (FAIL), > 280 chars (WARN)
+7. Situational routers include `Not for:` (FAIL); depth/catalog skills exempt
+8. `SKILL.md` ≤ 150 lines for routers, ≤ 200 lines for `routr-depth-*` (FAIL)
+9. Every relative markdown link under `skills/**.md` resolves to a real file (FAIL)
+10. Every `evals/*.eval.json` parses, and every `expected_router`/`expected_chain`/`must_not_load` entry names an existing `skills/routr-*` folder (FAIL)
+11. Every situational router has at least one eval prompt as `expected_router` somewhere in `evals/` (WARN)
+12. `routes.json` parses; every router it names exists and every situational router has an entry; chains <= `max_chain`; companion `section` anchors resolve to a heading (FAIL); handoff targets appear in the router's `## Handoff` section (WARN)
+
+**Eval runner** (`scripts/run-evals.py`, stdlib only): builds the router menu from each `SKILL.md` frontmatter, then scores every prompt in `evals/`.
+
+- `--mode static` (default): offline, deterministic — a lexical scorer over `Use when:` triggers minus `Not for:` phrases. A smoke test for description overlap, no model call.
+- `--mode claude`: shells out to `claude -p --model <model>` with the router menu + prompt, asks for a route plan on one line (`routr-a > routr-b`), takes the first item as the router, scores against `expected_router` (or any `acceptable_routers`).
+- `--mode predictions`: scores a predictions file; values may be a router name or `{"router", "chain"}`.
+- Chain metrics over prompts with `expected_chain`: exact-match and prefix-match (first two steps).
+- Reports accuracy per file, per-boundary failures, and `must_not_load` violations. `--json` for machine output; non-zero exit under `--min-accuracy` gates CI.
+
+Evals in `evals/` now cover every situational router (one `*.eval.json` file per router, plus `routr-router` for cross-cutting chain tests) — not just the original three.
+
+## Multi-route planning
+
+One router is active at a time, but the agent plans the whole route (max 3 steps) upfront and re-routes at each handoff. Chains, companion pairings and handoff targets are defined in `skills/routr-catalog/references/routes.json`. User-facing explanation and worked examples: [routing.md](routing.md).
 
 ## Compatibility
 

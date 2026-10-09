@@ -1,0 +1,53 @@
+name: Propose a new router
+description: Suggest a new routr-* router for a situation ROUTR does not cover.
+title: "[router] routr-"
+labels: ["new-router"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Read [docs/authoring.md](https://github.com/TeckTinkerere/ROUTR/blob/master/docs/authoring.md) first.
+        A router owns a situation, not a tool. If an existing router almost fits, propose a description change instead.
+  - type: textarea
+    id: situation
+    attributes:
+      label: Situation
+      description: What is the user doing when this router should fire, and what goes wrong today?
+    validations:
+      required: true
+  - type: textarea
+    id: triggers
+    attributes:
+      label: Triggers (Use when)
+      description: Short phrases a user would actually say.
+      placeholder: "slow page, high INP, big bundle"
+    validations:
+      required: true
+  - type: textarea
+    id: not-for
+    attributes:
+      label: Not-for neighbours
+      description: Which existing routers are closest, and which requests belong to them instead?
+      placeholder: "wrong output -> routr-debug; one slow query -> routr-database"
+    validations:
+      required: true
+  - type: textarea
+    id: children
+    attributes:
+      label: Child skills
+      description: Canonical child skills it would order (see skill-registry.md), and whether a routr-depth-* fallback is needed.
+    validations:
+      required: true
+  - type: textarea
+    id: examples
+    attributes:
+      label: Example prompts
+      description: At least three that belong to it, and at least one near-miss that should go elsewhere. One per line.
+    validations:
+      required: true
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Contribution
+      options:
+        - label: I am willing to open a PR for this router.
