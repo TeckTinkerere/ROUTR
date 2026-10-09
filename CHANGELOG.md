@@ -4,7 +4,7 @@ All notable changes to ROUTR are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). For ROUTR, a "breaking" change is one that renames or removes a skill, or changes a router's documented contract.
 
-## [2.1.0] - Unreleased
+## [2.1.0] - 2026-10-09
 
 ### Added
 
