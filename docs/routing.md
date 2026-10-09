@@ -33,6 +33,25 @@ Rules:
 
 Common plans (`prod-bugfix`, `perf-fix`, `ship-and-brag`, ...) are listed in [routes.json](../skills/routr-catalog/references/routes.json). The agent may also compose a plan from each router's `handoff` list.
 
+### Composing a plan
+
+The `step_signals` list in `routes.json` maps each job in a request to a router. The agent then orders the steps by how the work actually happens:
+
+```
+plan → diagnose or build → fix + commit (routr-ship) → release (routr-deploy) → verify live (routr-qa) / promote (routr-video, routr-marketing)
+```
+
+The `composition_rules` in `routes.json` add six more rules:
+
+1. **One step per job the request asks for.** "Find the cause, fix it, get it live" is debug → ship → deploy.
+2. **Fixes reach production through `routr-ship`.** Never go straight from debug, perf or security to deploy.
+3. **Diagnose before you polish.** perf comes before motion, review before ship, test before qa, and plan before building.
+4. **Add an unstated step only when the deliverable can't exist without it.** Example: AI chat in an app that has no chat UI yet.
+5. **Deferred work is not a step.** "We'll deploy later" means no deploy step.
+6. **A companion is never a step.**
+
+Adding these rules raised chain exact-match on a held-out set from 75% to 92% (see [Measured routing quality](../README.md#measured-routing-quality)).
+
 ## Companions
 
 A **companion** is a second router that contributes one checklist to the active router without taking over. Rules: at most one companion per step, started only by a named signal, and it reads only the section `routes.json` points at (no bootstrap, no child skills).
