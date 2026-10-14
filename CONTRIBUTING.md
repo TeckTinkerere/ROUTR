@@ -67,6 +67,23 @@ python scripts/run-evals.py --mode predictions --predictions preds.json
 python scripts/run-evals.py --mode claude --model claude-haiku-4-5-20251001
 ```
 
+**Host mode: what a real Claude Code session does.** Mode `claude` shows the model a clean menu. Host mode starts a real session per prompt, in a temp sandbox with the ROUTR skills installed, and records which skills it actually invokes. Use it to check that routing survives a crowded skill list. Sign in first by running `claude` once, then:
+
+```bash
+# Only the sandbox's ROUTR skills (plus Claude Code's bundled ones)
+python scripts/run-evals.py --mode host --host-env isolated --file evals/multi-route-holdout.eval.json
+
+# Also load the skills you have installed in ~/.claude (a realistic, crowded list)
+python scripts/run-evals.py --mode host --host-env user --file evals/multi-route-holdout.eval.json
+
+# Reproducible crowding: copy non-routr skill folders from a directory into the sandbox
+python scripts/run-evals.py --mode host --noise-dir path/to/other-skills
+```
+
+Cost: one real Claude Code session per prompt, so a full run of all eval files takes a while and spends tokens. Start with one file and a low `--concurrency`. The sessions can only use the Skill tool and run with hooks disabled, so they do not edit files. Use `--keep-sandbox` to inspect the sandbox. Results depend on your CLI version and installed skills, so quote them with those details.
+
+Changing `scripts/run-evals.py`? Run the offline unit tests, which use a fake CLI and need no sign-in: `python -m unittest discover -s scripts/tests -v`. CI runs them too.
+
 Rules of thumb:
 
 - A single model run varies by about 3 points. Compare averages across two or more runs, not one.

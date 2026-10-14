@@ -90,8 +90,22 @@ Two mechanical gates run before release, both callable from CI:
 - `--mode static` (default): offline, deterministic — a lexical scorer over `Use when:` triggers minus `Not for:` phrases. A smoke test for description overlap, no model call.
 - `--mode claude`: shells out to `claude -p --model <model>` with the router menu + prompt, asks for a route plan on one line (`routr-a > routr-b`), takes the first item as the router, scores against `expected_router` (or any `acceptable_routers`).
 - `--mode predictions`: scores a predictions file; values may be a router name or `{"router", "chain"}`.
+- `--mode host`: runs a real, signed-in Claude Code session per prompt and records which ROUTR skills it invokes (see [Host mode](#host-mode)).
 - Chain metrics over prompts with `expected_chain`: exact-match and prefix-match (first two steps).
 - Reports accuracy per file, per-boundary failures, and `must_not_load` violations. `--json` for machine output; non-zero exit under `--min-accuracy` gates CI.
+
+### Host mode
+
+`--mode claude` shows the model a clean menu of routers. A real session instead sees every installed skill, so routing has to survive a crowded list. `--mode host` measures that.
+
+Per prompt it starts a fresh `claude -p --output-format stream-json --verbose` session in a temp sandbox whose `.claude/skills/` holds copies of the repo's `routr-*` skills. The session is limited to the Skill tool (`--tools Skill`) with hooks disabled, so it cannot change anything. The runner reads the stream for the init event (how many skills the agent could see) and the Skill tool calls (which it invoked, in order). The first situational router invoked is the router; the situational routers in order are the chain. If `routr-router` came first, the prompt is counted as routed via the router.
+
+- `--host-env isolated` (default) loads only the sandbox's skills plus Claude Code's bundled ones. `--host-env user` also loads your installed `~/.claude` skills.
+- `--noise-dir DIR` copies the non-`routr-*` skill folders from `DIR` into the sandbox, for a crowded list you can reproduce.
+- The report adds: skills visible to the agent (min/max), prompts where no ROUTR skill was invoked, prompts routed via `routr-router`, and the other skills invoked instead.
+- It needs a signed-in `claude` CLI and runs one real session per prompt, so it costs tokens and time. A signed-out CLI fails the preflight with exit 2. No host-mode results are published yet.
+
+The runner itself is tested offline: `python -m unittest discover -s scripts/tests -v` drives `scripts/tests/fake_claude.py`, a fake CLI that emits stream-json, and CI runs it.
 
 Evals in `evals/` now cover every situational router (one `*.eval.json` file per router, plus `routr-router` for cross-cutting chain tests) — not just the original three.
 
