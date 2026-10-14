@@ -143,8 +143,17 @@ Routing is tested, not assumed. Blind runs used a **Haiku 4.5** subagent that co
 | With multi-route, 176 prompts (run A / B) | 98.3% / 97.7% | 75.0% / 75.0%, 82.1% / 78.6% | 1 / 1 |
 | Same, with `next` and `companions` in the menu (run C / D) | 94.3% / 98.9% | 75.0% / 78.6%, 78.6% / 78.6% | 4 / 0 |
 
+**Plan composition rules (unreleased):** these runs used 24 held-out chain prompts, written before the rules and never used for tuning.
+
+| Held-out chain set, 24 prompts | Router accuracy | Chain exact-match | Violations |
+|--------------------------------|-----------------|-------------------|------------|
+| Before: menu with handoffs only (2 runs) | 83.3% / 87.5% | 75.0% / 75.0% | 0 / 0 |
+| After: plus `composition_rules`, `step_signals` and known plans (2 runs) | **95.8% / 95.8%** | **91.7% / 91.7%** | 0 / 0 |
+
+On the 28 tuned chain prompts, chain exact-match moved from 85.7% / 82.1% to 85.7% / 92.9%.
+
 - **176 prompts** across **21 eval files**, covering every situational router with adversarial boundary pairs, plus 20 multi-intent prompts in `evals/multi-route.eval.json` (20/20 router accuracy in both runs).
-- Chain scores cover the 28 prompts with an `expected_chain`. The multi-route runs used a menu with descriptions only. Runs C and D also gave the model each router's `next` handoffs and `companions`, as an agent sees them. That changed chain scores by about one prompt, within run-to-run noise. Implicit next steps, such as a chat UI after AI SDK wiring, are still the main open problem.
+- Handoff lists alone barely moved chain scores. Explicit composition rules did, and the gain held on prompts the rules were never tuned on. To reproduce the comparison, run `--export-prompts` with and without `--no-route-guide`.
 - Single runs vary by about ±3 points, so compare averages. The offline static mode is only a lexical smoke test and is not a quality claim.
 - Details: [docs/plans/2026-09-25-routr-v2.1.md](docs/plans/2026-09-25-routr-v2.1.md) and [docs/plans/2026-10-09-multi-route.md](docs/plans/2026-10-09-multi-route.md).
 - One caveat: a single small model on one benchmark you can read. Your agent, model and prompts will differ. That is what [misroute reports](https://github.com/TeckTinkerere/ROUTR/issues/new?template=misroute.yml) are for.
@@ -332,7 +341,8 @@ Honest list of what is not done yet:
 - **Per-host eval runs.** Published numbers come from one small model. We want results per agent and host (Claude Code, Cursor, Codex, others).
 - **Independent `claude -p` confirmation.** `--mode claude` has not been run against the final descriptions because the local CLI was signed out.
 - **More depth fallbacks.** Only debug, frontend, plan, ship, test and security have built-in fallbacks. Other routers degrade to a plain checklist when children are missing.
-- **More contested-prompt handling.** Some prompts legitimately start at more than one router; the `acceptable_routers` field helps, but coverage is thin.
+- **More contested-prompt handling.** Some prompts legitimately start at more than one router, or are unclear about an implied step ("add streaming chat" doesn't say whether a chat UI exists). `acceptable_routers` and `acceptable_chains` help, but coverage is thin.
+- **A bigger held-out set.** 24 held-out chain prompts can only detect large changes. We want 100+, written by contributors.
 
 Want to pick one up? See [CONTRIBUTING.md](CONTRIBUTING.md).
 

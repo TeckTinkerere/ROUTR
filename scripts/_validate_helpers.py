@@ -344,6 +344,23 @@ def cmd_routes(skills_dir: str) -> int:
         print(f"FAIL: routes.json: situational router '{name}' has no entry in 'routers'")
         fails += 1
 
+    # Plan-composition guidance read by routr-router (and model evals).
+    signals = data.get("step_signals", [])
+    if not isinstance(signals, list):
+        print("FAIL: routes.json: 'step_signals' must be a list")
+        fails += 1
+    else:
+        for i, sig in enumerate(signals):
+            if not isinstance(sig, dict) or not sig.get("signal"):
+                print(f"FAIL: routes.json: step_signals[{i}] needs a non-empty 'signal'")
+                fails += 1
+                continue
+            check_name(sig.get("router"), f"step_signals[{i}].router")
+    rules = data.get("composition_rules", [])
+    if not isinstance(rules, list) or not all(isinstance(r, str) and r.strip() for r in rules):
+        print("FAIL: routes.json: 'composition_rules' must be a list of non-empty strings")
+        fails += 1
+
     texts: dict[str, str] = {}
     def skill_text(name: str) -> str:
         if name not in texts:
