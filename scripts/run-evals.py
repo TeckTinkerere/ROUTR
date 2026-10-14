@@ -8,14 +8,16 @@ gives enough signal to win the right prompts, not whether an LLM would
 actually pick it. `--mode claude` shells out to the real `claude -p` CLI and
 is a closer (but slower, non-free, non-deterministic) approximation of real
 routing behavior. `--mode predictions` scores a predictions file you (or an
-external model) produced out-of-band — see `--export-prompts` below. Treat
-all three as regression smoke tests for description quality, not as a
+external model) produced out-of-band — see `--export-prompts` below. `--mode host` goes furthest: it runs real Claude Code sessions and records
+which skills they actually invoke. Treat
+all of these as regression smoke tests for description quality, not as a
 certification that routing is "correct".
 
 Usage:
     python scripts/run-evals.py                         # static mode, all evals
     python scripts/run-evals.py --mode claude            # shells out to claude -p
     python scripts/run-evals.py --mode claude --model claude-haiku-4-5-20251001
+    python scripts/run-evals.py --mode host --host-env isolated   # real Claude Code sessions
     python scripts/run-evals.py --file evals/routr-router.eval.json
     python scripts/run-evals.py --json out.json --min-accuracy 0.8
 
@@ -24,6 +26,37 @@ Usage:
     #   -> hand prompts.json's "menu" + "prompts" to any model, collect its
     #      routing choice per prompt id, then:
     python scripts/run-evals.py --mode predictions --predictions preds.json
+
+--mode host  (real Claude Code sessions)
+    Measures what an actual `claude` session does with the ROUTR skills it can
+    see: which skill(s) it invokes for each eval prompt. Needs the `claude`
+    CLI signed in, and costs one real session per prompt. No results are
+    claimed anywhere until you run it; treat the numbers as yours.
+      * One temp sandbox per run with .claude/skills/ = copies of every
+        skills/routr-* folder. Each prompt runs in a fresh session
+        (`claude -p --output-format stream-json --verbose --no-session-persistence
+        --tools Skill --settings '{"disableAllHooks": true}'`), so nothing can
+        edit files, run commands or fire your hooks. The prompt goes to stdin.
+      * --host-env isolated (default): `--setting-sources project`, so the agent
+        sees only the sandbox's skills plus Claude Code's bundled ones.
+        --host-env user: `--setting-sources user,project`, so your installed
+        ~/.claude skills crowd the list too (the realistic case).
+      * --noise-dir DIR: copy every non-routr-* skill folder from DIR into the
+        sandbox, to simulate a crowded list reproducibly.
+      * --claude-bin PATH (also used by --mode claude), --max-turns N (default 3),
+        --model, --concurrency, --timeout (default 180s here), --keep-sandbox.
+      * Chain = situational routr-* skills in the order invoked, de-duplicated.
+        If routr-router was the first routr skill invoked, the prompt counts as
+        "via router" and the next situational skill is the router. No routr
+        skill invoked -> got=None with reason no-skill (or error).
+      * A preflight session runs first; a signed-out CLI exits 2 instead of
+        scoring zeros. Extra report lines: skills visible to the agent, % of
+        prompts with no ROUTR skill, % routed via routr-router, top other
+        skills invoked instead. --json adds a `host` summary and per-prompt
+        `host` details.
+    Example:
+        python scripts/run-evals.py --mode host --host-env isolated --file evals/multi-route-holdout.eval.json
+        python scripts/run-evals.py --mode host --host-env user --concurrency 2
 
 Only prompts carrying an `expected_router` field are scored for routing
 accuracy; prompts that test in-skill behavior only (`expected_behaviors`,
@@ -78,7 +111,7 @@ import shutil
 import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
 # Windows consoles often default to a cp1252-family encoding that can't
@@ -393,7 +426,9 @@ def build_menu(routers: list, route_guide: bool = True) -> str:
     return "\n".join(lines)
 
 
-def ask_claude(prompt: str, menu: str, model: str, timeout: int) -> tuple | None:
+def ask_claude(
+    prompt: str, menu: str, model: str, timeout: int, claude_bin: str | None = None
+) -> tuple | None:
     claude_prompt = (
         "You are a router that picks exactly one workflow skill for a coding "
         "agent to load, given a user request.\n\n"
@@ -411,7 +446,7 @@ def ask_claude(prompt: str, menu: str, model: str, timeout: int) -> tuple | None
     )
     try:
         result = subprocess.run(
-            [shutil.which("claude") or "claude", "-p", "--model", model],
+            claude_command(claude_bin) + ["-p", "--model", model],
             input=claude_prompt,
             capture_output=True,
             text=True,
@@ -435,13 +470,14 @@ def ask_claude(prompt: str, menu: str, model: str, timeout: int) -> tuple | None
 
 
 def pick_claude_batch(
-    prompts: list, routers: list, model: str, concurrency: int, timeout: int, route_guide: bool = True
+    prompts: list, routers: list, model: str, concurrency: int, timeout: int, route_guide: bool = True,
+    claude_bin: str | None = None,
 ) -> dict:
     menu = build_menu(routers, route_guide=route_guide)
     results = {}
     with ThreadPoolExecutor(max_workers=max(1, concurrency)) as ex:
         futures = {
-            ex.submit(ask_claude, p, menu, model, timeout): p for p in prompts
+            ex.submit(ask_claude, p, menu, model, timeout, claude_bin): p for p in prompts
         }
         for fut in as_completed(futures):
             p = futures[fut]
@@ -454,18 +490,303 @@ def pick_claude_batch(
 
 
 # --------------------------------------------------------------------------
+# host mode: what a real Claude Code session does
+# --------------------------------------------------------------------------
+
+HOST_PREFLIGHT_PROMPT = "Reply with only the word: ok"
+
+
+def claude_command(claude_bin: str | None = None) -> list:
+    """argv prefix for the claude CLI. A `.py` path runs under this Python."""
+    path = claude_bin or shutil.which("claude") or "claude"
+    if claude_bin and Path(claude_bin).exists():
+        path = str(Path(claude_bin).resolve())  # sessions run with cwd=sandbox, so no relative paths
+    if str(path).lower().endswith(".py"):
+        return [sys.executable, str(path)]
+    return [str(path)]
+
+
+def normalize_skill_name(raw) -> str | None:
+    """'/routr:routr-debug args' -> 'routr-debug'."""
+    if not isinstance(raw, str):
+        return None
+    tokens = raw.strip().lstrip("/").split()
+    if not tokens:
+        return None
+    return tokens[0].rsplit(":", 1)[-1].strip() or None
+
+
+def skill_name_from_input(tool_input) -> str | None:
+    """Skill name from a Skill tool_use input; the key is not verified, so be liberal."""
+    if not isinstance(tool_input, dict):
+        return None
+    for key in ("skill", "name", "command"):
+        name = normalize_skill_name(tool_input.get(key))
+        if name:
+            return name
+    return None
+
+
+@dataclass
+class HostParse:
+    saw_init: bool = False
+    skills_seen: int | None = None
+    routr_seen: int | None = None
+    model: str | None = None
+    invoked: list = field(default_factory=list)  # every Skill invocation, in order
+    error: str | None = None
+
+
+def parse_host_stream(lines) -> HostParse:
+    """Parse `claude -p --output-format stream-json --verbose` output (one JSON event per line).
+
+    The init event need not be first (hook events can precede it). Unparseable
+    lines are ignored.
+    """
+    out = HostParse()
+    seen_tool_ids = set()
+    for line in lines:
+        line = line.strip()
+        if not line.startswith("{"):
+            continue
+        try:
+            ev = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if not isinstance(ev, dict):
+            continue
+        etype = ev.get("type")
+        if etype == "system" and ev.get("subtype") == "init" and not out.saw_init:
+            out.saw_init = True
+            names = []
+            for s in ev.get("skills") or []:
+                n = normalize_skill_name(s.get("name") if isinstance(s, dict) else s)
+                if n:
+                    names.append(n)
+            out.skills_seen = len(names)
+            out.routr_seen = sum(1 for n in names if n.startswith("routr-"))
+            out.model = ev.get("model")
+        elif etype == "assistant":
+            if ev.get("error") and not out.error:
+                out.error = str(ev["error"])
+            content = (ev.get("message") or {}).get("content")
+            if not isinstance(content, list):
+                continue
+            for block in content:
+                if not (isinstance(block, dict) and block.get("type") == "tool_use"
+                        and block.get("name") == "Skill"):
+                    continue
+                tid = block.get("id")
+                if tid:
+                    if tid in seen_tool_ids:
+                        continue
+                    seen_tool_ids.add(tid)
+                name = skill_name_from_input(block.get("input"))
+                if name:
+                    out.invoked.append(name)
+        elif etype == "result":
+            if ev.get("is_error") and not out.error:
+                out.error = str(ev.get("result") or ev.get("subtype") or "error")
+    return out
+
+
+@dataclass
+class HostResult:
+    router: str | None
+    chain: list | None
+    reason: str | None = None  # why router is None: no-skill | no-situational | error
+    via_router: bool = False
+    routr_invoked: list = field(default_factory=list)
+    other_skills: list = field(default_factory=list)
+    skills_seen: int | None = None
+    routr_seen: int | None = None
+    error: str | None = None
+
+
+def interpret_host(parse: HostParse, situational: set) -> HostResult:
+    """Turn a parsed stream into the router/chain the session actually chose.
+
+    Chain = situational routr-* skills in invocation order, de-duplicated.
+    routr-router, routr-catalog and routr-depth-* are recorded but are not
+    chain steps; `via_router` is set when routr-router was the first routr
+    skill invoked.
+    """
+    routr = []
+    for n in parse.invoked:
+        if n.startswith("routr-") and n not in routr:
+            routr.append(n)
+    others = []
+    for n in parse.invoked:
+        if not n.startswith("routr-") and n not in others:
+            others.append(n)
+    chain = [n for n in routr if n in situational]
+    res = HostResult(
+        router=chain[0] if chain else None,
+        chain=chain or None,
+        via_router=bool(routr) and routr[0] == "routr-router",
+        routr_invoked=routr,
+        other_skills=others,
+        skills_seen=parse.skills_seen,
+        routr_seen=parse.routr_seen,
+        error=parse.error,
+    )
+    if not chain:
+        if parse.error and not routr:
+            res.reason = "error"
+        elif routr:
+            res.reason = "no-situational"
+        else:
+            res.reason = "no-skill"
+    return res
+
+
+def build_host_sandbox(noise_dir: Path | None = None) -> tuple:
+    """Temp project with .claude/skills = every repo routr-* skill (+ noise). Returns (path, noise_count)."""
+    import tempfile
+    sandbox = Path(tempfile.mkdtemp(prefix="routr-host-"))
+    skills = sandbox / ".claude" / "skills"
+    skills.mkdir(parents=True)
+    for d in sorted(SKILLS_DIR.glob("routr-*")):
+        if d.is_dir():
+            shutil.copytree(d, skills / d.name)
+    noise = 0
+    if noise_dir:
+        for d in sorted(Path(noise_dir).iterdir()):
+            if d.is_dir() and not d.name.startswith("routr-") and not (skills / d.name).exists():
+                shutil.copytree(d, skills / d.name)
+                noise += 1
+    return sandbox, noise
+
+
+def host_command(claude_bin: str | None, host_env: str, max_turns: int, model: str | None) -> list:
+    cmd = claude_command(claude_bin) + [
+        "-p",
+        "--output-format", "stream-json",
+        "--verbose",
+        "--no-session-persistence",
+        "--tools", "Skill",
+        "--settings", '{"disableAllHooks": true}',
+        "--permission-mode", "default",
+        "--setting-sources", "user,project" if host_env == "user" else "project",
+        "--max-turns", str(max_turns),
+    ]
+    if model:
+        cmd += ["--model", model]
+    return cmd
+
+
+def run_host_session(prompt: str, sandbox: Path, cmd: list, timeout: int) -> HostParse:
+    """Run one fresh session in the sandbox. A failure is recorded in .error, never raised."""
+    try:
+        proc = subprocess.run(
+            cmd, input=prompt, capture_output=True, text=True, encoding="utf-8",
+            errors="replace", timeout=timeout, cwd=str(sandbox),
+        )
+    except subprocess.TimeoutExpired:
+        return HostParse(error=f"timeout after {timeout}s")
+    except (FileNotFoundError, OSError) as exc:
+        return HostParse(error=f"could not run claude CLI: {exc}")
+    parse = parse_host_stream((proc.stdout or "").splitlines())
+    if proc.returncode != 0 and not parse.error:
+        detail = ((proc.stderr or proc.stdout or "").strip().splitlines() or ["no output"])[0]
+        parse.error = f"claude exited {proc.returncode}: {detail[:200]}"
+    return parse
+
+
+def pick_host_batch(
+    prompts: list, sandbox: Path, cmd: list, situational: set, concurrency: int, timeout: int
+) -> dict:
+    results = {}
+    with ThreadPoolExecutor(max_workers=max(1, concurrency)) as ex:
+        futures = {
+            ex.submit(run_host_session, p, sandbox, cmd, timeout): p for p in dict.fromkeys(prompts)
+        }
+        for fut in as_completed(futures):
+            p = futures[fut]
+            try:
+                results[p] = interpret_host(fut.result(), situational)
+            except Exception as exc:  # pragma: no cover - defensive
+                print(f"  ! error running prompt: {exc}", file=sys.stderr)
+                results[p] = HostResult(None, None, reason="error", error=str(exc))
+    return results
+
+
+def summarize_host(host_results: list) -> dict:
+    """Aggregate per-prompt host dicts (results[].host) for the report."""
+    seen = [h["skills_seen"] for h in host_results if h.get("skills_seen") is not None]
+    other: dict = {}
+    for h in host_results:
+        for s in h.get("other_skills") or []:
+            other[s] = other.get(s, 0) + 1
+    top = sorted(other.items(), key=lambda kv: (-kv[1], kv[0]))[:5]
+    return {
+        "prompts": len(host_results),
+        "skills_visible_min": min(seen) if seen else None,
+        "skills_visible_max": max(seen) if seen else None,
+        "no_routr_skill": sum(1 for h in host_results if h.get("reason") in ("no-skill", "error")),
+        "no_skill": sum(1 for h in host_results if h.get("reason") == "no-skill"),
+        "errors": sum(1 for h in host_results if h.get("reason") == "error"),
+        "via_router": sum(1 for h in host_results if h.get("via_router")),
+        "other_skills_top": [{"skill": k, "prompts": v} for k, v in top],
+    }
+
+
+def host_preflight(cmd: list, sandbox: Path, timeout: int) -> str | None:
+    """Return an error message when a session cannot run (signed out, bad CLI), else None."""
+    parse = run_host_session(HOST_PREFLIGHT_PROMPT, sandbox, cmd, timeout)
+    if parse.error:
+        return (
+            f"claude CLI preflight failed: {parse.error}\n"
+            "Run `claude` interactively to sign in, then retry."
+        )
+    if not parse.saw_init:
+        return (
+            "claude CLI preflight failed: no init event in the stream-json output "
+            "(is this a claude CLI that supports --output-format stream-json --verbose?)"
+        )
+    return None
+
+
+# --------------------------------------------------------------------------
 # main
 # --------------------------------------------------------------------------
 
 def main() -> int:
+    cleanup: list = []
+    try:
+        return _main(cleanup)
+    finally:
+        for fn in cleanup:
+            fn()
+
+
+def _main(cleanup: list) -> int:
     parser = argparse.ArgumentParser(
         description=__doc__,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    parser.add_argument("--mode", choices=["static", "claude", "predictions"], default="static")
-    parser.add_argument("--model", default=DEFAULT_MODEL, help="model for --mode claude")
+    parser.add_argument("--mode", choices=["static", "claude", "predictions", "host"], default="static")
+    parser.add_argument(
+        "--model", default=None,
+        help=f"model for --mode claude (default {DEFAULT_MODEL}) and --mode host (default: the CLI's own default)",
+    )
     parser.add_argument("--concurrency", type=int, default=4, help="parallel claude -p calls")
-    parser.add_argument("--timeout", type=int, default=60, help="per-call timeout (seconds) for --mode claude")
+    parser.add_argument(
+        "--timeout", type=int, default=None,
+        help="per-call timeout in seconds (default 60 for --mode claude, 180 for --mode host)",
+    )
+    parser.add_argument("--claude-bin", dest="claude_bin", default=None,
+                        help="claude CLI to run (default: `claude` on PATH; a .py path runs under this Python)")
+    parser.add_argument("--host-env", dest="host_env", choices=["isolated", "user"], default="isolated",
+                        help="--mode host: isolated = only the sandbox's project skills; "
+                        "user = also your installed ~/.claude skills")
+    parser.add_argument("--noise-dir", dest="noise_dir", default=None,
+                        help="--mode host: copy every non-routr-* skill folder from this directory into the "
+                        "sandbox to simulate a crowded skill list")
+    parser.add_argument("--max-turns", dest="max_turns", type=int, default=3,
+                        help="--mode host: --max-turns passed to each session (default 3)")
+    parser.add_argument("--keep-sandbox", dest="keep_sandbox", action="store_true",
+                        help="--mode host: do not delete the temp sandbox afterwards (for debugging)")
     parser.add_argument("--file", help="run only this eval file")
     parser.add_argument(
         "--no-route-guide",
@@ -487,6 +808,10 @@ def main() -> int:
         "mapping prompt ids (as produced by --export-prompts) to predicted routers",
     )
     args = parser.parse_args()
+    if args.mode == "claude" and not args.model:
+        args.model = DEFAULT_MODEL
+    if args.timeout is None:
+        args.timeout = 180 if args.mode == "host" else 60
 
     if args.mode == "predictions" and not args.predictions_path:
         print("--mode predictions requires --predictions PATH", file=sys.stderr)
@@ -571,7 +896,7 @@ def main() -> int:
         # prompt as a silent miss (got=None).
         try:
             probe = subprocess.run(
-                [shutil.which("claude") or "claude", "-p", "--model", args.model],
+                claude_command(args.claude_bin) + ["-p", "--model", args.model],
                 input="Reply with only the word: ok",
                 capture_output=True,
                 text=True,
@@ -590,6 +915,26 @@ def main() -> int:
                 "Run `claude` interactively to sign in, then retry.",
                 file=sys.stderr,
             )
+            return 2
+
+    host_sandbox = None
+    host_cmd: list = []
+    host_noise = 0
+    situational = {r.name for r in routers}
+    if args.mode == "host":
+        noise_dir = None
+        if args.noise_dir:
+            noise_dir = Path(args.noise_dir)
+            if not noise_dir.is_dir():
+                print(f"--noise-dir {args.noise_dir} is not a directory", file=sys.stderr)
+                return 2
+        host_sandbox, host_noise = build_host_sandbox(noise_dir)
+        if not args.keep_sandbox:
+            cleanup.append(lambda: shutil.rmtree(host_sandbox, ignore_errors=True))
+        host_cmd = host_command(args.claude_bin, args.host_env, args.max_turns, args.model)
+        problem = host_preflight(host_cmd, host_sandbox, args.timeout)
+        if problem:
+            print(problem, file=sys.stderr)
             return 2
 
     all_results = []
@@ -630,9 +975,16 @@ def main() -> int:
         elif args.mode == "claude":
             by_prompt_text = pick_claude_batch(
                 [p["prompt"] for _, p in scorable], routers, args.model, args.concurrency, args.timeout,
-                    route_guide=not args.no_route_guide,
+                    route_guide=not args.no_route_guide, claude_bin=args.claude_bin,
             )
             predictions = {i: by_prompt_text.get(p["prompt"]) for i, p in scorable}
+        elif args.mode == "host":
+            by_prompt_text = pick_host_batch(
+                [p["prompt"] for _, p in scorable], host_sandbox, host_cmd, situational,
+                args.concurrency, args.timeout,
+            )
+            host_by_index = {i: by_prompt_text[p["prompt"]] for i, p in scorable}
+            predictions = {i: (h.router, h.chain) for i, h in host_by_index.items()}
         else:  # predictions
             predictions = {
                 i: (normalize_prediction(predictions_by_id[f"{ef.name}#{i}"])
@@ -645,6 +997,7 @@ def main() -> int:
         for i, p in scorable:
             expected = p["expected_router"]
             got, got_chain = predictions.get(i) or (None, None)
+            host = host_by_index[i] if args.mode == "host" else None
             must_not_load = set(p.get("must_not_load", []) or [])
             acceptable = {expected} | set(p.get("acceptable_routers", []) or [])
             hit = got in acceptable
@@ -671,6 +1024,7 @@ def main() -> int:
                         "expected": expected,
                         "got": got,
                         "boundary": p.get("boundary"),
+                        **({"reason": host.reason} if host and host.reason else {}),
                     }
                 )
             if violation:
@@ -690,6 +1044,7 @@ def main() -> int:
                     "chain_prefix": prefix,
                     "must_not_load_violation": violation,
                     "boundary": p.get("boundary"),
+                    **({"host": asdict(host)} if host else {}),
                 }
             )
 
@@ -699,7 +1054,13 @@ def main() -> int:
         per_file_rows.append((ef.name, file_correct, len(scorable), skipped, file_violations))
 
     # ---- report ----
-    print(f"Mode: {args.mode}" + (f" (model={args.model})" if args.mode == "claude" else ""))
+    if args.mode == "host":
+        print(f"Mode: host (env={args.host_env}, model={args.model or 'CLI default'}, "
+              f"max-turns={args.max_turns}, noise skills={host_noise})")
+        if args.keep_sandbox:
+            print(f"Sandbox kept at: {host_sandbox}")
+    else:
+        print(f"Mode: {args.mode}" + (f" (model={args.model})" if args.mode == "claude" else ""))
     print(f"Candidate routers: {len(routers)} ({', '.join(r.name for r in routers)})")
     print()
     print(f"{'file':35} {'correct/scored':16} {'accuracy':>9} {'skipped':>8} {'violations':>11}")
@@ -719,6 +1080,29 @@ def main() -> int:
     print(f"Prompts skipped (no expected_router): {total_skipped}")
     print(f"must_not_load violations: {total_violations}")
 
+    host_summary = None
+    host_rows = [r["host"] for r in all_results if r.get("host")]
+    if args.mode == "host" and host_rows:
+        host_summary = summarize_host(host_rows)
+        n = host_summary["prompts"]
+        lo, hi = host_summary["skills_visible_min"], host_summary["skills_visible_max"]
+        print()
+        print("Host session details:")
+        if lo is None:
+            print("  Skills visible to the agent: unknown (no init event)")
+        else:
+            print(f"  Skills visible to the agent: min {lo}, max {hi} (per prompt)")
+        print(f"  No ROUTR skill invoked: {host_summary['no_routr_skill']}/{n} "
+              f"({host_summary['no_routr_skill'] / n * 100:.1f}%)"
+              + (f", of which {host_summary['errors']} errored" if host_summary["errors"] else ""))
+        print(f"  Routed via routr-router: {host_summary['via_router']}/{n} "
+              f"({host_summary['via_router'] / n * 100:.1f}%)")
+        if host_summary["other_skills_top"]:
+            print("  Other skills invoked instead (top 5, by prompts): "
+                  + ", ".join(f"{o['skill']} x{o['prompts']}" for o in host_summary["other_skills_top"]))
+        else:
+            print("  Other skills invoked instead: none")
+
     if chain_misses:
         print()
         print("Chain misses:")
@@ -731,14 +1115,20 @@ def main() -> int:
         print("Misses:")
         for m in misses:
             boundary = f" [boundary: {m['boundary']}]" if m.get("boundary") else ""
-            print(f"  - {m['file']}: \"{m['prompt']}\" expected={m['expected']} got={m['got']}{boundary}")
+            reason = f" [{m['reason']}]" if m.get("reason") else ""
+            print(f"  - {m['file']}: \"{m['prompt']}\" expected={m['expected']} got={m['got']}{reason}{boundary}")
 
     if args.json_path:
         Path(args.json_path).write_text(
             json.dumps(
                 {
                     "mode": args.mode,
-                    "model": args.model if args.mode == "claude" else None,
+                    "model": args.model if args.mode in ("claude", "host") else None,
+                    **(
+                        {"host_env": args.host_env, "noise_skills": host_noise, "max_turns": args.max_turns,
+                         "host": host_summary}
+                        if args.mode == "host" else {}
+                    ),
                     "overall_accuracy": overall_acc,
                     "total_scored": total_scored,
                     "total_correct": total_correct,
