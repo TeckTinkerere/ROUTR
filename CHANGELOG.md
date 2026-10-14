@@ -4,6 +4,23 @@ All notable changes to ROUTR are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). For ROUTR, a "breaking" change is one that renames or removes a skill, or changes a router's documented contract.
 
+## [Unreleased]
+
+### Added
+
+- **Plan composition rules.** `routes.json` now has `step_signals` (job → router) and `composition_rules`. The rules are: one step per job; fixes reach production through `routr-ship`; diagnose before you polish; add an unstated step only when the deliverable can't exist without it; deferred work and companions are never steps. `routr-router` and `docs/routing.md` explain them, and validator check 12 enforces them.
+- **Held-out chain eval set.** `evals/multi-route-holdout.eval.json` has 24 prompts, written before the rules were changed and never used for tuning.
+- **Eval runner.** Model-facing menus include the route guide: composition rules, step signals and known plans. Use `--no-route-guide` to run the ablation. The report now lists chain misses.
+
+### Changed
+
+- Known plans in `routes.json` have more descriptive `when` text.
+- Two "add streaming chat" prompts now accept `routr-ai` alone as a chain, because the request doesn't say whether a chat UI exists.
+
+### Measured
+
+- On held-out chain prompts with blind Haiku 4.5, chain exact-match rose from 75.0% to 91.7% and router accuracy from 83–88% to 95.8%, with 0 violations (2 runs each).
+
 ## [2.1.0] - 2026-10-09
 
 ### Added
@@ -91,6 +108,7 @@ Blind Haiku 4.5 runs (a subagent that could only read the exported prompts file)
 
 - Initial release: situational agent skill playbooks.
 
+[Unreleased]: https://github.com/TeckTinkerere/ROUTR/compare/v2.1.0...HEAD
 [2.1.0]: https://github.com/TeckTinkerere/ROUTR/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/TeckTinkerere/ROUTR/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/TeckTinkerere/ROUTR/compare/v1.3.0...v2.0.0

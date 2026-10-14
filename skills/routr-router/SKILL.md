@@ -75,6 +75,21 @@ Next: routr-ship once root cause is fixed and verified
 - **User overrides win.** "Skip", "stop after debug", "just ship" edit the plan immediately; restate it in one line.
 - Run `Next:` only after the current router's own Handoff says it is done.
 
+### Composing a plan
+
+Map each job the request asks for to a router (step_signals in routes.json), then order them by how the work happens:
+
+```
+plan → diagnose or build → fix + commit (routr-ship) → release (routr-deploy) → verify live (routr-qa) / promote (routr-video, routr-marketing)
+```
+
+1. **One step per distinct job asked for.** "Find the cause, fix it, get it live" is three jobs: debug → ship → deploy.
+2. **Fixes go live through ship.** Never go straight from routr-debug, routr-perf or routr-security to routr-deploy.
+3. **Diagnose before you polish.** perf before motion, review before ship, test before qa, plan before building.
+4. **Add an unstated step only if the deliverable can't exist without it.** For example, AI chat in an app with no chat UI needs routr-frontend.
+5. **Deferred work is not a step.** "We'll deploy later" means no deploy step.
+6. **Companions are never steps.**
+
 ## Companions
 
 A **companion** lends one checklist to the active router without taking the task. At most one per step, only on its named signal (pairings in routes.json, e.g. `routr-ship` + `routr-security` when the diff touches auth, RLS, secrets, or payments). Read only the section the entry names; never run its bootstrap or load its children.

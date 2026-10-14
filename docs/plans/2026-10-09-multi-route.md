@@ -155,3 +155,29 @@ Re-measured with the richer menu:
 - **Implicit follow-on steps.** "Streaming chat" implies a UI step. Teach this with chain examples in the menu, or treat the step as optional in scoring.
 - **perf vs motion.** Check this boundary when frame drops come with a request to fix them.
 - **Run variance.** Run C's 94.3% shows the noise. Gate CI on the mean of three runs, never on one.
+
+## Chain accuracy follow-up
+
+After 2.1.0, a Sonnet subagent wrote a held-out set of 24 chain prompts (`evals/multi-route-holdout.eval.json`). It saw only `routes.json` and the router docs. The set was written before any change and never used for tuning.
+
+The diagnosis showed three kinds of chain miss:
+- **Skipped steps:** debug → deploy without ship, or ship without a release the request asked for.
+- **Implied steps:** for example, a chat UI after AI SDK wiring.
+- **Wrong order:** for example, perf before motion.
+
+The fix:
+- **`routes.json`:** new `step_signals` and `composition_rules`, plus more descriptive `when` text on known plans.
+- **`routr-router`:** a "Composing a plan" section.
+- **Eval menus:** they now carry the same guide an agent reads; `--no-route-guide` turns it off.
+
+Blind Haiku 4.5, 2 runs each:
+
+| Set | Measure | Before | After |
+|-----|---------|--------|-------|
+| Held-out (24) | Router accuracy | 83.3% / 87.5% | 95.8% / 95.8% |
+| Held-out (24) | Chain exact-match | 75.0% / 75.0% | 91.7% / 91.7% |
+| Tuned (28 chain prompts) | Chain exact-match | 85.7% / 82.1% | 85.7% / 92.9% |
+
+Violations: 0 on the held-out set in all runs.
+
+The remaining consistent miss is "add streaming chat with the AI SDK", which never got a frontend step in 8 of 8 runs. The request doesn't say whether a chat UI exists. Both eval prompts with this wording now accept `routr-ai` alone, with a `chain_note` explaining why. No rule was added for it.
