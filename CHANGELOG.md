@@ -12,6 +12,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - **Held-out chain eval set.** `evals/multi-route-holdout.eval.json` has 24 prompts, written before the rules were changed and never used for tuning.
 - **Eval runner.** Model-facing menus include the route guide: composition rules, step signals and known plans. Use `--no-route-guide` to run the ablation. The report now lists chain misses.
 
+- **Host eval mode.** `python scripts/run-evals.py --mode host` runs a real Claude Code session per eval prompt in a temp sandbox and records which ROUTR skills it invokes, to test whether routing survives a crowded skill list. Options: `--host-env isolated|user`, `--noise-dir`, `--claude-bin`, `--max-turns`, `--keep-sandbox`. The report adds skills visible to the agent, prompts with no ROUTR skill, prompts routed via `routr-router`, and other skills invoked instead. No host-mode results have been collected yet.
+- **Runner unit tests.** `scripts/tests/` has stdlib `unittest` tests for the runner against a fake `claude` CLI (`fake_claude.py`), and CI runs them.
+
 ### Changed
 
 - Known plans in `routes.json` have more descriptive `when` text.
