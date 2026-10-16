@@ -55,10 +55,18 @@ npx skills add TeckTinkerere/ROUTR -g --all -y --copy
 | Bundle | Command |
 |--------|---------|
 | **Meta** | `npx skills add TeckTinkerere/ROUTR -g --copy -y --skill routr-router --skill routr-catalog` |
-| **Core** | `… --skill routr-debug --skill routr-ship --skill routr-plan --skill routr-explore` |
+| **Core** | `… --skill routr-debug --skill routr-ship --skill routr-plan --skill routr-spec --skill routr-explore` |
 | **Frontend** | `… --skill routr-frontend --skill routr-motion` |
 | **Video** | `… --skill routr-video` |
 | **Stacks** | `… --skill routr-mobile --skill routr-marketing --skill routr-ai` |
+
+For existing-product specification reconciliation, install `routr-spec` individually or use the all-skills command above:
+
+```bash
+npx skills add TeckTinkerere/ROUTR -g --copy -y --skill routr-spec
+```
+
+`routr-spec` supports source-based reconciliation without REA. Its optional `reverse-engineer-anything` child is for claims that require shipped/runtime evidence; installing that child does not register or connect the REA MCP server. Consult the [skill registry](skills/routr-catalog/references/skill-registry.md) and REA's own connection contract when that evidence is needed.
 
 ---
 
@@ -94,7 +102,8 @@ Search `routr-` in `/` picker:
 | `routr-debug` | Find and fix bugs step by step |
 | `routr-ship` | Fix, verify, commit or PR |
 | `routr-frontend` | Build or redesign UI |
-| `routr-plan` | Plan, PRD, grill ideas |
+| `routr-plan` | Plan future work, new-feature PRD, grill ideas |
+| `routr-spec` | Reconstruct current product, reconcile specs, document drift |
 | `routr-video` | Video — launch, Remotion, HyperFrames |
 | `routr-ai` | AI SDK chat, agents, RAG |
 | `routr-mobile` | Expo / React Native |
@@ -124,7 +133,7 @@ npx skills update TeckTinkerere/ROUTR -g -y
 Remove all v2 routers:
 
 ```bash
-npx skills remove routr-router routr-catalog routr-debug routr-ship routr-plan routr-test routr-review routr-refactor routr-deploy routr-database routr-qa routr-security routr-perf routr-explore routr-integrate routr-agents routr-frontend routr-motion routr-mobile routr-marketing routr-ai routr-video routr-depth-debug routr-depth-frontend routr-depth-plan routr-depth-ship routr-depth-test routr-depth-security -g -y
+npx skills remove routr-router routr-catalog routr-debug routr-ship routr-plan routr-spec routr-test routr-review routr-refactor routr-deploy routr-database routr-qa routr-security routr-perf routr-explore routr-integrate routr-agents routr-frontend routr-motion routr-mobile routr-marketing routr-ai routr-video routr-depth-debug routr-depth-frontend routr-depth-plan routr-depth-ship routr-depth-test routr-depth-security -g -y
 ```
 
 ---

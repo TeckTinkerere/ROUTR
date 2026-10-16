@@ -8,6 +8,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ### Added
 
+- **`routr-spec`** for evidence-backed reconciliation of existing products: preserve baseline intent, reconstruct current behavior, document drift and product evolution, and incrementally maintain a living specification from Git changes. Source and Git evidence are the ordinary path; `reverse-engineer-anything` from `morluto/rea` is an optional child only when shipped/runtime evidence is required. Includes artifact/schema guidance, source-only fallback, adversarial routing evals, and explicit opt-in `routr-plan → routr-ship → routr-spec` composition.
 - **Plan composition rules.** `routes.json` now has `step_signals` (job → router) and `composition_rules`. The rules are: one step per job; fixes reach production through `routr-ship`; diagnose before you polish; add an unstated step only when the deliverable can't exist without it; deferred work and companions are never steps. `routr-router` and `docs/routing.md` explain them, and validator check 12 enforces them.
 - **Held-out chain eval set.** `evals/multi-route-holdout.eval.json` has 24 prompts, written before the rules were changed and never used for tuning.
 - **Eval runner.** Model-facing menus include the route guide: composition rules, step signals and known plans. Use `--no-route-guide` to run the ablation. The report now lists chain misses.
@@ -22,6 +23,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ### Measured
 
+- `routr-spec`: static results moved from 123/200 to 150/231, preserving all original passes and adding zero `must_not_load` violations. An isolated blind before/after comparison scored 195/200 and 226/231, including 31/31 new cases and all three new multi-step chains, with zero violations. Additional single-step assertions protect specification artifact writes from unwanted handoffs. See `docs/plans/2026-10-16-routr-spec.md` for methods, validation and limitations.
 - On held-out chain prompts with blind Haiku 4.5, chain exact-match rose from 75.0% to 91.7% and router accuracy from 83–88% to 95.8%, with 0 violations (2 runs each).
 
 ## [2.1.0] - 2026-10-09
