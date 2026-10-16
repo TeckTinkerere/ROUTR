@@ -1,6 +1,6 @@
 ---
 name: routr-ship
-description: "Make a small fix, verify it, and commit or open a PR. Use when: 'fix this', patch, tests must pass, ready to ship, commit, open PR, merge this change. Not for: unknown root cause (→ routr-debug); building new UI (→ routr-frontend)."
+description: "Make a small fix, verify it, and commit or open a PR. Use when: 'fix this', known change, patch, tests must pass, ready to ship, commit, open PR, merge this change. Not for: unknown root cause (→ routr-debug); building new UI (→ routr-frontend)."
 ---
 
 # routr-ship
@@ -18,6 +18,7 @@ description: "Make a small fix, verify it, and commit or open a PR. Use when: 'f
 - Root cause unknown → `routr-debug`
 - Large feature from scratch → `routr-plan` then domain router
 - Deploy only → `routr-deploy`
+- Reconcile an existing product's specification without code changes → `routr-spec`
 
 ## Iron law
 
@@ -66,6 +67,7 @@ Committed → **STOP and re-route** for the next stage (do not deploy or polish 
 - Motion polish → `routr-motion` (short pass)
 - Deploy → `routr-deploy`
 - Launch or brag video → `routr-video`
+- Explicitly requested as-built spec / product-drift update after implementation → `routr-spec` (also after verified implementation when committing was not requested)
 
 ## References
 

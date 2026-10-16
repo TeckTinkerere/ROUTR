@@ -15,7 +15,7 @@
 <p align="center">
   <a href="https://github.com/TeckTinkerere/ROUTR/actions/workflows/validate-skills.yml"><img src="https://github.com/TeckTinkerere/ROUTR/actions/workflows/validate-skills.yml/badge.svg" alt="CI" /></a>
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="MIT license" />
-  <img src="https://img.shields.io/badge/skills-28-blue?style=flat-square" alt="28 skills" />
+  <img src="https://img.shields.io/badge/skills-29-blue?style=flat-square" alt="29 skills" />
   <img src="https://img.shields.io/badge/version-2.1.0-orange?style=flat-square" alt="version 2.1.0" />
 </p>
 
@@ -35,9 +35,9 @@ You installed dozens of skills. The agent picks the wrong one, reads whole files
 
 - **Right skill, first time.** Each router has a tight `Use when:` / `Not for:` description, so the agent chooses from the slash-menu text alone.
 - **Whole route, announced upfront.** Real requests span several routers ("fix the 500 and ship it"). ROUTR plans up to three steps, with one router active at a time.
-- **Measured, not guessed.** 153 eval prompts, a validator in CI, and blind model runs that reach 97 to 99% router accuracy. You can reproduce every number.
+- **Measured, not guessed.** Adversarial eval prompts, a validator in CI, and published blind model runs. Results below identify the benchmark used for each measurement.
 
-> Routers route. Install **child skill bundles** for full depth, see the [skill registry](skills/routr-catalog/references/skill-registry.md). Missing children fall back to built-in `routr-depth-*` skills.
+> Routers route. Install **child skill bundles** for full depth, see the [skill registry](skills/routr-catalog/references/skill-registry.md). Missing children fall back to built-in `routr-depth-*` skills or the router's `references/fallback.md`.
 
 ## Quickstart
 
@@ -75,7 +75,7 @@ flowchart TD
     C -- No --> D
     K --> D{Children installed?}
     D -- Yes --> E[Read child skills<br/>in the router's order]
-    D -- No --> F[routr-depth-* fallback]
+    D -- No --> F[Depth skill or local fallback]
     E --> H[Exit condition met:<br/>handoff]
     F --> H
     H --> N{Next step still applies?}
@@ -86,7 +86,7 @@ flowchart TD
 1. The agent matches a router by its `description` (the text you see on slash-menu hover), or asks `routr-router` when the request is unclear.
 2. The router announces a **route plan**, then works its first step. Only one router is active at a time.
 3. A **companion** may add one checklist section on a named signal. It never takes over.
-4. The router tells the agent which **child skills** to read, and falls back to `routr-depth-*` if they are missing.
+4. The router tells the agent which **child skills** to read, and uses its depth skill or local fallback if they are missing.
 5. At the exit condition the router **hands off**. The agent re-checks the plan and drops steps that no longer apply.
 
 The machine-readable source of truth for handoffs, companions and chains is [`routes.json`](skills/routr-catalog/references/routes.json). Design notes live in [docs/architecture.md](docs/architecture.md) and [docs/plans/](docs/plans/).
@@ -107,6 +107,8 @@ Next: routr-ship once root cause is fixed and verified
 - Each step has an **exit condition**: the point where the agent hands off and re-routes.
 - You can steer mid-task: "skip", "stop after debug", "just ship".
 - At each handoff the agent checks the next step still applies, and drops it if not.
+
+When you explicitly ask to plan a change, implement it, and refresh the living product specification, the plan can be `routr-plan → routr-ship → routr-spec`. Ordinary implementation requests do not automatically add specification work. See [product specification routing](docs/routing.md#product-specification-routing).
 
 ### Companions
 
@@ -135,7 +137,9 @@ Evals support `acceptable_routers` and `acceptable_chains` for prompts with more
 
 ## Measured routing quality
 
-Routing is tested, not assumed. Blind runs used a **Haiku 4.5** subagent that could read only the exported prompt file and menu, with no expected answers.
+The current suite has **245 prompts across 23 files** (231 routing cases, 14 behavior-only cases). Adding `routr-spec` preserved the original static results, introduced zero new `must_not_load` violations, and passed all 31 new cases in an isolated blind model run. Full methods, limitations and before/after results: [routr-spec validation](docs/plans/2026-10-16-routr-spec.md).
+
+Routing is tested, not assumed. The historical blind runs below used a **Haiku 4.5** subagent that could read only the exported prompt file and menu, with no expected answers. These measurements predate `routr-spec`; their prompt counts describe those runs, not the current suite.
 
 | Eval set | Router accuracy | Chain exact / prefix | `must_not_load` violations |
 |----------|-----------------|----------------------|----------------------------|
@@ -152,7 +156,7 @@ Routing is tested, not assumed. Blind runs used a **Haiku 4.5** subagent that co
 
 On the 28 tuned chain prompts, chain exact-match moved from 85.7% / 82.1% to 85.7% / 92.9%.
 
-- **176 prompts** across **21 eval files**, covering every situational router with adversarial boundary pairs, plus 20 multi-intent prompts in `evals/multi-route.eval.json` (20/20 router accuracy in both runs).
+- The historical multi-route benchmark had **176 prompts** across **21 eval files**, covering every then-existing situational router with adversarial boundary pairs, including 20 multi-intent prompts in `evals/multi-route.eval.json` (20/20 router accuracy in both runs).
 - Handoff lists alone barely moved chain scores. Explicit composition rules did, and the gain held on prompts the rules were never tuned on. To reproduce the comparison, run `--export-prompts` with and without `--no-route-guide`.
 - Single runs vary by about ±3 points, so compare averages. The offline static mode is only a lexical smoke test and is not a quality claim.
 - Details: [docs/plans/2026-09-25-routr-v2.1.md](docs/plans/2026-09-25-routr-v2.1.md) and [docs/plans/2026-10-09-multi-route.md](docs/plans/2026-10-09-multi-route.md).
@@ -186,7 +190,8 @@ Hover text = YAML `description` in each `SKILL.md`:
 | `routr-ship` | Fix, verify, commit or PR |
 | `routr-frontend` | Build or redesign UI |
 | `routr-motion` | Animate existing UI |
-| `routr-plan` | Plan, PRD, grill ideas |
+| `routr-plan` | Plan future work, new-feature PRD, grill ideas |
+| `routr-spec` | Reconstruct current product, reconcile specs, document drift |
 | `routr-video` | Video — launch, product marketing, data-driven, Remotion, HyperFrames |
 | `routr-ai` | AI SDK chat, agents, RAG |
 | `routr-mobile` | Expo / React Native |
@@ -237,11 +242,12 @@ Single entry — `references/launch.md` and `references/remotion.md` for sub-pat
 ## All routers
 
 <details>
-<summary><b>Core engineering (14)</b></summary>
+<summary><b>Core engineering (15)</b></summary>
 
 | Router | Triggers | Top children |
 |--------|----------|--------------|
-| [`routr-plan`](skills/routr-plan/) | plan, PRD, grill | `brainstorming`, `grill-me`, `to-prd` |
+| [`routr-plan`](skills/routr-plan/) | future work, new-feature PRD, grill | `brainstorming`, `grill-me`, `to-prd` |
+| [`routr-spec`](skills/routr-spec/) | as-built PRD, requirements drift, product evolution | `symdex-code-search`, `lean-ctx`; optional `reverse-engineer-anything` |
 | [`routr-debug`](skills/routr-debug/) | debug, error | `systematic-debugging`, symdex, lean-ctx |
 | [`routr-ship`](skills/routr-ship/) | fix, commit, PR | TDD, `caveman-commit` |
 | [`routr-test`](skills/routr-test/) | tests, Playwright | `webapp-testing`, `tdd` |
@@ -306,6 +312,14 @@ Install commands in [skill-registry.md](skills/routr-catalog/references/skill-re
 
 ## Example flows
 
+**Existing product → living specification**
+
+> "Reverse engineer our current app into an as-built PRD and compare it against the original requirements."
+
+`routr-spec` identifies the baseline, reconstructs current product behavior, and reconciles each requirement with evidence. It preserves the original intent, distinguishes observed facts from inferred intent and unknowns, and records product evolution separately from the repository release changelog. Later runs use `last_reconciled_commit..HEAD` to revisit affected product areas.
+
+It uses source and Git evidence for ordinary repositories. The optional `reverse-engineer-anything` child is reserved for claims requiring shipped artifacts or runtime evidence that available source cannot establish. The phrase "reverse engineer" alone does not load it. See [the workflow](skills/routr-spec/references/workflow.md).
+
 **Ship feature + brag video**
 
 ```
@@ -327,7 +341,7 @@ routr-marketing → ai-seo
 
 ## Quality & upkeep
 
-- `bash scripts/validate-skills.sh` — 11 mechanical checks: frontmatter/folder match, `Use when:` and `Not for:` presence, description length budget, SKILL.md line caps, child-skill resolution, broken relative links, eval JSON validity, eval coverage, and router-tree/resolution.md registration. Runs in CI.
+- `bash scripts/validate-skills.sh` — 12 mechanical checks: frontmatter/folder match, `Use when:` and `Not for:` presence, description length budget, SKILL.md line caps, child-skill resolution, broken relative links, eval JSON validity, eval coverage, router-tree/resolution.md registration, and route-plan integrity. Runs in CI.
 - `python scripts/run-evals.py` — runs every `evals/*.eval.json` prompt against the router menu. Modes: `static` (default, offline), `claude` (real `claude -p` calls), `predictions` (score answers from any model) and `--export-prompts` (write the menu and prompts for a blind run). Exits non-zero under `--min-accuracy`.
 - `bash scripts/sync-installed.sh` (or `scripts/sync-installed.ps1` on Windows) — diffs this repo's `skills/routr-*` against your installed copies and reports drift. `--apply` copies; `--prune-legacy` moves removed `*-playbook` stubs to a dated backup folder instead of deleting them. See [INSTALL.md](INSTALL.md#keep-installed-copies-in-sync).
 
@@ -339,7 +353,6 @@ Honest list of what is not done yet:
 
 - **Chain scoring in CI.** Chain metrics exist in the eval runner but are report-only. No accuracy gate on them yet.
 - **Per-host eval runs.** Published numbers come from one small model. We want results per agent and host (Claude Code, Cursor, Codex, others).
-- **Independent `claude -p` confirmation.** `--mode claude` has not been run against the final descriptions because the local CLI was signed out.
 - **More depth fallbacks.** Only debug, frontend, plan, ship, test and security have built-in fallbacks. Other routers degrade to a plain checklist when children are missing.
 - **More contested-prompt handling.** Some prompts legitimately start at more than one router, or are unclear about an implied step ("add streaming chat" doesn't say whether a chat UI exists). `acceptable_routers` and `acceptable_chains` help, but coverage is thin.
 - **A bigger held-out set.** 24 held-out chain prompts can only detect large changes. We want 100+, written by contributors.

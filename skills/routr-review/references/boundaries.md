@@ -3,6 +3,7 @@
 | Situation | Use instead |
 |-----------|-------------|
 | Writing the fix yourself, not just flagging it | `routr-ship` |
+| Reconcile product behavior since the last specification checkpoint | `routr-spec` |
 | Deep security-only pass (the PR needs a dedicated audit) | `routr-security` |
 | Motion/animation critique specifically | `review-animations` (child skill, still under `routr-review`) |
 
