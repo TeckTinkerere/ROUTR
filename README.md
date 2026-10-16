@@ -171,6 +171,9 @@ python scripts/run-evals.py --mode predictions --predictions preds.json
 
 # Or, with the Claude CLI signed in
 python scripts/run-evals.py --mode claude --model claude-haiku-4-5-20251001
+
+# Or real Claude Code sessions in a sandbox: which skills does the agent actually invoke?
+python scripts/run-evals.py --mode host --host-env isolated
 ```
 
 ---
