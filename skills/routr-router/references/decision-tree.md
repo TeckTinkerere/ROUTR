@@ -2,6 +2,17 @@
 
 ## Overlap resolution
 
+### PRD, current reality or code explanation?
+
+- New-feature PRD / future requirements → `routr-plan`
+- As-built PRD / existing product versus original requirements / product evolution → `routr-spec`
+- How the code works, without a product-spec deliverable → `routr-explore`
+- Review this PR's quality → `routr-review`; report product drift since a spec checkpoint → `routr-spec`
+- Implement known missing requirements → `routr-ship`; reconciliation alone never edits application code
+- "Reverse engineer my app" with sufficient source and an as-built spec deliverable → `routr-spec`, source path
+- Shipped-app product specification with insufficient source → `routr-spec`, optional `reverse-engineer-anything`
+- Low-level artifact/decompilation only → direct `reverse-engineer-anything`; do not force a product-spec workflow
+
 ### "Fix the UI" — bug or design?
 
 - Error in console / wrong data → `routr-debug`

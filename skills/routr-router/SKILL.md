@@ -27,7 +27,8 @@ Pick **one** `routr-*` skill, announce it in one line, then read and follow that
 
 ```
 User intent?
-├─ Plan / spec / PRD / grill idea              → routr-plan
+├─ Future plan / new-feature PRD / grill idea → routr-plan
+├─ As-built spec / product drift / stale docs → routr-spec
 ├─ Bug / error / crash / root cause            → routr-debug
 ├─ Fix + verify + commit (known change)        → routr-ship
 ├─ Write tests / TDD / Playwright              → routr-test
@@ -52,6 +53,8 @@ User intent?
 Domain machinery beats generic debug: if the thing failing is a domain's *own machinery* (render pipeline, agent loop, AI SDK stream, EAS build, migration runner), that domain router owns it. Wrong *application* logic that merely uses the domain → `routr-debug`.
 
 Tie-break by **most specific wins** — single source of truth in [routr-catalog/references/resolution.md](../routr-catalog/references/resolution.md#router-precedence). Overlap edge cases (fix-the-UI, ship-the-feature, video-vs-frontend, AI-feature): [references/decision-tree.md](./references/decision-tree.md).
+
+PRD for future work → `routr-plan`; reconstruct existing product reality or reconcile requirements/history → `routr-spec`; explain code only → `routr-explore`. "Reverse engineer" alone does not require artifact tooling. Standalone low-level decompilation may use `reverse-engineer-anything` directly without inserting a ROUTR workflow.
 
 ## Frontend detection
 
@@ -84,6 +87,8 @@ plan → diagnose or build → fix + commit (routr-ship) → release (routr-depl
 ```
 
 1. **One step per distinct job asked for.** "Find the cause, fix it, get it live" is three jobs: debug → ship → deploy.
+   Add `routr-spec` after implementation only when as-built reconciliation is requested. Plan → ship → spec is valid for an appropriately scoped change, not mandatory.
+   Writing CURRENT, DRIFT or a product changelog is part of `routr-spec`; it does not add a ship or planning step.
 2. **Fixes go live through ship.** Never go straight from routr-debug, routr-perf or routr-security to routr-deploy.
 3. **Diagnose before you polish.** perf before motion, review before ship, test before qa, plan before building.
 4. **Add an unstated step only if the deliverable can't exist without it.** For example, AI chat in an app with no chat UI needs routr-frontend.
