@@ -63,10 +63,30 @@ if [ -z "$PYTHON" ]; then
   fail=$((fail + 1))
 fi
 
+# Run one _validate_helpers.py subcommand, output into $1, labelled $2 for
+# errors. A helper exits 0 when it found no failures and 1 after printing
+# FAIL lines. Any other non-zero exit, or a non-zero exit with no FAIL line
+# (an uncaught exception), counts as a failure so a crashed checker can't
+# pass CI by printing nothing.
+run_helper() {
+  local out="$1" label="$2" status=0
+  shift 2
+  if [ -z "$PYTHON" ]; then
+    : > "$out"
+    return
+  fi
+  "$PYTHON" scripts/_validate_helpers.py "$@" > "$out" 2>&1 || status=$?
+  if [ "$status" -ne 0 ] && ! grep -qE '^([0-9]+:)?FAIL:' "$out"; then
+    fail=$((fail + 1))
+    echo "FAIL: $label checker exited $status without reporting a failure (it likely crashed):"
+    tail -n 5 "$out" | sed 's/^/      /'
+  fi
+}
+
 # Run checks 1, 2, 5, 6, 7, 8 in a single python pass. Output lines look like
 # "1:FAIL: msg" / "5:WARN: msg" — the leading "N:" says which section header
 # the line belongs under; emit_section() below strips it and prints the rest.
-"$PYTHON" scripts/_validate_helpers.py skills skills "$ROUTER_TREE" "$RESOLUTION" > "$TMP_DIR/check_skills_out.txt" 2>&1 || true
+run_helper "$TMP_DIR/check_skills_out.txt" "skills (checks 1, 2, 5-8)" skills skills "$ROUTER_TREE" "$RESOLUTION"
 
 emit_section() {
   # $1 = check number to filter for
@@ -171,7 +191,7 @@ emit_section 8
 
 echo
 echo "== 9. Relative markdown links in skills/**.md resolve =="
-"$PYTHON" scripts/_validate_helpers.py links skills > "$TMP_DIR/check9_out.txt" 2>&1 || true
+run_helper "$TMP_DIR/check9_out.txt" "links (check 9)" links skills
 if [ -s "$TMP_DIR/check9_out.txt" ]; then
   while IFS= read -r line; do
     case "$line" in
@@ -184,7 +204,7 @@ fi
 
 echo
 echo "== 10/11. evals/*.eval.json validity, router-name references, and coverage =="
-"$PYTHON" scripts/_validate_helpers.py evals evals skills > "$TMP_DIR/check10_out.txt" 2>&1 || true
+run_helper "$TMP_DIR/check10_out.txt" "evals (checks 10/11)" evals evals skills
 if [ -s "$TMP_DIR/check10_out.txt" ]; then
   while IFS= read -r line; do
     case "$line" in
@@ -197,7 +217,7 @@ fi
 
 echo
 echo "== 12. routes.json: routers, chains, companions, handoff consistency =="
-"$PYTHON" scripts/_validate_helpers.py routes skills > "$TMP_DIR/check12_out.txt" 2>&1 || true
+run_helper "$TMP_DIR/check12_out.txt" "routes (check 12)" routes skills
 if [ -s "$TMP_DIR/check12_out.txt" ]; then
   while IFS= read -r line; do
     case "$line" in
@@ -210,7 +230,7 @@ fi
 
 echo
 echo "== 13. Plugin manifests: valid JSON, marketplace entry, version sync =="
-"$PYTHON" scripts/_validate_helpers.py plugin . > "$TMP_DIR/check13_out.txt" 2>&1 || true
+run_helper "$TMP_DIR/check13_out.txt" "plugin (check 13)" plugin .
 if [ -s "$TMP_DIR/check13_out.txt" ]; then
   while IFS= read -r line; do
     case "$line" in
