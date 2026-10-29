@@ -14,6 +14,7 @@ description: "Review a PR or diff for bugs, style, and React best practices. Use
 ## Do not activate
 
 - Writing the fix yourself → `routr-ship`
+- Reconcile current product behavior with original requirements or update product history → `routr-spec`
 
 ## Iron law
 

@@ -3,8 +3,12 @@
   "max_chain": 3,
   "step_signals": [
     {
-      "signal": "plan, spec, PRD, multi-screen feature with no spec",
+      "signal": "plan future work, new-feature spec or PRD, multi-screen feature with no spec",
       "router": "routr-plan"
+    },
+    {
+      "signal": "as-built PRD, existing product reality versus original requirements, stale product docs, drift, product evolution, incremental spec reconciliation",
+      "router": "routr-spec"
     },
     {
       "signal": "find the cause, why is it broken, error, crash",
@@ -70,7 +74,9 @@
     "Add an unstated step only when the deliverable cannot exist without it: an AI chat feature added to an app with no chat UI yet needs routr-frontend; a page that embeds a video nobody has made yet needs routr-video.",
     "Work the user defers ('deploy later', 'not now', 'we'll handle X separately') is not a step.",
     "A companion is never a step. If a second concern fits a companion signal of the active router, keep a one-router plan and run the companion's checklist inside it.",
-    "Each next step must appear in the previous router's handoff list, and a plan has at most max_chain steps."
+    "Each next step must appear in the previous router's handoff list, and a plan has at most max_chain steps.",
+    "PRD is a format, not a planning signal: future intent goes to routr-plan; current product reality and drift go to routr-spec; code explanation alone goes to routr-explore. Add post-implementation routr-spec only when reconciliation is requested, not after every build. Missing requirements discovered during reconciliation do not authorize implementation.",
+    "Writing or updating the as-built specification, drift report, ledger or product changelog is part of routr-spec itself. These artifact writes do not add routr-ship, routr-review or routr-plan; hand off only for a separately requested implementation, review or future decision, through a permitted route."
   ],
   "routers": {
     "routr-agents": {
@@ -238,11 +244,20 @@
       "handoff": [
         "routr-motion",
         "routr-deploy",
-        "routr-video"
+        "routr-video",
+        "routr-spec"
       ],
       "companions": [
         "routr-security"
       ],
+      "owns_domain_failures": false
+    },
+    "routr-spec": {
+      "handoff": [
+        "routr-plan",
+        "routr-ship"
+      ],
+      "companions": [],
       "owns_domain_failures": false
     },
     "routr-test": {
@@ -474,6 +489,20 @@
       ],
       "exits": [
         "findings listed"
+      ]
+    },
+    {
+      "id": "intent-build-reconcile",
+      "when": "explicitly plan a scoped change, implement it, then update its as-built specification and product drift; only when all three jobs are requested and ship fits the implementation",
+      "steps": [
+        "routr-plan",
+        "routr-ship",
+        "routr-spec"
+      ],
+      "exits": [
+        "future requirements resolved/approved",
+        "implementation verified within authorized commit scope",
+        "current specification and drift reconciled with evidence"
       ]
     }
   ]

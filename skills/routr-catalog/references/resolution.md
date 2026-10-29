@@ -29,7 +29,7 @@ Once loaded (by any method): follow that skill's instructions for the current st
 Missing means: not found by host invocation (bare or namespaced) **and** not found on the filesystem path.
 
 1. Open [skill-registry.md](skill-registry.md)
-2. Run install command for that skill or a bundle
+2. Run an install command only when installation is authorized; otherwise use the router's fallback. A missing helper alone is not permission to change the environment.
 3. If still missing → router's `routr-depth-*` or `references/fallback.md`
 
 ## Router precedence
@@ -43,7 +43,7 @@ When multiple `routr-*` skills could apply, use the **most specific** match:
 5. `routr-integrate` — third-party library API
 6. `routr-explore` — understand architecture
 7. `routr-agents` — agent systems
-8. `routr-plan` — specs and PRDs
+8. `routr-plan` — future specs and PRDs
 9. `routr-test` — TDD and Playwright
 10. `routr-review` — PR review
 11. `routr-deploy` — Vercel and shipping
@@ -56,6 +56,13 @@ When multiple `routr-*` skills could apply, use the **most specific** match:
 18. `routr-marketing` — SEO, copy
 19. `routr-ai` — AI SDK apps
 20. `routr-video` — all video workflows
+21. `routr-spec` — existing product reality, as-built specification, requirements drift and product evolution
+
+### Tie-break: specification time and deliverable
+
+The requested result beats document keywords. A PRD for unbuilt work belongs to `routr-plan`; an as-built PRD or comparison of current product contracts with original intent belongs to `routr-spec`; a code walkthrough alone belongs to `routr-explore`. Reviewing a PR is `routr-review`; reporting product evolution since a specification checkpoint is `routr-spec`. Implementation requests go to the applicable build router, never silently run inside reconciliation.
+
+Within `routr-spec`, source is sufficient for ordinary complete repositories. Load optional `reverse-engineer-anything` only for claims needing shipped/package/runtime evidence not established reliably by source. The phrase "reverse engineer" is not that evidence gate. Installing a child skill supplies instructions, not an MCP connection or analysis engines.
 
 ### Tie-break: domain machinery beats generic debug
 
@@ -74,7 +81,7 @@ Some installed child skills declare themselves the default for a whole domain in
 - A `routr-*` router owns the **workflow selection**: which domain, which child skill, in what order, with what handoff.
 - A self-declared entry-point child skill owns the **execution details** once selected: how to use that stack correctly.
 
-Route with `routr-*` first, then hand off to the entry-point child skill for stack-specific execution. Never let a child skill's own activation language skip the router.
+For situations owned by ROUTR, route with `routr-*` first, then hand off to the entry-point child for stack-specific execution. A standalone child task outside those situations (such as low-level binary decompilation without product-spec work) can use `reverse-engineer-anything` directly; do not invent a ROUTR step merely to claim the task.
 
 ## Removed playbook names
 

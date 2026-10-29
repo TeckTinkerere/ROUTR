@@ -6,6 +6,7 @@ ROUTR keeps one rule fixed: **one router is active at a time.** What varies is h
 - [Route plans](#route-plans)
 - [Companions](#companions)
 - [Tie-breaks](#tie-breaks)
+- [Product specification routing](#product-specification-routing)
 - [Worked examples](#worked-examples)
 - [Where this is defined](#where-this-is-defined)
 
@@ -76,6 +77,27 @@ Two rules decide most contested cases:
 
 Some prompts legitimately start at more than one router ("build a whole new onboarding flow" can begin at `routr-plan` or `routr-frontend`). Evals record these with `acceptable_routers`, and alternative route plans with `acceptable_chains`.
 
+## Product specification routing
+
+Route by the requested deliverable, especially when the prompt says "PRD" or "reverse engineer":
+
+| Request | Owner |
+|---------|-------|
+| Write a PRD for a feature we have not built | `routr-plan`: intended future |
+| Explain how authentication works in this repository | `routr-explore`: codebase understanding |
+| Reconstruct the current app as an as-built PRD and compare it with the original | `routr-spec`: current behavior, historical drift and living specification |
+| Review this PR for correctness and quality | `routr-review` |
+| Explain product behavior changes since the last spec reconciliation | `routr-spec` |
+| Implement these already-defined missing requirements | `routr-ship`; use `routr-plan` first only if planning is needed |
+| Reconstruct an inherited shipped app's current product specification | `routr-spec`, with optional REA evidence when justified |
+| Decompile or analyze a binary without a product-specification deliverable | `reverse-engineer-anything` directly, outside ROUTR domain selection |
+
+REA is a child capability, never an `expected_router` or a route-plan step. `routr-spec` loads it only for claims requiring shipped/runtime evidence that available source cannot establish. A normal source-based "reverse engineer my app" request does not automatically need REA.
+
+Discovering missing requirements does not authorize implementing them. `routr-spec` records the gap and hands off only when the user requests that further work. A user who explicitly asks to plan, implement, and then reconcile the living specification can get `routr-plan → routr-ship → routr-spec`; it keeps the existing three-step limit and one active router. Do not append reconciliation to every implementation task.
+
+Creating or updating CURRENT, DRIFT or the product changelog is part of `routr-spec` itself. A request to write these documents does not add `routr-ship` or `routr-plan` to the route.
+
 ## Worked examples
 
 **1. Prompt:** "The checkout page throws a 500 in production. Find the cause, fix it, and get it live."
@@ -120,6 +142,16 @@ Now: routr-mobile — onboarding screens
 ROUTR plan: routr-mobile → routr-deploy
 Now: routr-mobile — onboarding screens
 ```
+
+**6. Prompt:** "Plan the passwordless login change, implement it, then update our as-built spec and product changelog."
+
+```
+ROUTR plan: routr-plan → routr-ship → routr-spec
+Now: routr-plan — define the requested future behavior
+Next: routr-ship once the implementation plan is approved or its open questions are explicit
+```
+
+After implementation and verification, `routr-spec` reconciles the changed authentication area against the preserved baseline, updates the current specification, and records only evidence-backed reasons. This chain applies because all three deliverables were requested.
 
 ## Where this is defined
 

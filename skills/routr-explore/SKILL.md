@@ -1,6 +1,6 @@
 ---
 name: routr-explore
-description: "Explain how the codebase works without changing code. Use when: 'how does X work', architecture, onboarding, where is this defined, walk me through. Not for: a specific bug (→ routr-debug); changing code (→ routr-ship)."
+description: "Explain how the codebase works without changing code. Use when: 'how does X work', architecture, onboarding, where is this defined, walk me through. Not for: as-built specs or product drift (→ routr-spec); a specific bug (→ routr-debug); changing code (→ routr-ship)."
 ---
 
 # routr-explore
@@ -16,6 +16,7 @@ description: "Explain how the codebase works without changing code. Use when: 'h
 
 - A specific bug or error → `routr-debug`
 - Changing code → `routr-ship`
+- Reconstruct product contracts, reconcile requirements or maintain a living spec → `routr-spec`
 
 ## Iron law
 

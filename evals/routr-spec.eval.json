@@ -1,0 +1,377 @@
+{
+  "skill_name": "routr-spec",
+  "description": "Evidence-backed current product specifications, baseline drift, incremental reconciliation, optional shipped evidence, and boundaries against future planning or code work",
+  "prompts": [
+    {
+      "prompt": "reverse engineer my current app into a PRD and compare it against the original",
+      "expected_router": "routr-spec",
+      "must_not_load": [
+        "routr-plan"
+      ],
+      "expected_behaviors": [
+        "Find and preserve the original intent with provenance before comparison",
+        "Reconstruct current product behavior rather than invent future requirements",
+        "Determine whether repository source is sufficient before considering reverse-engineer-anything"
+      ],
+      "boundary": "PRD and reverse engineer describe an existing product reconciliation, not future planning or an automatic artifact-analysis trigger",
+      "expected_chain": [
+        "routr-spec"
+      ]
+    },
+    {
+      "prompt": "our docs are stale, tell me what the product has actually become",
+      "expected_router": "routr-spec",
+      "expected_behaviors": [
+        "Describe user-visible capabilities and product contracts with evidence",
+        "Keep baseline intent separate from the current as-built specification"
+      ],
+      "expected_chain": [
+        "routr-spec"
+      ]
+    },
+    {
+      "prompt": "update the as-built spec from everything changed since the last reconciliation",
+      "expected_router": "routr-spec",
+      "expected_behaviors": [
+        "Read the saved reconciliation checkpoint and inspect its Git range through HEAD",
+        "Map changed files to affected product areas and preserve unrelated verified records",
+        "Advance the checkpoint only for a completed reconciliation scope"
+      ],
+      "expected_chain": [
+        "routr-spec"
+      ]
+    },
+    {
+      "prompt": "compare the current authentication behavior with the original requirements and write the product changelog",
+      "expected_router": "routr-spec",
+      "must_not_load": [
+        "routr-explore",
+        "routr-review",
+        "routr-ship"
+      ],
+      "expected_behaviors": [
+        "Compare intended and observed authentication contracts",
+        "Record product evolution separately from repository release notes",
+        "Cite evidence for what changed, when it changed, and any established reason"
+      ],
+      "expected_chain": [
+        "routr-spec"
+      ]
+    },
+    {
+      "prompt": "we inherited this shipped Electron app and need an evidence-backed current spec",
+      "expected_router": "routr-spec",
+      "expected_behaviors": [
+        "Establish source availability and identify claims dependent on the shipped package",
+        "Use reverse-engineer-anything for required shipped evidence and preserve its evidence limits",
+        "Do not treat a source checkout as proof of an unverified shipped version"
+      ],
+      "expected_chain": [
+        "routr-spec"
+      ]
+    },
+    {
+      "prompt": "Reverse engineer my app into an as-built PRD. The complete source and tests are here, and all the behavior we need to document can be established from them.",
+      "expected_router": "routr-spec",
+      "must_not_load": [
+        "routr-plan"
+      ],
+      "expected_behaviors": [
+        "Use focused source and test evidence with the normal code-intelligence path",
+        "Skip reverse-engineer-anything because source evidence is sufficient",
+        "Do not invoke artifact tooling merely because the user said reverse engineer"
+      ],
+      "expected_chain": [
+        "routr-spec"
+      ]
+    },
+    {
+      "prompt": "Reconcile this source repository with its old PRD. SymDex and REA are not installed, but the source and tests are complete.",
+      "expected_router": "routr-spec",
+      "expected_behaviors": [
+        "Continue using bounded repository search and focused file reads through the source fallback",
+        "Do not block source-only reconciliation on an optional child",
+        "Do not silently install tools or modify the environment"
+      ],
+      "expected_chain": [
+        "routr-spec"
+      ]
+    },
+    {
+      "prompt": "The checked-in login code allows passwords, but our shipped desktop app only offers magic links. Reconcile its actual product specification against the old PRD.",
+      "expected_router": "routr-spec",
+      "expected_behaviors": [
+        "Separate source behavior from versioned shipped or runtime observations",
+        "Use reverse-engineer-anything for claims that require the shipped application",
+        "Keep unresolved contradictions explicit instead of forcing a single authoritative answer"
+      ],
+      "expected_chain": [
+        "routr-spec"
+      ]
+    },
+    {
+      "prompt": "We only have an APK and the original requirements. Build a current product spec and drift report; REA's skill is present but its MCP tools are not connected.",
+      "expected_router": "routr-spec",
+      "expected_behaviors": [
+        "Load reverse-engineer-anything for the artifact-dependent work and follow its own connection and recovery contract",
+        "Distinguish installed skill instructions from available MCP tooling",
+        "Preserve baseline work and mark artifact claims unverified while the required evidence is blocked",
+        "Do not silently install analysis engines or invent APK behavior"
+      ],
+      "expected_chain": [
+        "routr-spec"
+      ]
+    },
+    {
+      "prompt": "The old PRD says passwords, current code uses magic links, and the commit only says 'auth cleanup'. Explain why the product changed in the drift report.",
+      "expected_router": "routr-spec",
+      "expected_behaviors": [
+        "Record the observed authentication change with evidence",
+        "Record its reason as unknown because an implementation change and vague commit message do not establish intent",
+        "Separate observed fact, inferred intent, and unknown without inventing a security or conversion rationale"
+      ],
+      "expected_chain": [
+        "routr-spec"
+      ]
+    },
+    {
+      "prompt": "Reconcile the current app against our original product intent. README, docs/PRD.md, and an accepted ADR disagree about whether guests may export reports.",
+      "expected_router": "routr-spec",
+      "expected_behaviors": [
+        "Record each baseline candidate and its provenance instead of assuming README is authoritative",
+        "Resolve authority from evidence or preserve the baseline ambiguity",
+        "Keep guest-export behavior and the reason for the intended policy separately evidenced"
+      ],
+      "expected_chain": [
+        "routr-spec"
+      ]
+    },
+    {
+      "prompt": "Update our living specification after the new onboarding shipped. Keep the original PRD intact so we can still see what drifted.",
+      "expected_router": "routr-spec",
+      "expected_behaviors": [
+        "Preserve the original baseline snapshot and provenance",
+        "Update the current specification, drift ledger, and product evolution history",
+        "Do not rewrite original intent merely to match current behavior"
+      ],
+      "expected_chain": [
+        "routr-spec"
+      ]
+    },
+    {
+      "prompt": "Create an as-built specification for the app we inherited. There is no original PRD and we have not found any requirements or roadmap.",
+      "expected_router": "routr-spec",
+      "expected_behaviors": [
+        "Document evidenced current product contracts without manufacturing an original baseline",
+        "Mark baseline and intent as unknown where no evidence exists",
+        "Do not classify every existing capability as an intentional addition to an invented baseline"
+      ],
+      "expected_chain": [
+        "routr-spec"
+      ]
+    },
+    {
+      "prompt": "Only billing files changed since the last spec reconciliation. Update the current product spec and explain any billing drift without rescanning all the unrelated features.",
+      "expected_router": "routr-spec",
+      "expected_behaviors": [
+        "Use the saved Git checkpoint and changed paths to identify affected contracts",
+        "Revalidate billing and any demonstrated shared dependencies",
+        "Carry forward unaffected areas with their original evidence freshness rather than pretending they were rechecked"
+      ],
+      "expected_chain": [
+        "routr-spec"
+      ]
+    },
+    {
+      "prompt": "Reconcile this exported source folder with the previous as-built spec. It has no .git directory, so we cannot compute the last-reconciled-commit range.",
+      "expected_router": "routr-spec",
+      "expected_behaviors": [
+        "Use available snapshots or fingerprints to bound changes when possible",
+        "Explicitly widen the reconciliation if a reliable incremental range cannot be established",
+        "Leave unavailable introduction commits and historical reasons unknown"
+      ],
+      "expected_chain": [
+        "routr-spec"
+      ]
+    },
+    {
+      "prompt": "Update the living product spec, but the saved reconciliation commit disappeared after a history rewrite. Do not pretend the old checkpoint is still valid.",
+      "expected_router": "routr-spec",
+      "expected_behaviors": [
+        "Validate checkpoint availability and ancestry before using a Git range",
+        "Record the history discontinuity and deliberately rebuild or widen the affected scope",
+        "Preserve baseline provenance and never run destructive Git recovery"
+      ],
+      "expected_chain": [
+        "routr-spec"
+      ]
+    },
+    {
+      "prompt": "Reconcile the app's current behavior with the PRD, including my uncommitted changes, and make the evidence clear about what has and has not been committed.",
+      "expected_router": "routr-spec",
+      "expected_behaviors": [
+        "Identify the working-tree scope and distinguish dirty-file evidence from committed HEAD",
+        "Keep the incremental checkpoint truthful so uncommitted changes cannot disappear from the next reconciliation",
+        "Do not commit application changes or silently edit the app during reconciliation"
+      ],
+      "expected_chain": [
+        "routr-spec"
+      ]
+    },
+    {
+      "prompt": "The old PRD promises CSV export. Its implementation still exists behind a permanently disabled feature flag. Record this accurately in the current spec and drift report.",
+      "expected_router": "routr-spec",
+      "expected_behaviors": [
+        "Distinguish dormant implementation from a currently available user capability",
+        "Cite flag and reachability evidence rather than treating code existence as proof of availability",
+        "Do not enable the feature to erase the drift"
+      ],
+      "expected_chain": [
+        "routr-spec"
+      ]
+    },
+    {
+      "prompt": "Tests say free accounts can export, source denies it, and nobody has checked the deployed version. Reconcile that requirement in our product specification.",
+      "expected_router": "routr-spec",
+      "expected_behaviors": [
+        "Record conflicting source and test evidence with their scope and revision",
+        "Do not claim production behavior without production evidence",
+        "Mark unresolved current claims unverified and use the shipped-evidence gate only for claims that require it"
+      ],
+      "expected_chain": [
+        "routr-spec"
+      ]
+    },
+    {
+      "prompt": "Compare the current report-retention behavior with the old PRD. ADR-014 explicitly approved reducing retention to 30 days; Git shows the implementing commit a week later.",
+      "expected_router": "routr-spec",
+      "expected_behaviors": [
+        "Use the ADR as intent evidence and the implementation commit as change evidence",
+        "Keep decision time, implementation time, and observed release scope distinct",
+        "Cite both sources in the product evolution record"
+      ],
+      "expected_chain": [
+        "routr-spec"
+      ]
+    },
+    {
+      "prompt": "Write a PRD for a feature we haven't built yet.",
+      "expected_router": "routr-plan",
+      "must_not_load": [
+        "routr-spec"
+      ],
+      "boundary": "new intended behavior belongs to plan; PRD alone does not select spec"
+    },
+    {
+      "prompt": "Create a PRD for a new referrals feature before we start implementation.",
+      "expected_router": "routr-plan",
+      "must_not_load": [
+        "routr-spec"
+      ],
+      "boundary": "future requirements without current-product reconciliation"
+    },
+    {
+      "prompt": "Explain how authentication works in this repo.",
+      "expected_router": "routr-explore",
+      "must_not_load": [
+        "routr-spec"
+      ],
+      "boundary": "code understanding without a specification, baseline comparison, or evolution deliverable"
+    },
+    {
+      "prompt": "Reverse engineer the request flow in this complete source repo: show me the entry points and callers. I only need a code walkthrough.",
+      "expected_router": "routr-explore",
+      "must_not_load": [
+        "routr-spec"
+      ],
+      "expected_behaviors": [
+        "Use source navigation rather than automatic artifact analysis",
+        "Do not manufacture a living-specification task from the phrase reverse engineer"
+      ],
+      "boundary": "reverse engineer is colloquial source exploration, not product reconciliation"
+    },
+    {
+      "prompt": "Review this PR.",
+      "expected_router": "routr-review",
+      "must_not_load": [
+        "routr-spec"
+      ],
+      "boundary": "judge a proposed code change rather than reconstruct current product contracts"
+    },
+    {
+      "prompt": "Review the authentication diff for bugs and maintainability before I merge it.",
+      "expected_router": "routr-review",
+      "must_not_load": [
+        "routr-spec"
+      ],
+      "boundary": "authentication is the review subject, not a specification reconciliation request"
+    },
+    {
+      "prompt": "Implement the missing PRD requirement now: change the known report export limit from 20 to 50 and run its existing test.",
+      "expected_router": "routr-ship",
+      "must_not_load": [
+        "routr-spec",
+        "routr-plan"
+      ],
+      "boundary": "known scoped implementation belongs to ship even though a PRD supplies the requirement"
+    },
+    {
+      "prompt": "Refactor the billing module into smaller modules without changing behavior.",
+      "expected_router": "routr-refactor",
+      "must_not_load": [
+        "routr-spec"
+      ],
+      "boundary": "structure-only implementation work does not require a product-specification pass"
+    },
+    {
+      "prompt": "Reconcile the existing app against the original PRD, then plan which missing requirements we should build next. Do not implement anything yet.",
+      "expected_router": "routr-spec",
+      "expected_chain": [
+        "routr-spec",
+        "routr-plan"
+      ],
+      "expected_behaviors": [
+        "Complete current-reality reconciliation before planning future decisions",
+        "Pass unresolved requirements and evidence to plan with one router active at a time",
+        "Do not silently implement discovered drift"
+      ],
+      "boundary": "explicit reconciliation followed by future planning warrants a two-router handoff"
+    },
+    {
+      "prompt": "Ship the known one-line export limit fix, then reconcile the living product spec and product changelog with the implemented behavior.",
+      "expected_router": "routr-ship",
+      "expected_chain": [
+        "routr-ship",
+        "routr-spec"
+      ],
+      "expected_behaviors": [
+        "Implement and verify the scoped fix before handing completed behavior to spec",
+        "Reconcile only because the user explicitly requested that follow-up"
+      ],
+      "boundary": "spec is an explicit post-implementation job, not an automatic step in every ship request"
+    },
+    {
+      "prompt": "Plan the requirements for a small new report-retention rule, implement the agreed rule, and then reconcile our as-built spec against that approved intent.",
+      "expected_router": "routr-plan",
+      "expected_chain": [
+        "routr-plan",
+        "routr-ship",
+        "routr-spec"
+      ],
+      "expected_behaviors": [
+        "Resolve intended behavior before implementation",
+        "Respect the plan approval boundary before activating ship",
+        "After implementation, reconcile the current spec with the preserved intent using at most three routers"
+      ],
+      "boundary": "explicit intent, implementation, and reconciliation compose a three-step plan; no companion becomes a chain step"
+    },
+    {
+      "prompt": "Use reverse-engineer-anything to decompile this native executable and identify its serialization routine. I do not want a product specification.",
+      "expected_behaviors": [
+        "Keep the explicitly requested low-level reverse-engineering task with reverse-engineer-anything",
+        "Do not hijack it into routr-spec or treat REA as a routr domain selector"
+      ],
+      "boundary": "behavior-only case: the router-selection scorer has no no-router or direct-child outcome"
+    }
+  ]
+}

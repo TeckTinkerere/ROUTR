@@ -1,6 +1,6 @@
 ---
 name: routr-plan
-description: "Plan before coding: brainstorm, PRD, stress-test ideas. Use when: new multi-screen feature, spec, PRD, 'grill my plan', brainstorm, architecture decision, before big implementation. Not for: writing code now (→ routr-ship); sketching UI layout or visuals (→ routr-frontend)."
+description: "Plan future work: brainstorm, PRD, stress-test ideas. Use when: new multi-screen feature, new spec or PRD, 'grill my plan', brainstorm, architecture decision. Not for: as-built reconciliation (→ routr-spec); implement now (→ routr-ship); UI layout (→ routr-frontend)."
 ---
 
 # routr-plan
@@ -10,13 +10,14 @@ description: "Plan before coding: brainstorm, PRD, stress-test ideas. Use when: 
 ## When to activate
 
 - Greenfield feature or large change
-- User wants spec, PRD, or plan before code
+- User wants a spec, PRD, or plan for future work before code
 - Stress-test or "grill" an idea
 
 ## Do not activate
 
 - Ready to implement small fix → `routr-ship`
 - Explore existing code only → `routr-explore`
+- Reconstruct existing product behavior or reconcile original requirements → `routr-spec`
 - Agent system design → `routr-agents`
 
 ## Iron law
