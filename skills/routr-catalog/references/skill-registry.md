@@ -3,13 +3,13 @@
 Install globally:
 
 ```bash
-npx skills add <source> -g -y --copy
+npx skills@1.7.4 add <source> -g -y --copy
 ```
 
 Install ROUTR routers:
 
 ```bash
-npx skills add TeckTinkerere/ROUTR -g --all -y --copy
+npx skills@1.7.4 add TeckTinkerere/ROUTR -g --all -y --copy
 ```
 
 ## Install bundles
@@ -19,10 +19,10 @@ ROUTR routers are indexes — install child bundles for depth.
 ### routr-bundle-core (daily coding)
 
 ```bash
-npx skills add obra/superpowers -g --skill systematic-debugging --skill test-driven-development --skill brainstorming --skill requesting-code-review -y --copy
-npx skills add husnainpk/SymDex -g -y --copy
-npx skills add yvgude/lean-ctx -g -y --copy
-npx skills add JuliusBrussee/caveman -g --skill caveman-commit -y --copy
+npx skills@1.7.4 add obra/superpowers -g --skill systematic-debugging --skill test-driven-development --skill brainstorming --skill requesting-code-review -y --copy
+npx skills@1.7.4 add husnainpk/SymDex -g -y --copy
+npx skills@1.7.4 add yvgude/lean-ctx -g -y --copy
+npx skills@1.7.4 add JuliusBrussee/caveman -g --skill caveman-commit -y --copy
 ```
 
 Covers: `routr-debug`, `routr-ship`, `routr-explore`, `routr-plan`, `routr-review`
@@ -30,10 +30,10 @@ Covers: `routr-debug`, `routr-ship`, `routr-explore`, `routr-plan`, `routr-revie
 ### routr-bundle-frontend (UI work)
 
 ```bash
-npx skills add anthropics/skills@frontend-design anthropics/skills@web-design-guidelines -g -y --copy
-npx skills add vercel-labs/agent-skills -g --skill vercel-react-best-practices --skill web-design-guidelines -y --copy
-npx skills add shadcn/ui -g --skill shadcn -y --copy
-npx skills add patricio0312rev/skills -g --skill framer-motion-animator -y --copy
+npx skills@1.7.4 add anthropics/skills@frontend-design anthropics/skills@web-design-guidelines -g -y --copy
+npx skills@1.7.4 add vercel-labs/agent-skills -g --skill vercel-react-best-practices --skill web-design-guidelines -y --copy
+npx skills@1.7.4 add shadcn/ui -g --skill shadcn -y --copy
+npx skills@1.7.4 add patricio0312rev/skills -g --skill framer-motion-animator -y --copy
 ```
 
 Covers: `routr-frontend`, `routr-motion`
@@ -42,22 +42,22 @@ Covers: `routr-frontend`, `routr-motion`
 
 ```bash
 # Discovery & docs
-npx skills add vercel-labs/skills@find-skills upstash/context7 -g -y --copy
+npx skills@1.7.4 add vercel-labs/skills@find-skills upstash/context7 -g -y --copy
 # Vercel engineering
-npx skills add vercel-labs/agent-skills -g --skill vercel-react-best-practices --skill web-design-guidelines --skill deploy-to-vercel --skill vercel-composition-patterns -y --copy
-npx skills add vercel-labs/agent-browser -g -y --copy
+npx skills@1.7.4 add vercel-labs/agent-skills -g --skill vercel-react-best-practices --skill web-design-guidelines --skill deploy-to-vercel --skill vercel-composition-patterns -y --copy
+npx skills@1.7.4 add vercel-labs/agent-browser -g -y --copy
 # Anthropic
-npx skills add anthropics/skills@frontend-design anthropics/skills@webapp-testing -g -y --copy
+npx skills@1.7.4 add anthropics/skills@frontend-design anthropics/skills@webapp-testing -g -y --copy
 # Obra Superpowers
-npx skills add obra/superpowers -g --skill systematic-debugging --skill test-driven-development --skill brainstorming --skill requesting-code-review --skill receiving-code-review -y --copy
+npx skills@1.7.4 add obra/superpowers -g --skill systematic-debugging --skill test-driven-development --skill brainstorming --skill requesting-code-review --skill receiving-code-review -y --copy
 # Matt Pocock
-npx skills add mattpocock/skills -g --skill tdd --skill to-prd --skill grill-me --skill improve-codebase-architecture --skill diagnosing-bugs -y --copy
+npx skills@1.7.4 add mattpocock/skills -g --skill tdd --skill to-prd --skill grill-me --skill improve-codebase-architecture --skill diagnosing-bugs -y --copy
 # Database
-npx skills add supabase/agent-skills -g --all -y --copy
+npx skills@1.7.4 add supabase/agent-skills -g --all -y --copy
 # Playwright
-npx skills add microsoft/playwright-cli@playwright-cli currents-dev/playwright-best-practices-skill -g -y --copy
+npx skills@1.7.4 add microsoft/playwright-cli@playwright-cli currents-dev/playwright-best-practices-skill -g -y --copy
 # Code intelligence
-npx skills add husnainpk/SymDex yvgude/lean-ctx -g -y --copy
+npx skills@1.7.4 add husnainpk/SymDex yvgude/lean-ctx -g -y --copy
 ```
 
 ---
@@ -271,9 +271,9 @@ The **operating loop** (research loops, self-correction, eval gates, trace debug
 
 ```bash
 # Context + loop engineering (one collection, all skills)
-npx skills add muratcankoylan/Agent-Skills-for-Context-Engineering -g --all --full-depth -y --copy
+npx skills@1.7.4 add muratcankoylan/Agent-Skills-for-Context-Engineering -g --all --full-depth -y --copy
 # Subagent delegation loop (Obra)
-npx skills add obra/superpowers -g --skill subagent-driven-development -y --copy
+npx skills@1.7.4 add obra/superpowers -g --skill subagent-driven-development -y --copy
 ```
 
 **Route:** `routr-agents` bootstrap loads exactly one row per active symptom — never the whole cluster.

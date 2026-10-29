@@ -4,6 +4,9 @@
 
 set -euo pipefail
 
+# Pinned so every install runs the same reviewed CLI, not npm's latest.
+SKILLS_CLI="skills@1.7.4"
+
 declare -A BUNDLE_SKILLS
 BUNDLE_SKILLS[meta]="routr-router routr-catalog routr-depth-debug routr-depth-frontend routr-depth-plan routr-depth-ship routr-depth-test"
 BUNDLE_SKILLS[core]="routr-debug routr-ship routr-plan routr-test routr-review routr-refactor routr-deploy routr-database routr-qa routr-security routr-explore routr-integrate routr-agents"
@@ -31,7 +34,7 @@ choice="${choice:-8}"
 if [[ "$choice" == "8" ]]; then
   echo ""
   echo "Launching interactive skills CLI (Space = toggle, Enter = confirm)..."
-  npx skills add TeckTinkerere/ROUTR -g --copy
+  npx "$SKILLS_CLI" add TeckTinkerere/ROUTR -g --copy
   exit 0
 fi
 
@@ -70,7 +73,7 @@ echo "Installing ${#unique_skills[@]} skill(s):"
 printf '  - %s\n' "${unique_skills[@]}"
 echo ""
 
-npx skills add TeckTinkerere/ROUTR -g --copy -y "${skill_args[@]}"
+npx "$SKILLS_CLI" add TeckTinkerere/ROUTR -g --copy -y "${skill_args[@]}"
 
 echo ""
 echo "Install child bundles from routr-catalog/references/skill-registry.md for full depth."

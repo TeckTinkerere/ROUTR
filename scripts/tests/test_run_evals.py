@@ -235,7 +235,7 @@ class HostRuns(unittest.TestCase):
                           ("--max-turns", "5"), ("--model", "fake-m"),
                           ("--settings", '{"disableAllHooks": true}')]:
             self.assertEqual(argv[argv.index(flag) + 1], val)
-        for flag in ("-p", "--verbose", "--no-session-persistence"):
+        for flag in ("-p", "--verbose", "--no-session-persistence", "--strict-mcp-config"):
             self.assertIn(flag, argv)
         sandbox = Path(calls[-1]["cwd"])
         self.assertFalse(sandbox.exists(), "sandbox should be removed")

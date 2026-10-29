@@ -29,7 +29,7 @@ MEASURE BEFORE AND AFTER — NO OPTIMIZATION WITHOUT A BASELINE NUMBER
 ## Escalate to install
 
 ```bash
-npx skills add vercel-labs/agent-skills -g --skill vercel-react-best-practices --skill vercel-optimize -y --copy
-npx skills add anthropics/skills@webapp-testing -g -y --copy
-npx skills add supabase/agent-skills -g --skill supabase-postgres-best-practices -y --copy
+npx skills@1.7.4 add vercel-labs/agent-skills -g --skill vercel-react-best-practices --skill vercel-optimize -y --copy
+npx skills@1.7.4 add anthropics/skills@webapp-testing -g -y --copy
+npx skills@1.7.4 add supabase/agent-skills -g --skill supabase-postgres-best-practices -y --copy
 ```

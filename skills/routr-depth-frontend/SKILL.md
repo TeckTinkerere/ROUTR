@@ -48,5 +48,5 @@ Avoid competing selector specificities (`.section` vs `.cta` padding wars).
 ## Install full skill
 
 ```bash
-npx skills add anthropics/skills@frontend-design -g -y --copy
+npx skills@1.7.4 add anthropics/skills@frontend-design -g -y --copy
 ```

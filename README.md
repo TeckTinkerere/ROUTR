@@ -45,10 +45,10 @@ About 30 seconds, Node.js 18+ required:
 
 ```bash
 # Interactive checkbox picker
-npx skills add TeckTinkerere/ROUTR -g --copy
+npx skills@1.7.4 add TeckTinkerere/ROUTR -g --copy
 
 # Or every routr-* skill, no prompts
-npx skills add TeckTinkerere/ROUTR -g --all -y --copy
+npx skills@1.7.4 add TeckTinkerere/ROUTR -g --all -y --copy
 ```
 
 Restart your agent, then type `/routr-` in the slash menu. Try:

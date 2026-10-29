@@ -47,7 +47,7 @@ NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST
 ## Install full skill
 
 ```bash
-npx skills add obra/superpowers -g --skill systematic-debugging -y --copy
+npx skills@1.7.4 add obra/superpowers -g --skill systematic-debugging -y --copy
 ```
 
 Then follow `systematic-debugging/SKILL.md` exclusively.

@@ -35,10 +35,10 @@ A **workflow** (`product-launch-video`, `pr-to-video`, `general-video`, …) own
 If the matched workflow isn't installed, don't improvise a substitute:
 
 ```bash
-npx skills add heygen-com/hyperframes --skill pr-to-video
+npx skills@1.7.4 add heygen-com/hyperframes --skill pr-to-video
 ```
 
-`npx skills add heygen-com/hyperframes --all` installs core plus every workflow.
+`npx skills@1.7.4 add heygen-com/hyperframes --all` installs core plus every workflow.
 
 ## CLI dev loop
 

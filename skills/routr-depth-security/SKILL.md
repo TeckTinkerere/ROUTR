@@ -84,8 +84,8 @@ Rate each finding by actual exploitability, not OWASP category alone:
 ## Install full skills
 
 ```bash
-npx skills add trailofbits/skills -g --skill semgrep -y --copy
-npx skills add firebase/agent-skills -g --skill firebase-security-rules-auditor -y --copy
+npx skills@1.7.4 add trailofbits/skills -g --skill semgrep -y --copy
+npx skills@1.7.4 add firebase/agent-skills -g --skill firebase-security-rules-auditor -y --copy
 ```
 
 Then follow those skills' own instructions in addition to this process — this fallback does not replace static analysis tooling once installed.

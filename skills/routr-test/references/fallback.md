@@ -25,6 +25,6 @@ FAILING TEST BEFORE IMPLEMENTATION WHEN DOING TDD
 ## Escalate to install
 
 ```bash
-npx skills add anthropics/skills@webapp-testing -g -y --copy
-npx skills add obra/superpowers -g --skill test-driven-development -y --copy
+npx skills@1.7.4 add anthropics/skills@webapp-testing -g -y --copy
+npx skills@1.7.4 add obra/superpowers -g --skill test-driven-development -y --copy
 ```
