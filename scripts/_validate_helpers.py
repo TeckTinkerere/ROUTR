@@ -22,6 +22,12 @@ Subcommands:
   routes <skills_dir>                -- check 12: routes.json integrity
                                          (routers, chains, companions,
                                          handoff vs `## Handoff` sections).
+  plugin <repo_root>                 -- check 13: plugin manifests parse
+                                         (.plugin/, .claude-plugin/ plugin.json
+                                         and marketplace.json), the marketplace
+                                         entry points at the repo-root plugin,
+                                         and every version matches the latest
+                                         released CHANGELOG.md heading.
 """
 from __future__ import annotations
 
@@ -422,6 +428,104 @@ def cmd_routes(skills_dir: str) -> int:
     return fails
 
 
+# `## [2.1.0] - 2026-10-09`; `## [2.2.0] - Unreleased` is skipped by the caller.
+RELEASE_HEADING_RE = re.compile(r"^## \[(\d+\.\d+\.\d+[^\]]*)\](.*)$", re.M)
+
+
+def load_json_object(path: Path) -> dict | None:
+    """Parsed JSON object, or None after printing a FAIL line."""
+    if not path.is_file():
+        print(f"FAIL: {path.as_posix()}: missing")
+        return None
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        print(f"FAIL: {path.as_posix()}: does not parse as JSON ({exc})")
+        return None
+    if not isinstance(data, dict):
+        print(f"FAIL: {path.as_posix()}: top level must be a JSON object")
+        return None
+    return data
+
+
+def latest_release(changelog: str) -> str | None:
+    for m in RELEASE_HEADING_RE.finditer(changelog):
+        if "unreleased" not in m.group(2).lower():
+            return m.group(1)
+    return None
+
+
+def cmd_plugin(repo_root: str) -> int:
+    root = Path(repo_root)
+    open_manifest = root / ".plugin" / "plugin.json"
+    cc_manifest = root / ".claude-plugin" / "plugin.json"
+    marketplace = root / ".claude-plugin" / "marketplace.json"
+    loaded = {p: load_json_object(p) for p in (open_manifest, cc_manifest, marketplace)}
+    fails = sum(1 for v in loaded.values() if v is None)
+    if fails:
+        return fails
+    plugin, market = loaded[cc_manifest], loaded[marketplace]
+
+    def nonempty_str(value: object) -> bool:
+        return isinstance(value, str) and value.strip() != ""
+
+    def fail(msg: str) -> None:
+        nonlocal fails
+        print(f"FAIL: {msg}")
+        fails += 1
+
+    for path, data in loaded.items():
+        if path != marketplace and not nonempty_str(data.get("version")):
+            fail(f"{path.as_posix()}: 'version' must be a non-empty string")
+    if not nonempty_str(plugin.get("name")):
+        fail(f"{cc_manifest.as_posix()}: 'name' must be a non-empty string")
+    if not nonempty_str(market.get("name")):
+        fail(f"{marketplace.as_posix()}: 'name' must be a non-empty string")
+    owner = market.get("owner")
+    if not isinstance(owner, dict) or not nonempty_str(owner.get("name")):
+        fail(f"{marketplace.as_posix()}: 'owner.name' must be a non-empty string")
+    entries = market.get("plugins")
+    if not isinstance(entries, list) or not entries:
+        fail(f"{marketplace.as_posix()}: 'plugins' must be a non-empty list")
+        entries = []
+
+    # The plugin is the repo root: .claude-plugin/plugin.json + the default skills/ scan.
+    name = plugin.get("name")
+    matches = [e for e in entries if isinstance(e, dict) and e.get("name") == name]
+    for i, e in enumerate(entries):
+        if not isinstance(e, dict) or not nonempty_str(e.get("name")) or "source" not in e:
+            fail(f"{marketplace.as_posix()}: plugins[{i}] needs a 'name' and a 'source'")
+    if len(matches) != 1:
+        fail(f"{marketplace.as_posix()}: expected exactly one plugins[] entry named '{name}' "
+             f"(the name in {cc_manifest.as_posix()}), found {len(matches)}")
+    else:
+        entry = matches[0]
+        if entry.get("source") not in ("./", "."):
+            fail(f"{marketplace.as_posix()}: plugins entry '{name}' must use source \"./\" "
+                 f"(the repo root holds .claude-plugin/plugin.json and skills/), got {entry.get('source')!r}")
+        if "version" in entry and entry["version"] != plugin.get("version"):
+            fail(f"{marketplace.as_posix()}: plugins entry '{name}' version {entry['version']!r} "
+                 f"differs from {cc_manifest.as_posix()} {plugin.get('version')!r}")
+
+    if not (root / "skills").is_dir() or not any((root / "skills").glob("routr-*/SKILL.md")):
+        fail("skills/: no routr-*/SKILL.md found for the plugin to load")
+
+    versions = {p.as_posix(): d.get("version") for p, d in loaded.items() if p != marketplace}
+    changelog = root / "CHANGELOG.md"
+    if not changelog.is_file():
+        fail(f"{changelog.as_posix()}: missing")
+    else:
+        released = latest_release(changelog.read_text(encoding="utf-8", errors="replace"))
+        if released is None:
+            fail(f"{changelog.as_posix()}: no released '## [x.y.z] - <date>' heading found")
+        else:
+            versions[f"{changelog.as_posix()} (latest release)"] = released
+    if len(set(versions.values())) > 1:
+        detail = ", ".join(f"{k}={v!r}" for k, v in versions.items())
+        fail(f"plugin version drift: {detail}")
+    return fails
+
+
 def main(argv: list[str]) -> int:
     if len(argv) < 2:
         print(__doc__)
@@ -435,6 +539,8 @@ def main(argv: list[str]) -> int:
         return 1 if cmd_skills(argv[2], argv[3], argv[4]) else 0
     if cmd == "routes" and len(argv) == 3:
         return 1 if cmd_routes(argv[2]) else 0
+    if cmd == "plugin" and len(argv) == 3:
+        return 1 if cmd_plugin(argv[2]) else 0
     print(__doc__)
     return 2
 

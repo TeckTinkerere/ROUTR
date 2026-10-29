@@ -156,4 +156,4 @@ Small, focused PRs get reviewed fastest.
 
 ## Releases (maintainers)
 
-Move the `[2.x.y] - Unreleased` heading in `CHANGELOG.md` to a dated heading, bump `.plugin/plugin.json`, then push a `vX.Y.Z` tag. The release workflow validates the repo and publishes the matching changelog section as the GitHub Release.
+Move the `[2.x.y] - Unreleased` heading in `CHANGELOG.md` to a dated heading, bump `version` in both `.plugin/plugin.json` and `.claude-plugin/plugin.json` (validator check 13 fails if either disagrees with the new heading), then push a `vX.Y.Z` tag. The release workflow validates the repo and publishes the matching changelog section as the GitHub Release.

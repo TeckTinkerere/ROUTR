@@ -116,7 +116,7 @@ Top routers include `references/` (workflow, fallback, gotchas, examples, bounda
 
 Two mechanical gates run before release, both callable from CI:
 
-**Validator** (`scripts/validate-skills.sh`), 12 checks:
+**Validator** (`scripts/validate-skills.sh`), 13 checks:
 
 1. Frontmatter `name:` matches folder name
 2. Router description contains `Use when:`
@@ -130,6 +130,7 @@ Two mechanical gates run before release, both callable from CI:
 10. Every `evals/*.eval.json` parses, and every `expected_router`/`expected_chain`/`must_not_load` entry names an existing `skills/routr-*` folder (FAIL)
 11. Every situational router has at least one eval prompt as `expected_router` somewhere in `evals/` (WARN)
 12. `routes.json` parses; every router it names exists and every situational router has an entry; chains <= `max_chain`; companion `section` anchors resolve to a heading (FAIL); handoff targets appear in the router's `## Handoff` section (WARN)
+13. `.plugin/plugin.json`, `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json` parse with their required fields; the marketplace's `routr` entry uses source `./`; both manifest versions match the latest released `CHANGELOG.md` heading (FAIL)
 
 **Eval runner** (`scripts/run-evals.py`, stdlib only): builds the router menu from each `SKILL.md` frontmatter, then scores every prompt in `evals/`.
 

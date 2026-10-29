@@ -15,6 +15,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 - **Host eval mode.** `python scripts/run-evals.py --mode host` runs a real Claude Code session per eval prompt in a temp sandbox and records which ROUTR skills it invokes, to test whether routing survives a crowded skill list. Options: `--host-env isolated|user`, `--noise-dir`, `--claude-bin`, `--max-turns`, `--keep-sandbox`. The report adds skills visible to the agent, prompts with no ROUTR skill, prompts routed via `routr-router`, and other skills invoked instead. No host-mode results have been collected yet.
 - **Runner unit tests.** `scripts/tests/` has stdlib `unittest` tests for the runner against a fake `claude` CLI (`fake_claude.py`), and CI runs them.
+- **Claude Code plugin.** `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json` make this repo a Claude Code plugin marketplace. `/plugin marketplace add TeckTinkerere/ROUTR`, then `/plugin install routr@routr`, installs every `skills/routr-*` skill as one `routr` plugin, with skills namespaced as `routr:routr-*`. The `npx skills` route and `.plugin/plugin.json` are unchanged. README Quickstart and INSTALL.md document both routes.
+- **Validator check 13.** CI fails when a plugin manifest is missing or invalid JSON, when the marketplace entry is not the repo-root `routr` plugin, or when the versions in `.plugin/plugin.json` and `.claude-plugin/plugin.json` disagree with each other or with the latest released `CHANGELOG.md` heading. `scripts/tests/test_validate_helpers.py` covers it.
 
 ### Changed
 

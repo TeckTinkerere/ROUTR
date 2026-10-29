@@ -1,0 +1,17 @@
+{
+  "name": "routr",
+  "description": "ROUTR: situational router skills that help coding agents pick the right skill, in the right order.",
+  "owner": {
+    "name": "TeckTinkerere",
+    "url": "https://github.com/TeckTinkerere"
+  },
+  "plugins": [
+    {
+      "name": "routr",
+      "source": "./",
+      "description": "Every routr-* router skill: debug, ship, plan, spec, test, review, deploy, frontend, motion, mobile, AI SDK, video, marketing, security, perf and more, with multi-route plans and depth fallbacks.",
+      "category": "development",
+      "tags": ["skills", "routing", "router", "agent-skills"]
+    }
+  ]
+}
