@@ -42,6 +42,8 @@ description: "Deploy to Vercel, preview environments, or app stores. Use when: d
 
 Read `deploy-to-vercel`; capture preview URL; smoke-test.
 
+Preview is the default target. Production deploys, alias promotion and store submission (EAS submit, TestFlight) go out only after the user approves that release in this conversation: name the target, project and commit before asking.
+
 ## 3. Post-deploy
 
 - `vercel-optimize` for cost/CWV
@@ -70,4 +72,5 @@ Read `deploy-to-vercel`; capture preview URL; smoke-test.
 
 - Deploy without build check
 - Force-push main to fix deploy
+- Promoting to production because the preview looked fine, without the user's go-ahead
 - Skipping env var parity preview ↔ production

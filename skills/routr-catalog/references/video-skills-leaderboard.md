@@ -66,19 +66,19 @@ Need a video?
 
 ```bash
 # ROUTR routers
-npx skills add TeckTinkerere/ROUTR -g --all -y --copy
+npx skills@1.7.4 add TeckTinkerere/ROUTR -g --all -y --copy
 
 # #1 Remotion (skills.sh)
-npx skills add remotion-dev/skills@remotion-best-practices -g -y --copy
+npx skills@1.7.4 add remotion-dev/skills@remotion-best-practices -g -y --copy
 
 # #2 Launch video from current project
-npx skills add latent-spaces/brag@brag -g -y --copy
+npx skills@1.7.4 add latent-spaces/brag@brag -g -y --copy
 
 # HyperFrames core + all workflows (brag, product-launch, pr-to-video, …)
-npx skills add heygen-com/hyperframes -g --all -y --copy
+npx skills@1.7.4 add heygen-com/hyperframes -g --all -y --copy
 
 # Optional Remotion alternate
-npx skills add shreefentsar/remotion-video-toolkit@remotion-video-toolkit -g -y --copy
+npx skills@1.7.4 add shreefentsar/remotion-video-toolkit@remotion-video-toolkit -g -y --copy
 ```
 
 **Prerequisites (HyperFrames / brag):** Node.js 22+, FFmpeg on `PATH`, and a clean `npx hyperframes doctor --json` payload (the command exits 0 even when the environment is broken — gate on the payload field).

@@ -44,7 +44,7 @@ while [ $# -gt 0 ]; do
     --apply) APPLY=1; shift ;;
     --prune-legacy) PRUNE_LEGACY=1; shift ;;
     --root)
-      [ $# -ge 2 ] || { echo "error: --root requires a PATH argument" >&2; exit 2; }
+      [ $# -ge 2 ] && [ -n "$2" ] || { echo "error: --root requires a non-empty PATH argument" >&2; exit 2; }
       ROOTS+=("$2")
       shift 2
       ;;
@@ -124,8 +124,7 @@ for root in "${ROOTS[@]}"; do
       echo "MISSING  $skill"
       missing_or_drift=1
       if [ "$APPLY" -eq 1 ]; then
-        mkdir -p "$dst"
-        cp -r "$src"/. "$dst"/
+        mkdir -p "$dst" && cp -r "$src"/. "$dst"/ || { echo "error: failed to copy $skill into $root" >&2; exit 1; }
         echo "         -> copied (apply)"
       fi
       continue
@@ -137,9 +136,13 @@ for root in "${ROOTS[@]}"; do
       echo "$diff_files" | sed 's/^/         /'
       missing_or_drift=1
       if [ "$APPLY" -eq 1 ]; then
-        rm -rf "$dst"
-        mkdir -p "$dst"
-        cp -r "$src"/. "$dst"/
+        if [ -L "$dst" ]; then
+          # A linked install (npx skills add without --copy) points into
+          # another root; sync that root instead of replacing the link.
+          echo "         -> skipped: symlink to $(readlink "$dst"); sync its root instead (apply)"
+          continue
+        fi
+        rm -rf "$dst" && mkdir -p "$dst" && cp -r "$src"/. "$dst"/ || { echo "error: failed to replace $skill in $root" >&2; exit 1; }
         echo "         -> replaced with repo version (apply)"
       fi
     else

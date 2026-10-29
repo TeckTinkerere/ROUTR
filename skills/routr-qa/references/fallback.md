@@ -24,6 +24,6 @@ CLAIM NOTHING WORKS UNTIL YOU'VE ACTUALLY DRIVEN THE BROWSER AND SEEN IT
 ## Escalate to install
 
 ```bash
-npx skills add vercel-labs/agent-browser -g -y --copy
-npx skills add anthropics/skills@webapp-testing -g -y --copy
+npx skills@1.7.4 add vercel-labs/agent-browser -g -y --copy
+npx skills@1.7.4 add anthropics/skills@webapp-testing -g -y --copy
 ```

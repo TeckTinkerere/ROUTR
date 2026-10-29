@@ -19,7 +19,7 @@ Launch, PR, site-tour, and explainer workflows for `routr-video`. Product promos
 | 11 | `general-video` | Multi-scene, over ~3 min, static loop, or custom |
 
 ```bash
-npx skills add latent-spaces/brag@brag heygen-com/hyperframes -g -y --copy
+npx skills@1.7.4 add latent-spaces/brag@brag heygen-com/hyperframes -g -y --copy
 ```
 
 Prereqs: Node 22+, FFmpeg, and a clean `npx hyperframes doctor --json` payload.

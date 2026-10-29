@@ -29,8 +29,8 @@ NEVER LOAD REMOTION + HYPERFRAMES IN PARALLEL FOR A ONE-OFF CLIP
 ## Escalate to install
 
 ```bash
-npx skills add latent-spaces/brag@brag heygen-com/hyperframes -g -y --copy
-npx skills add remotion-dev/skills@remotion-best-practices -g -y --copy
+npx skills@1.7.4 add latent-spaces/brag@brag heygen-com/hyperframes -g -y --copy
+npx skills@1.7.4 add remotion-dev/skills@remotion-best-practices -g -y --copy
 ```
 
 For voice, music, effects, transcription, and captions, `media-use` ships with the HyperFrames bundle above — see [media.md](./media.md) for its credential switch and preflight rule.

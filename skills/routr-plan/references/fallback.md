@@ -19,6 +19,6 @@ Before any implementation:
 - [ ] Non-goals listed
 
 ```bash
-npx skills add obra/superpowers -g --skill brainstorming -y --copy
-npx skills add mattpocock/skills -g --skill grill-me --skill to-prd -y --copy
+npx skills@1.7.4 add obra/superpowers -g --skill brainstorming -y --copy
+npx skills@1.7.4 add mattpocock/skills -g --skill grill-me --skill to-prd -y --copy
 ```
