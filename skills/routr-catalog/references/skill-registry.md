@@ -79,8 +79,8 @@ npx skills@1.7.4 add husnainpk/SymDex yvgude/lean-ctx -g -y --copy
 | canonical | aliases | namespace | tier | routers | source |
 |-----------|---------|-----------|------|---------|--------|
 | `find-skills` | — | vercel | optional | routr-plan | vercel-labs/skills |
-| `symdex-code-search` | symdex | routr | recommended | routr-debug, routr-ship, routr-explore, routr-frontend, routr-database, routr-refactor, routr-perf | husnainpk/SymDex |
-| `lean-ctx` | — | routr | recommended | all code routers | yvgude/lean-ctx |
+| `symdex-code-search` | symdex | routr | recommended | routr-debug, routr-ship, routr-explore, routr-frontend, routr-database, routr-refactor, routr-perf, routr-spec | husnainpk/SymDex |
+| `lean-ctx` | — | routr | recommended | all code routers, routr-spec | yvgude/lean-ctx |
 | `find-docs` | context7 | vercel | recommended | routr-integrate, routr-frontend | upstash/context7 |
 | `caveman` | — | routr | optional | routr-debug | JuliusBrussee/caveman |
 | `caveman-commit` | — | routr | optional | routr-ship | JuliusBrussee/caveman |
@@ -110,6 +110,22 @@ npx skills@1.7.4 add husnainpk/SymDex yvgude/lean-ctx -g -y --copy
 | `improve-codebase-architecture` | — | mattpocock | optional | routr-plan, routr-refactor | mattpocock/skills |
 
 **ROUTR fallback:** `routr-depth-plan` when `brainstorming` missing.
+
+## Shipped and runtime evidence
+
+| canonical | aliases | namespace | tier | routers | source |
+|-----------|---------|-----------|------|---------|--------|
+| `reverse-engineer-anything` | — | rea | optional | routr-spec | morluto/rea |
+
+Opt-in skill-only install (not part of core/full child bundles):
+
+```bash
+npx skills@1.7.4 add morluto/rea -g --skill reverse-engineer-anything -y --copy
+```
+
+This installs instructions/references only, not MCP registration or analysis engines. The namespace is a logical hint, not a guaranteed host prefix. Load only for shipped/package/runtime claims that available source cannot establish; ordinary complete source-repository reconciliation skips REA, including readiness checks. If required tools are absent/blocked, follow the child's own connection/recovery contract; never silently install engines or change configuration.
+
+Verified against the [actual upstream skill](https://github.com/morluto/rea/blob/1bd5c5c87e81b27bfb16140f71ffa03563e58477/.agents/skills/reverse-engineer-anything/SKILL.md) and [skill-only installation docs](https://github.com/morluto/rea/blob/1bd5c5c87e81b27bfb16140f71ffa03563e58477/docs/installation.md#skill-only-installation). Source-only fallback: [routr-spec](../../routr-spec/references/fallback.md). `to-prd` remains a planning child; as-built reconciliation uses its own artifact contract without loading future-planning instructions.
 
 ## Testing & E2E
 
@@ -289,6 +305,7 @@ npx skills@1.7.4 add obra/superpowers -g --skill subagent-driven-development -y 
 | `routr-test` | test-driven-development, tdd, webapp-testing |
 | `routr-review` | requesting-code-review, vercel-react-best-practices |
 | `routr-plan` | brainstorming, grill-me, to-prd |
+| `routr-spec` | symdex-code-search, lean-ctx; reverse-engineer-anything only for the shipped/runtime evidence gate |
 | `routr-deploy` | deploy-to-vercel |
 | `routr-database` | supabase-postgres-best-practices |
 | `routr-refactor` | improve-codebase-architecture, vercel-composition-patterns |

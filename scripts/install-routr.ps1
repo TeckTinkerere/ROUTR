@@ -15,9 +15,9 @@ $bundles = @(
     }
     [PSCustomObject]@{
         Bundle = "Core engineering"
-        Description = "Debug, ship, plan, test, review, refactor, deploy, DB, QA, security, explore"
+        Description = "Debug, ship, plan, spec reconciliation, test, review, refactor, deploy, DB, QA, security, explore"
         Skills = @(
-            "routr-debug", "routr-ship", "routr-plan",
+            "routr-debug", "routr-ship", "routr-plan", "routr-spec",
             "routr-test", "routr-review", "routr-refactor",
             "routr-deploy", "routr-database", "routr-qa",
             "routr-security", "routr-explore",

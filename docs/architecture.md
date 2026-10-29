@@ -42,6 +42,52 @@ Routers route. They do not replace child skills — but they stay useful without
 
 **ROUTR without child bundles feels weak** — install `routr-bundle-core` / `routr-bundle-frontend` from [skill-registry.md](../skills/routr-catalog/references/skill-registry.md).
 
+## Product specification reconciliation
+
+`routr-spec` owns **current product reality, historical drift, and the living specification**. `routr-plan` owns intended future work; `routr-explore` explains the codebase. The word "PRD" does not decide between them: an as-built PRD reconstructed from an existing product belongs to `routr-spec`.
+
+The router sits above evidence sources:
+
+```text
+Original intent (PRD / requirements / ADRs / docs)
+                         │
+                    routr-spec
+                         │
+          ┌──────────────┴────────────────┐
+          │                               │
+ Source reality                    Shipped/runtime reality
+ code + tests + Git                 REA when justified
+          └──────────────┬────────────────┘
+                  Current product model
+                         │
+              Baseline ↔ current reconciliation
+                         │
+       Current spec + drift report + product changelog
+```
+
+For a normal source repository, `symdex-code-search` and `lean-ctx` help locate relevant behavior without a whole-codebase walkthrough. The local fallback uses ordinary source search, targeted reads, tests and Git history when those helpers are missing. No new depth skill or runtime is required.
+
+`reverse-engineer-anything` is an optional child from `morluto/rea`, not a domain selector. Load it only when a claim depends on a shipped binary/package, decompilation, passive/runtime evidence, version comparison, browser/application behavior, or behavior not established by available source. Skip it for complete source-repository architecture analysis, including requests phrased as "reverse engineer my app" when source is sufficient. Low-level artifact analysis without a specification deliverable stays with REA directly.
+
+REA's skill instructions and its MCP/tool registration are separate. ROUTR delegates connection/recovery to REA's own skill rather than embedding setup instructions or silently installing engines. An unavailable REA path leaves only its dependent claims unverified; source-based reconciliation can continue.
+
+The evidence contract distinguishes **OBSERVED FACT**, **INFERRED INTENT**, and **UNKNOWN**. Code can show what changed; Git can show when; a commit explanation, PR, issue or ADR may establish why. A plausible implementation rationale is never recorded as confirmed intent. A current source claim also does not establish that the same behavior is deployed.
+
+Use an existing specification directory when it has equivalent roles; otherwise default to `.product-spec/`:
+
+| Artifact | Role |
+|----------|------|
+| `BASELINE.md` | Original intent snapshot and provenance, preserved across updates |
+| `CURRENT.md` | As-built product behavior and contracts, with evidence and uncertainty |
+| `DRIFT.md` | Deterministic baseline-versus-current reconciliation |
+| `PRODUCT_CHANGELOG.md` | Product evolution and unresolved intent, separate from the release changelog |
+| `ledger.json` | Stable requirement identities, states, statuses, evidence and reason provenance |
+| `manifest.json` | Schema version, baseline provenance and reconciliation checkpoints |
+
+The first run establishes coverage. Later runs use `last_reconciled_commit..HEAD`, map changed files to product areas and requirement evidence, and revalidate affected areas plus any wider assumptions they invalidate. Missing history, changed baselines or runtime inputs require an explicit coverage decision; they never justify silently declaring the whole product current. A deliberate full reconciliation remains available. The [router workflow](../skills/routr-spec/references/workflow.md) defines the detailed process and links the artifact contract.
+
+Reconciliation edits only requested specification artifacts. Missing requirements become drift, and implementation is a separate handoff when requested. Baseline text is not rewritten to erase the discrepancy.
+
 ## Frontend stack
 
 | Router | Scope |

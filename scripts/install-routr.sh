@@ -9,7 +9,7 @@ SKILLS_CLI="skills@1.7.4"
 
 declare -A BUNDLE_SKILLS
 BUNDLE_SKILLS[meta]="routr-router routr-catalog routr-depth-debug routr-depth-frontend routr-depth-plan routr-depth-ship routr-depth-test"
-BUNDLE_SKILLS[core]="routr-debug routr-ship routr-plan routr-test routr-review routr-refactor routr-deploy routr-database routr-qa routr-security routr-explore routr-integrate routr-agents"
+BUNDLE_SKILLS[core]="routr-debug routr-ship routr-plan routr-spec routr-test routr-review routr-refactor routr-deploy routr-database routr-qa routr-security routr-explore routr-integrate routr-agents"
 BUNDLE_SKILLS[frontend]="routr-frontend routr-motion"
 BUNDLE_SKILLS[video]="routr-video"
 BUNDLE_SKILLS[mobile]="routr-mobile"
