@@ -39,6 +39,7 @@
 #>
 [CmdletBinding()]
 param(
+    [ValidateNotNullOrEmpty()]
     [string[]]$Root,
     [switch]$Apply,
     [switch]$PruneLegacy
@@ -152,7 +153,15 @@ foreach ($root in $Root) {
             $diffFiles | ForEach-Object { Write-Host "         $_" }
             $missingOrDrift = $true
             if ($Apply) {
-                Remove-Item -Path $dst -Recurse -Force
+                $dstItem = Get-Item -LiteralPath $dst -Force
+                if ($dstItem.Attributes -band [System.IO.FileAttributes]::ReparsePoint) {
+                    # A linked install (npx skills add without --copy) points into another
+                    # root. Remove-Item -Recurse on a junction in Windows PowerShell 5.1
+                    # deletes the target's contents, so sync that root instead.
+                    Write-Host "         -> skipped: link to $($dstItem.Target); sync its root instead (apply)"
+                    continue
+                }
+                Remove-Item -LiteralPath $dst -Recurse -Force
                 Copy-Item -Path $src -Destination $dst -Recurse -Force
                 Write-Host "         -> replaced with repo version (apply)"
             }

@@ -22,6 +22,6 @@ Optional body explaining why.
 - Screenshots if UI
 
 ```bash
-npx skills add JuliusBrussee/caveman -g --skill caveman-commit -y --copy
-npx skills add obra/superpowers -g --skill requesting-code-review -y --copy
+npx skills@1.7.4 add JuliusBrussee/caveman -g --skill caveman-commit -y --copy
+npx skills@1.7.4 add obra/superpowers -g --skill requesting-code-review -y --copy
 ```

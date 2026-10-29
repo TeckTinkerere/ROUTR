@@ -26,6 +26,6 @@ NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST
 ## Escalate to install
 
 ```bash
-npx skills add obra/superpowers -g --skill systematic-debugging -y --copy
-npx skills add mattpocock/skills -g --skill diagnosing-bugs -y --copy
+npx skills@1.7.4 add obra/superpowers -g --skill systematic-debugging -y --copy
+npx skills@1.7.4 add mattpocock/skills -g --skill diagnosing-bugs -y --copy
 ```

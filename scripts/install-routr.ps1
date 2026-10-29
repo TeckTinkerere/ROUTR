@@ -4,6 +4,9 @@
 
 $ErrorActionPreference = "Stop"
 
+# Pinned so every install runs the same reviewed CLI, not npm's latest.
+$skillsCli = "skills@1.7.4"
+
 $bundles = @(
     [PSCustomObject]@{
         Bundle = "Meta"
@@ -66,7 +69,7 @@ Write-Host ""
 Write-Host "Installing $($skillNames.Count) skill(s):" -ForegroundColor Green
 $skillNames | ForEach-Object { Write-Host "  - $_" }
 
-$npxArgs = @("skills", "add", "TeckTinkerere/ROUTR", "-g", "--copy", "-y") + $skillArgs
+$npxArgs = @($skillsCli, "add", "TeckTinkerere/ROUTR", "-g", "--copy", "-y") + $skillArgs
 & npx @npxArgs
 
 Write-Host ""
