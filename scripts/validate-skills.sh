@@ -24,8 +24,12 @@
 #       exists; every situational router has an entry; chains <= max_chain;
 #       companion `section` anchors resolve to a heading (GitHub slug);
 #       handoff targets appear in the router's `## Handoff` section (WARN).
+#   13. Plugin manifests (.plugin/plugin.json, .claude-plugin/plugin.json,
+#       .claude-plugin/marketplace.json) parse as JSON with their required
+#       fields; the marketplace entry is the repo-root plugin; every version
+#       matches the latest released CHANGELOG.md heading.
 #
-# Checks 9-12 are implemented in scripts/_validate_helpers.py (stdlib-only
+# Checks 9-13 are implemented in scripts/_validate_helpers.py (stdlib-only
 # Python) because bash JSON/link parsing gets unreadable fast.
 #
 # Checks 1, 2, 5, 6, 7, 8 all loop over every skills/routr-* directory; doing
@@ -55,7 +59,7 @@ trap 'rm -rf "$TMP_DIR"' EXIT
 
 PYTHON="$(command -v python3 || command -v python || true)"
 if [ -z "$PYTHON" ]; then
-  echo "FAIL: no python3/python on PATH — checks 1,2,5-12 (links, eval JSON, routes.json, per-skill checks) skipped"
+  echo "FAIL: no python3/python on PATH — checks 1,2,5-13 (links, eval JSON, routes.json, plugin manifests, per-skill checks) skipped"
   fail=$((fail + 1))
 fi
 
@@ -202,6 +206,19 @@ if [ -s "$TMP_DIR/check12_out.txt" ]; then
       *) echo "$line" ;;
     esac
   done < "$TMP_DIR/check12_out.txt"
+fi
+
+echo
+echo "== 13. Plugin manifests: valid JSON, marketplace entry, version sync =="
+"$PYTHON" scripts/_validate_helpers.py plugin . > "$TMP_DIR/check13_out.txt" 2>&1 || true
+if [ -s "$TMP_DIR/check13_out.txt" ]; then
+  while IFS= read -r line; do
+    case "$line" in
+      FAIL:*) fail=$((fail + 1)); echo "$line" ;;
+      WARN:*) warn=$((warn + 1)); echo "$line" ;;
+      *) echo "$line" ;;
+    esac
+  done < "$TMP_DIR/check13_out.txt"
 fi
 
 echo

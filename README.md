@@ -51,6 +51,15 @@ npx skills@1.7.4 add TeckTinkerere/ROUTR -g --copy
 npx skills@1.7.4 add TeckTinkerere/ROUTR -g --all -y --copy
 ```
 
+**Claude Code plugin.** In Claude Code you can use the plugin manager instead. Add this repo as a marketplace and install every router at once (needs Git, not Node.js):
+
+```text
+/plugin marketplace add TeckTinkerere/ROUTR
+/plugin install routr@routr
+```
+
+Pick one route: with both installed, every router is listed twice. Plugin skills show as `/routr:routr-debug`. Shell commands, scopes and updates are in [INSTALL.md](INSTALL.md#claude-code-plugin).
+
 Restart your agent, then type `/routr-` in the slash menu. Try:
 
 > *"Fix the 500 on checkout and ship it"*

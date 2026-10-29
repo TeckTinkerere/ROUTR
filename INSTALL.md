@@ -70,6 +70,59 @@ npx skills@1.7.4 add TeckTinkerere/ROUTR -g --copy -y --skill routr-spec
 
 ---
 
+## Claude Code plugin
+
+Claude Code only. Instead of `npx skills`, you can install ROUTR through Claude Code's plugin manager, which installs every `routr-*` skill as one `routr` plugin. This route needs Git but not Node.js.
+
+Pick one route. If you already installed the `npx skills` copies, every router is listed twice, so remove them first with the command under [Update / uninstall](#update--uninstall).
+
+Inside a Claude Code session:
+
+```text
+/plugin marketplace add TeckTinkerere/ROUTR
+/plugin install routr@routr
+```
+
+`/plugin install` opens the plugin's details, where you pick a scope: you in every project, everyone working in this repository, or you in this repository only.
+
+From a shell, without a session:
+
+```bash
+claude plugin marketplace add TeckTinkerere/ROUTR
+claude plugin install routr@routr
+```
+
+`claude plugin install` installs at user scope. Add `--scope project` to turn ROUTR on for everyone working in the current repository: it writes `.claude/settings.json`, and each collaborator runs the same install command once.
+
+Plugin skills are namespaced under the plugin name, so the slash menu shows `/routr:routr-debug`, `/routr:routr-ship` and so on. Routers still hand off by bare name (`routr-ship`), which resolves to the plugin's skill.
+
+Check the install:
+
+```bash
+claude plugin list            # routr@routr, Status: enabled
+claude plugin details routr   # Component inventory lists every routr-* skill
+```
+
+Update: auto-update is off by default for third-party marketplaces, and `.claude-plugin/plugin.json` pins the release version, so a new version arrives when ROUTR tags a release.
+
+```bash
+claude plugin marketplace update routr
+claude plugin update routr@routr
+```
+
+To get releases automatically, open `/plugin`, go to **Marketplaces**, select `routr` and choose **Enable auto-update**.
+
+Uninstall:
+
+```bash
+claude plugin uninstall routr@routr
+claude plugin marketplace remove routr   # also uninstalls its plugins
+```
+
+The plugin contains the routers only. Install child skill bundles (next section) separately.
+
+---
+
 ## Install child skill bundles (required for depth)
 
 Routers are indexes — install children for Anthropic-grade output:
