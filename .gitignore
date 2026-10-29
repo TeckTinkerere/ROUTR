@@ -4,3 +4,6 @@ Thumbs.db
 *.swp
 .idea/
 .vscode/
+
+# local secrets for marketing video
+marketing/video/intro/.env
