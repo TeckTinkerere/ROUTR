@@ -6,6 +6,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-11-01
+
 ### Added
 
 - **`routr-spec`** for evidence-backed reconciliation of existing products: preserve baseline intent, reconstruct current behavior, document drift and product evolution, and incrementally maintain a living specification from Git changes. Source and Git evidence are the ordinary path; `reverse-engineer-anything` from `morluto/rea` is an optional child only when shipped/runtime evidence is required. Includes artifact/schema guidance, source-only fallback, adversarial routing evals, and explicit opt-in `routr-plan → routr-ship → routr-spec` composition.
@@ -124,7 +126,8 @@ Blind Haiku 4.5 runs (a subagent that could only read the exported prompts file)
 
 - Initial release: situational agent skill playbooks.
 
-[Unreleased]: https://github.com/TeckTinkerere/ROUTR/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/TeckTinkerere/ROUTR/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/TeckTinkerere/ROUTR/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/TeckTinkerere/ROUTR/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/TeckTinkerere/ROUTR/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/TeckTinkerere/ROUTR/compare/v1.3.0...v2.0.0

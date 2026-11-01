@@ -16,7 +16,7 @@
   <a href="https://github.com/TeckTinkerere/ROUTR/actions/workflows/validate-skills.yml"><img src="https://github.com/TeckTinkerere/ROUTR/actions/workflows/validate-skills.yml/badge.svg" alt="CI" /></a>
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="MIT license" />
   <img src="https://img.shields.io/badge/skills-29-blue?style=flat-square" alt="29 skills" />
-  <img src="https://img.shields.io/badge/version-2.1.0-orange?style=flat-square" alt="version 2.1.0" />
+  <img src="https://img.shields.io/badge/version-2.2.0-orange?style=flat-square" alt="version 2.2.0" />
 </p>
 
 <p align="center">
@@ -156,7 +156,7 @@ Routing is tested, not assumed. The historical blind runs below used a **Haiku 4
 | With multi-route, 176 prompts (run A / B) | 98.3% / 97.7% | 75.0% / 75.0%, 82.1% / 78.6% | 1 / 1 |
 | Same, with `next` and `companions` in the menu (run C / D) | 94.3% / 98.9% | 75.0% / 78.6%, 78.6% / 78.6% | 4 / 0 |
 
-**Plan composition rules (unreleased):** these runs used 24 held-out chain prompts, written before the rules and never used for tuning.
+**Plan composition rules (added in 2.2.0):** these runs used 24 held-out chain prompts, written before the rules and never used for tuning.
 
 | Held-out chain set, 24 prompts | Router accuracy | Chain exact-match | Violations |
 |--------------------------------|-----------------|-------------------|------------|
