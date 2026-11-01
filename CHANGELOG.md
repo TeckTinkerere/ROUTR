@@ -6,6 +6,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+### Changed
+
+- Every situational router now has a `**Skip:**` line naming skills that look relevant but belong to a neighbouring router, and routers with optional children have a one-line budget gate. Child tables in `routr-ai`, `routr-database`, `routr-deploy`, `routr-integrate`, `routr-motion`, `routr-refactor`, `routr-review`, `routr-explore` and `routr-mobile` gain the `Tier` column. Router bodies only; no descriptions changed.
+
 ## [2.2.0] - 2026-11-01
 
 ### Added

@@ -23,13 +23,17 @@ description: "Deploy to Vercel, preview environments, or app stores. Use when: d
 
 ## 0. Bootstrap
 
-| Skill | When |
-|-------|------|
-| `deploy-to-vercel` | Vercel (default Next.js) |
-| `vercel-cli-with-tokens` | CI token auth |
-| `vercel-optimize` | Post-deploy tuning |
-| `finishing-a-development-branch` | Merge vs PR |
-| `expo-deployment` | Mobile EAS |
+| Order | Skill | Tier |
+|-------|-------|------|
+| 1 | `deploy-to-vercel` | required — web target (Vercel, default Next.js) |
+| 2 | `expo-deployment` | required — mobile target (EAS) |
+| 3 | `vercel-cli-with-tokens` | optional — CI token auth |
+| 4 | `vercel-optimize` | optional — post-deploy tuning |
+| 5 | `finishing-a-development-branch` | optional — merge vs PR |
+
+**Budget gate:** read only the one target skill (row 1 or 2) for the deploy at hand. Pull `vercel-cli-with-tokens` only for CI or token auth, `vercel-optimize` only after a Vercel deploy, and `finishing-a-development-branch` only when the user asks merge vs PR.
+
+**Skip:** `agent-browser`, `webapp-testing` (post-deploy browser QA → `routr-qa`), `systematic-debugging` (production broke → `routr-debug`), `supabase` (writing the migration → `routr-database`), `caveman-commit` (commit prep → `routr-ship`).
 
 ## 1. Pre-deploy gate
 

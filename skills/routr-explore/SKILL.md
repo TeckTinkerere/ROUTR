@@ -24,9 +24,13 @@ description: "Explain how the codebase works without changing code. Use when: 'h
 
 ## 0. Bootstrap
 
-1. `symdex-code-search`
-2. `lean-ctx`
-3. `context-fundamentals` — only if agent/context implications
+| Order | Skill | Tier |
+|-------|-------|------|
+| 1 | `symdex-code-search` | recommended |
+| 2 | `lean-ctx` | recommended |
+| 3 | `context-fundamentals` | optional — only if agent/context implications |
+
+**Budget gate:** rows 1–2 answer almost every "how does X work" question; pull `context-fundamentals` only when the question is about agent or context behavior.
 
 **Skip:** `caveman`, `frontend-design` unless UI structure is the subject.
 

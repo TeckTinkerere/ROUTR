@@ -46,6 +46,8 @@ Install missing from `routr-catalog/references/skill-registry.md`.
 
 No dedicated `routr-depth-perf` fallback exists — if every child skill above is missing, use [references/fallback.md](./references/fallback.md) directly.
 
+**Skip:** `systematic-debugging` (wrong output, not slow → `routr-debug`), `frontend-design`, `ui-ux-pro-max` (redesign with no perf complaint → `routr-frontend`), `framer-motion-animator` (authoring the animation → `routr-motion`), `agent-browser` (smoke test with no perf claim → `routr-qa`), `improve-codebase-architecture` (structure with no measured slowness → `routr-refactor`).
+
 ## 1. Baseline (low freedom)
 
 - [ ] Capture the metric that's actually complained about (LCP ms, INP ms, bundle KB, render count, endpoint p95 ms, heap MB) — before any change

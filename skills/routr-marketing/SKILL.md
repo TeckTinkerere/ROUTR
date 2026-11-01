@@ -35,6 +35,10 @@ See `routr-catalog/references/skill-registry.md`:
 npx skills@1.7.4 add coreyhaines31/marketingskills -g --all -y --copy
 ```
 
+**Budget gate:** each row serves one goal, so read only the lead skill for the stated goal (§1), not all four. `ai-seo` and `aso` only on an explicit LLM-citation or store-listing ask.
+
+**Skip:** `frontend-design`, `shadcn` (page UI → `routr-frontend`, after copy is approved), `remotion-best-practices`, `hyperframes` (video production → `routr-video`), `systematic-debugging` (analytics or tracking bug → `routr-debug`).
+
 ## 1. Goal routing
 
 | Goal | Lead skill |

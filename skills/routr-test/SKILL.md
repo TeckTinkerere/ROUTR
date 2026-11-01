@@ -41,6 +41,8 @@ If `webapp-testing` missing → read `routr-depth-test` OR [references/fallback.
 
 Failing tests debug → `routr-debug` + `systematic-debugging`.
 
+**Skip:** `agent-browser` (clicking through the running app → `routr-qa`), `caveman-commit`, `finishing-a-development-branch` (committing → `routr-ship`), `requesting-code-review` (reviewing a test PR → `routr-review`).
+
 ## 1. Choose test level (medium freedom)
 
 | Level | When |

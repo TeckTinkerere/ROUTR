@@ -22,15 +22,19 @@ description: "Review a PR or diff for bugs, style, and React best practices. Use
 
 ## 0. Bootstrap
 
-| Skill | When |
-|-------|------|
-| `requesting-code-review` | Author pre-merge self-review |
-| `receiving-code-review` | Addressing others' comments |
-| `vercel-react-best-practices` | React/Next patterns |
-| `review-animations` | Motion/CSS in PR |
-| `caveman-review` | Terse one-line comments |
+| Order | Skill | Tier |
+|-------|-------|------|
+| 1 | `requesting-code-review` | recommended — author pre-merge self-review |
+| 2 | `receiving-code-review` | optional — addressing others' comments |
+| 3 | `vercel-react-best-practices` | optional — React/Next diffs only |
+| 4 | `review-animations` | optional — motion/CSS in the PR |
+| 5 | `caveman-review` | optional — terse one-line comments |
 
 `review-since` — "review since commit X".
+
+**Budget gate:** `requesting-code-review` for every review; pull rows 2–5 only when their trigger is in the diff or the request (reviewer comments to answer, React files, motion/CSS, terse output asked for).
+
+**Skip:** `semgrep`, `firebase-security-rules-auditor` (dedicated security pass → `routr-security`), `systematic-debugging` (a suspected bug is a finding to report, not a debug session → `routr-debug`), `test-driven-development` (writing the fix → `routr-ship`).
 
 ## 1. Scope diff
 

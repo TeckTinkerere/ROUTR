@@ -24,13 +24,15 @@ description: "Build Expo or React Native apps (screens, navigation, native UI). 
 
 See `routr-catalog/references/skill-registry.md`:
 
-| Order | Skill | Role |
+| Order | Skill | Tier |
 |-------|-------|------|
-| 1 | `building-native-ui` | Expo Router, native patterns, RN conventions |
-| 2 | `vercel-react-native-skills` | RN performance |
-| 3 | `native-data-fetching` | Data loading |
-| 4 | `find-docs` | Expo API docs |
-| 5 | `symdex-code-search` | Existing screens |
+| 1 | `building-native-ui` | required — Expo Router, native patterns, RN conventions |
+| 2 | `vercel-react-native-skills` | recommended — RN performance |
+| 3 | `symdex-code-search` | recommended — existing screens |
+| 4 | `native-data-fetching` | optional — only when the screen loads remote data |
+| 5 | `find-docs` | optional — Expo API docs for an unverified API |
+
+**Budget gate:** rows 1–3 cover a routine screen. Pull `native-data-fetching` only when the screen loads remote data, and `find-docs` only for an Expo API you haven't verified.
 
 NativeWind projects: wire Expo's Tailwind setup (`tailwind.config.js` + Metro/Babel config) before building.
 

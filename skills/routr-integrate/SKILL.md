@@ -23,11 +23,16 @@ description: "Integrate a third-party library using up-to-date docs. Use when: '
 
 ## 0. Bootstrap
 
-1. `find-docs` — **always** for API details
-2. `symdex-code-search` — existing usage in repo
-3. `lean-ctx` — narrow reads
+| Order | Skill | Tier |
+|-------|-------|------|
+| 1 | `find-docs` | required — **always**, for API details |
+| 2 | `symdex-code-search` | recommended — existing usage in repo |
+| 3 | `lean-ctx` | recommended — narrow reads |
+| 4 | `shadcn`, `framer-motion-animator` | optional — only when the library being integrated is that UI lib (§4) |
 
-UI libs: `shadcn`, `framer-motion-animator` as needed.
+**Budget gate:** `find-docs` on every task; add rows 2–3 to match repo conventions. A backend or non-UI SDK needs no row 4 skill.
+
+**Skip:** `ui-ux-pro-max`, `web-design-guidelines` (new page or redesign → `routr-frontend`), `systematic-debugging` (a library call that throws → `routr-debug`), `supabase`, `supabase-postgres-best-practices` (schema, RLS or query work → `routr-database`).
 
 ## 1. Verify docs
 
