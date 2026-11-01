@@ -41,6 +41,8 @@ If root cause unclear → **stop**, switch to `routr-debug`.
 
 If `caveman-commit` missing → `routr-depth-ship` for commit format.
 
+**Skip:** `systematic-debugging` (root cause unknown → `routr-debug`), `brainstorming` (large feature from scratch → `routr-plan`), `deploy-to-vercel` (deploy is a separate stage → `routr-deploy`), `receiving-code-review` (review feedback only → `routr-review`).
+
 ## 1. Impact check (low freedom)
 
 - [ ] SymDex: callers of changed symbols

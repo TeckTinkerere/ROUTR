@@ -21,13 +21,17 @@ description: "Improve code structure without changing behavior. Use when: refact
 
 ## 0. Bootstrap
 
-| Skill | Role |
-|-------|------|
-| `improve-codebase-architecture` | Deep modules, seams, deepening opportunities |
-| `vercel-composition-patterns` | React composition refactors |
-| `vercel-react-best-practices` | Performance-safe refactors |
-| `symdex-code-search` | Callers before moves |
-| `tdd` / `test-driven-development` | Safety net |
+| Order | Skill | Tier |
+|-------|-------|------|
+| 1 | `symdex-code-search` | recommended — callers before moves |
+| 2 | `tdd` / `test-driven-development` | recommended — safety net when no green tests exist |
+| 3 | `improve-codebase-architecture` | optional — deep modules, seams; only when module boundaries move |
+| 4 | `vercel-composition-patterns` | optional — React component API refactors |
+| 5 | `vercel-react-best-practices` | optional — React only, performance-safe restructuring |
+
+**Budget gate:** rows 1–2 for every refactor. Pull `improve-codebase-architecture` only when the change moves module boundaries, and the two Vercel rows only when the code being restructured is React.
+
+**Skip:** `systematic-debugging` (a bug found mid-refactor → `routr-debug`), `requesting-code-review` (reviewing the refactor PR → `routr-review`), `caveman-commit` (committing → `routr-ship`), `webapp-testing` (a measured speed goal → `routr-perf`).
 
 ## 1. Safety net
 

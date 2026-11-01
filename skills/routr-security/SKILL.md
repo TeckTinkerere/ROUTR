@@ -33,7 +33,11 @@ See `routr-catalog/references/skill-registry.md`:
 | 2 | `firebase-security-rules-auditor` | optional — Firebase & Firestore rules |
 | 3 | `requesting-code-review` | recommended — review discipline |
 
+**Budget gate:** `semgrep` + `requesting-code-review` on changed paths cover a routine pass. Pull `firebase-security-rules-auditor` only when the project uses Firebase/Firestore.
+
 If `semgrep` and any rules-auditor skill are both missing → read `routr-depth-security` OR [references/fallback.md](./references/fallback.md).
+
+**Skip:** `systematic-debugging` (non-security bug → `routr-debug`), `caveman-review` (style-level PR feedback → `routr-review`), `supabase-postgres-best-practices` (query and index tuning → `routr-database`).
 
 Data layer → `routr-database` (Postgres/Supabase RLS). Firebase → rules auditors above.
 

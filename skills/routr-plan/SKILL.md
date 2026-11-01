@@ -39,6 +39,8 @@ description: "Plan future work: brainstorm, PRD, stress-test ideas. Use when: ne
 
 If `brainstorming` missing → read `routr-depth-plan` OR [references/fallback.md](./references/fallback.md).
 
+**Skip:** `reverse-engineer-anything` (as-built reconstruction → `routr-spec`), `multi-agent-patterns` (agent harness design → `routr-agents`), `frontend-design` (screen layout → `routr-frontend`), `test-driven-development`, `executing-plans` (implementation children wait until the plan is approved).
+
 ## 1. Intake
 
 - [ ] Problem, audience, success metric

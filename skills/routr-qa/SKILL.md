@@ -34,7 +34,11 @@ See `routr-catalog/references/skill-registry.md`:
 | 3 | `playwright-best-practices` | optional — durable E2E design |
 | 4 | `playwright-cli` | optional — Playwright automation |
 
+**Budget gate:** `agent-browser` alone covers an exploratory or post-deploy check; add `webapp-testing` only for a local dev server. Pull the two `optional` Playwright rows only when a spec file already exists in the repo or the user asked for repeatable E2E — a one-off check never needs them.
+
 If both `agent-browser` and `webapp-testing` are missing → [references/fallback.md](./references/fallback.md).
+
+**Skip:** `test-driven-development`, `tdd` (authoring spec files → `routr-test`), `systematic-debugging` (a bug found → `routr-debug`), `deploy-to-vercel` (no preview URL yet → `routr-deploy`), `frontend-design` (visual fixes → `routr-frontend`).
 
 ## 1. Mode (medium freedom)
 
