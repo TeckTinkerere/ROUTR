@@ -94,7 +94,7 @@ claude plugin install routr@routr
 
 `claude plugin install` installs at user scope. Add `--scope project` to turn ROUTR on for everyone working in the current repository: it writes `.claude/settings.json`, and each collaborator runs the same install command once.
 
-Plugin skills are namespaced under the plugin name, so the slash menu shows `/routr:routr-debug`, `/routr:routr-ship` and so on. Routers still hand off by bare name (`routr-ship`), which resolves to the plugin's skill.
+Plugin skills are namespaced under the plugin name, so the slash menu shows `/routr:routr-debug`, `/routr:routr-ship` and so on. You only type these to force a router (see [Slash menu](#slash-menu)); normal messages are routed automatically. Routers still hand off by bare name (`routr-ship`), which resolves to the plugin's skill.
 
 Check the install:
 
@@ -147,7 +147,9 @@ npx skills@1.7.4 add husnainpk/SymDex yvgude/lean-ctx -g -y --copy
 
 ## Slash menu
 
-Search `routr-` in `/` picker:
+You don't need the slash menu for everyday use. Send a normal message and the agent picks a router from these descriptions. Type a router's slash command before your request only to force that router, for example `/routr-debug checkout returns 500` (plugin installs: `/routr:routr-debug …`).
+
+To see them, search `routr-` in the `/` picker and press Esc when you're done:
 
 | Router | Hover |
 |--------|-------|
