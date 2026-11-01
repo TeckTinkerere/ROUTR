@@ -381,7 +381,7 @@ routr-marketing → ai-seo
 
 ## Quality & upkeep
 
-- `bash scripts/validate-skills.sh` — 12 mechanical checks: frontmatter/folder match, `Use when:` and `Not for:` presence, description length budget, SKILL.md line caps, child-skill resolution, broken relative links, eval JSON validity, eval coverage, router-tree/resolution.md registration, and route-plan integrity. Runs in CI.
+- `bash scripts/validate-skills.sh` — 13 mechanical checks: frontmatter/folder match, `Use when:` and `Not for:` presence, description length budget, SKILL.md line caps, child-skill resolution, broken relative links, eval JSON validity, eval coverage, router-tree/resolution.md registration, route-plan integrity, and plugin manifest version sync. Runs in CI.
 - `python scripts/run-evals.py` — runs every `evals/*.eval.json` prompt against the router menu. Modes: `static` (default, offline), `claude` (real `claude -p` calls), `predictions` (score answers from any model) and `--export-prompts` (write the menu and prompts for a blind run). Exits non-zero under `--min-accuracy`.
 - `bash scripts/sync-installed.sh` (or `scripts/sync-installed.ps1` on Windows) — diffs this repo's `skills/routr-*` against your installed copies and reports drift. `--apply` copies; `--prune-legacy` moves removed `*-playbook` stubs to a dated backup folder instead of deleting them. See [INSTALL.md](INSTALL.md#keep-installed-copies-in-sync).
 
