@@ -51,7 +51,7 @@ A **skill** is a folder of instructions (`SKILL.md`) that your coding agent read
 1. **Install the routers.**
    - **Claude Code:** check `git --version`, then run the two `/plugin` commands below. When asked for a scope, pick *you, in every project*.
    - **Cursor, Codex and other agents:** check that `node -v` is 18 or newer, then run `npx skills@1.7.4 add TeckTinkerere/ROUTR -g --all -y --copy`. `-g` installs it for every project, and `--copy` copies the files instead of linking them.
-2. **Restart your agent,** then type `/routr` to check the routers are listed.
+2. **Restart your agent and check the install.** Type `/routr` and look for the routers in the menu that opens, then press Esc to close it. You're only checking that they're there, so don't run one.
 3. **Install the core child skills.** This step needs Node.js 18+. Routers are an index, and the depth comes from the skills they point to:
 
    ```bash
@@ -61,7 +61,9 @@ A **skill** is a folder of instructions (`SKILL.md`) that your coding agent read
    ```
 
    Restart your agent again afterwards.
-4. **Work normally.** Ask *"Fix the 500 on checkout and ship it"*. You don't need a slash command: the agent should announce a plan like `routr-debug → routr-ship` before it starts.
+4. **Work normally.** Type your request as an ordinary chat message, with no `/` in front: *"Fix the 500 on checkout and ship it"*. The agent picks the router itself and should announce a plan like `routr-debug → routr-ship` before it starts.
+
+**Slash commands are optional.** Use one only when you want a specific router: put it before your request, as in `/routr:routr-debug checkout returns 500` (plugin) or `/routr-debug checkout returns 500` (npx). If you're not sure which router fits, start with `/routr:routr-router` or `/routr-router` and it picks one for you.
 
 If routers are listed twice, you used both install routes, so keep one. If answers feel generic, step 3 is missing. Your agent follows a skill's instructions, so only install skills from sources you trust.
 
@@ -86,11 +88,11 @@ npx skills@1.7.4 add TeckTinkerere/ROUTR -g --all -y --copy
 
 Pick one route: with both installed, every router is listed twice. Plugin skills show as `/routr:routr-debug`. Shell commands, scopes and updates are in [INSTALL.md](INSTALL.md#claude-code-plugin).
 
-Restart your agent, then type `/routr-` in the slash menu. Try:
+Restart your agent. To check the install, type `/routr`, look for the routers in the menu, then press Esc. Then send a normal message, with no slash command:
 
 > *"Fix the 500 on checkout and ship it"*
 
-You should see a route plan like `routr-debug → routr-ship`. Windows, per-agent paths, bundles and troubleshooting are in **[INSTALL.md](INSTALL.md)**.
+The agent picks the router itself, so you should see a route plan like `routr-debug → routr-ship`. To force a specific router, put its slash command before your request: `/routr-debug …`, or `/routr:routr-debug …` with the plugin. Windows, per-agent paths, bundles and troubleshooting are in **[INSTALL.md](INSTALL.md)**.
 
 **v2 breaking rename:** `*-playbook` became `routr-*`. See [docs/naming.md](docs/naming.md).
 
