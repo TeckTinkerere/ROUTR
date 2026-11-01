@@ -60,6 +60,8 @@ If `caveman-commit` missing → `routr-depth-ship` for commit format.
 
 Commit or PR per project convention — templates in [workflow.md](./references/workflow.md).
 
+Push, merge or open a PR only when the user asked for that step. Never force-push a shared branch or merge into the default branch on your own initiative.
+
 ## Handoff
 
 Committed → **STOP and re-route** for the next stage (do not deploy or polish from here):

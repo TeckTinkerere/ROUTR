@@ -35,8 +35,9 @@ Usage:
       * One temp sandbox per run with .claude/skills/ = copies of every
         skills/routr-* folder. Each prompt runs in a fresh session
         (`claude -p --output-format stream-json --verbose --no-session-persistence
-        --tools Skill --settings '{"disableAllHooks": true}'`), so nothing can
-        edit files, run commands or fire your hooks. The prompt goes to stdin.
+        --tools Skill --strict-mcp-config --settings '{"disableAllHooks": true}'`),
+        so nothing can edit files, run commands, call MCP servers or fire your
+        hooks. The prompt goes to stdin.
       * --host-env isolated (default): `--setting-sources project`, so the agent
         sees only the sandbox's skills plus Claude Code's bundled ones.
         --host-env user: `--setting-sources user,project`, so your installed
@@ -665,6 +666,9 @@ def host_command(claude_bin: str | None, host_env: str, max_turns: int, model: s
         "--verbose",
         "--no-session-persistence",
         "--tools", "Skill",
+        # --tools limits only built-in tools; without this, MCP servers from
+        # user settings or plugins stay callable in --host-env user.
+        "--strict-mcp-config",
         "--settings", '{"disableAllHooks": true}',
         "--permission-mode", "default",
         "--setting-sources", "user,project" if host_env == "user" else "project",

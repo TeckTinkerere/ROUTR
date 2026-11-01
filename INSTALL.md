@@ -15,11 +15,11 @@ The **slash-command hover text** comes from each skill’s `description` in `SKI
 ### Interactive (recommended)
 
 ```powershell
-npx skills add TeckTinkerere/ROUTR -g --copy
+npx skills@1.7.4 add TeckTinkerere/ROUTR -g --copy
 ```
 
 ```bash
-npx skills add TeckTinkerere/ROUTR -g --copy
+npx skills@1.7.4 add TeckTinkerere/ROUTR -g --copy
 ```
 
 Use **Space** to toggle, **Enter** to confirm. On Windows use `--copy`.
@@ -37,7 +37,7 @@ Use **Space** to toggle, **Enter** to confirm. On Windows use `--copy`.
 ### Install all routr-* skills (no prompts)
 
 ```powershell
-npx skills add TeckTinkerere/ROUTR -g --all -y --copy
+npx skills@1.7.4 add TeckTinkerere/ROUTR -g --all -y --copy
 ```
 
 | Flag | Meaning |
@@ -54,7 +54,7 @@ npx skills add TeckTinkerere/ROUTR -g --all -y --copy
 
 | Bundle | Command |
 |--------|---------|
-| **Meta** | `npx skills add TeckTinkerere/ROUTR -g --copy -y --skill routr-router --skill routr-catalog` |
+| **Meta** | `npx skills@1.7.4 add TeckTinkerere/ROUTR -g --copy -y --skill routr-router --skill routr-catalog` |
 | **Core** | `… --skill routr-debug --skill routr-ship --skill routr-plan --skill routr-spec --skill routr-explore` |
 | **Frontend** | `… --skill routr-frontend --skill routr-motion` |
 | **Video** | `… --skill routr-video` |
@@ -63,7 +63,7 @@ npx skills add TeckTinkerere/ROUTR -g --all -y --copy
 For existing-product specification reconciliation, install `routr-spec` individually or use the all-skills command above:
 
 ```bash
-npx skills add TeckTinkerere/ROUTR -g --copy -y --skill routr-spec
+npx skills@1.7.4 add TeckTinkerere/ROUTR -g --copy -y --skill routr-spec
 ```
 
 `routr-spec` supports source-based reconciliation without REA. Its optional `reverse-engineer-anything` child is for claims that require shipped/runtime evidence; installing that child does not register or connect the REA MCP server. Consult the [skill registry](skills/routr-catalog/references/skill-registry.md) and REA's own connection contract when that evidence is needed.
@@ -138,9 +138,9 @@ Commands in [`skills/routr-catalog/references/skill-registry.md`](skills/routr-c
 Quick core install:
 
 ```bash
-npx skills add obra/superpowers -g --skill systematic-debugging --skill brainstorming -y --copy
-npx skills add anthropics/skills@frontend-design -g -y --copy
-npx skills add husnainpk/SymDex yvgude/lean-ctx -g -y --copy
+npx skills@1.7.4 add obra/superpowers -g --skill systematic-debugging --skill brainstorming -y --copy
+npx skills@1.7.4 add anthropics/skills@frontend-design -g -y --copy
+npx skills@1.7.4 add husnainpk/SymDex yvgude/lean-ctx -g -y --copy
 ```
 
 ---
@@ -170,7 +170,7 @@ Old `debugging-playbook` etc. were removed — use `routr-*`.
 ## Verify
 
 ```bash
-npx skills ls -g | grep routr
+npx skills@1.7.4 ls -g | grep routr
 ```
 
 In Cursor: `/` → search `routr-debug`.
@@ -180,13 +180,13 @@ In Cursor: `/` → search `routr-debug`.
 ## Update / uninstall
 
 ```bash
-npx skills update TeckTinkerere/ROUTR -g -y
+npx skills@1.7.4 update TeckTinkerere/ROUTR -g -y
 ```
 
 Remove all v2 routers:
 
 ```bash
-npx skills remove routr-router routr-catalog routr-debug routr-ship routr-plan routr-spec routr-test routr-review routr-refactor routr-deploy routr-database routr-qa routr-security routr-perf routr-explore routr-integrate routr-agents routr-frontend routr-motion routr-mobile routr-marketing routr-ai routr-video routr-depth-debug routr-depth-frontend routr-depth-plan routr-depth-ship routr-depth-test routr-depth-security -g -y
+npx skills@1.7.4 remove routr-router routr-catalog routr-debug routr-ship routr-plan routr-spec routr-test routr-review routr-refactor routr-deploy routr-database routr-qa routr-security routr-perf routr-explore routr-integrate routr-agents routr-frontend routr-motion routr-mobile routr-marketing routr-ai routr-video routr-depth-debug routr-depth-frontend routr-depth-plan routr-depth-ship routr-depth-test routr-depth-security -g -y
 ```
 
 ---
@@ -223,7 +223,7 @@ PowerShell equivalent:
 scripts\sync-installed.ps1 -Apply -PruneLegacy
 ```
 
-Run this after `npx skills update` or after pulling repo changes, before trusting a router's behavior matches what's in this repo.
+Run this after `npx skills@1.7.4 update` or after pulling repo changes, before trusting a router's behavior matches what's in this repo.
 
 The sync scripts only touch `routr-*` folders in the skill roots they find. Repo-only files such as `.gitattributes`, `.editorconfig`, `.github/` and `CHANGELOG.md` are for contributors and are never copied to your machine, so you can ignore them.
 
@@ -238,5 +238,5 @@ The sync scripts only touch `routr-*` folders in the skill roots they find. Repo
 | Codex | `~/.codex/skills/` |
 
 ```bash
-npx skills ls -g -a cursor
+npx skills@1.7.4 ls -g -a cursor
 ```

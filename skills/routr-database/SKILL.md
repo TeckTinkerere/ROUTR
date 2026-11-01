@@ -40,6 +40,8 @@ SymDex for repositories/models; locate migrations; note RLS.
 
 Backward-compatible when possible; indexes for new queries; RLS for multi-tenant.
 
+Destructive or production changes stop for approval: before a `DROP`, column drop or rename, `TRUNCATE`, bulk `UPDATE`/`DELETE`, disabling RLS, or any migration run against a production database, show the exact SQL and wait for the user's go-ahead. Prefer a branch or staging database first.
+
 ## 3. Query work
 
 Explain analyze for slow queries; N+1 detection; connection pooling.

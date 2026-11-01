@@ -32,7 +32,7 @@ See `routr-catalog/references/skill-registry.md`:
 | `aso` | App store listings |
 
 ```bash
-npx skills add coreyhaines31/marketingskills -g --all -y --copy
+npx skills@1.7.4 add coreyhaines31/marketingskills -g --all -y --copy
 ```
 
 ## 1. Goal routing

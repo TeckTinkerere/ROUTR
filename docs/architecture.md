@@ -145,7 +145,7 @@ Two mechanical gates run before release, both callable from CI:
 
 `--mode claude` shows the model a clean menu of routers. A real session instead sees every installed skill, so routing has to survive a crowded list. `--mode host` measures that.
 
-Per prompt it starts a fresh `claude -p --output-format stream-json --verbose` session in a temp sandbox whose `.claude/skills/` holds copies of the repo's `routr-*` skills. The session is limited to the Skill tool (`--tools Skill`) with hooks disabled, so it cannot change anything. The runner reads the stream for the init event (how many skills the agent could see) and the Skill tool calls (which it invoked, in order). The first situational router invoked is the router; the situational routers in order are the chain. If `routr-router` came first, the prompt is counted as routed via the router.
+Per prompt it starts a fresh `claude -p --output-format stream-json --verbose` session in a temp sandbox whose `.claude/skills/` holds copies of the repo's `routr-*` skills. The session is limited to the Skill tool (`--tools Skill`), with MCP servers (`--strict-mcp-config`) and hooks disabled, so it cannot change anything. The runner reads the stream for the init event (how many skills the agent could see) and the Skill tool calls (which it invoked, in order). The first situational router invoked is the router; the situational routers in order are the chain. If `routr-router` came first, the prompt is counted as routed via the router.
 
 - `--host-env isolated` (default) loads only the sandbox's skills plus Claude Code's bundled ones. `--host-env user` also loads your installed `~/.claude` skills.
 - `--noise-dir DIR` copies the non-`routr-*` skill folders from `DIR` into the sandbox, for a crowded list you can reproduce.
@@ -162,7 +162,7 @@ One router is active at a time, but the agent plans the whole route (max 3 steps
 
 ## Compatibility
 
-Works anywhere the [Agent Skills](https://skills.sh) format is supported: Cursor, Claude Code, Codex, Kiro, OpenCode, Windsurf, and 70+ agents via `npx skills add`.
+Works anywhere the [Agent Skills](https://skills.sh) format is supported: Cursor, Claude Code, Codex, Kiro, OpenCode, Windsurf, and 70+ agents via `npx skills@1.7.4 add`.
 
 ## Authoring new routers
 

@@ -22,6 +22,15 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 - Known plans in `routes.json` have more descriptive `when` text.
 - Two "add streaming chat" prompts now accept `routr-ai` alone as a chain, because the request doesn't say whether a chat UI exists.
+- Install commands pin the `skills` CLI to `skills@1.7.4` in the installers, README, INSTALL and every skill, so installs no longer run npm's latest release.
+
+### Security
+
+- Host eval sessions pass `--strict-mcp-config`. `--tools Skill` only limits built-in tools, so with `--host-env user` your MCP servers were still callable by eval prompts.
+- CI pins `actions/checkout` and `actions/setup-python` to commit SHAs, gives `validate-skills` a read-only token, and sets `persist-credentials: false`.
+- `routr-deploy`, `routr-database` and `routr-ship` now stop for the user's approval before irreversible actions: production deploys and store submissions, destructive or production SQL, and pushes, merges or force-pushes the user didn't ask for.
+- `validate-skills.sh` fails closed when a Python checker crashes. Before, every helper ran with `|| true` and only printed `FAIL:` lines counted, so an uncaught exception reported "All checks passed" and CI went green having checked nothing.
+- `sync-installed --apply` skips symlinked or junctioned installs instead of deleting through them (on Windows PowerShell 5.1, `Remove-Item -Recurse` on a junction deletes the target). It also rejects an empty root and fails on copy errors.
 
 ### Measured
 

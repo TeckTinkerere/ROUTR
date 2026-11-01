@@ -12,7 +12,7 @@ Remotion workflow for `routr-video` — React programmatic video. Per-record bat
 | 4 | `find-docs` | API edge cases |
 
 ```bash
-npx skills add remotion-dev/skills@remotion-best-practices -g -y --copy
+npx skills@1.7.4 add remotion-dev/skills@remotion-best-practices -g -y --copy
 ```
 
 ## When Remotion (not launch or HyperFrames)
