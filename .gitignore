@@ -5,5 +5,5 @@ Thumbs.db
 .idea/
 .vscode/
 
-# local secrets for marketing video
-marketing/video/intro/.env
+# local marketing drafts, videos and their secrets
+marketing/
