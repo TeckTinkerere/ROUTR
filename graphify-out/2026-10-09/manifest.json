@@ -1,0 +1,410 @@
+{
+  ".plugin/plugin.json": {
+    "mtime": 1788335278.3959298,
+    "seen": 1788337071.9413755,
+    "ast_hash": "f81be2749a0e10306e1ee11cbc3d1f10",
+    "semantic_hash": "f81be2749a0e10306e1ee11cbc3d1f10"
+  },
+  "evals/routr-debug.eval.json": {
+    "mtime": 1788335278.4085763,
+    "seen": 1788337071.941384,
+    "ast_hash": "51f7aedd1acc420ccc2801d8037af910",
+    "semantic_hash": "51f7aedd1acc420ccc2801d8037af910"
+  },
+  "evals/routr-frontend.eval.json": {
+    "mtime": 1788335278.428176,
+    "seen": 1788337071.9413874,
+    "ast_hash": "85ca7558f2ca4f956006f7541bf19f61",
+    "semantic_hash": "85ca7558f2ca4f956006f7541bf19f61"
+  },
+  "evals/routr-router.eval.json": {
+    "mtime": 1788335278.453316,
+    "seen": 1788337071.9413896,
+    "ast_hash": "5ba8cc3c06377a9fac689dba3927b429",
+    "semantic_hash": "5ba8cc3c06377a9fac689dba3927b429"
+  },
+  "scripts/install-routr.ps1": {
+    "mtime": 1788335278.45734,
+    "seen": 1788337071.9413917,
+    "ast_hash": "893a084cfa69882744eccfb05f5a9a68",
+    "semantic_hash": "893a084cfa69882744eccfb05f5a9a68"
+  },
+  "scripts/install-routr.sh": {
+    "mtime": 1788335278.45734,
+    "seen": 1788337071.9413931,
+    "ast_hash": "0a76362e2d7fbee4f0af91aed30b8483",
+    "semantic_hash": "0a76362e2d7fbee4f0af91aed30b8483"
+  },
+  ".github/DISCUSSION_TEMPLATE/welcome.yml": {
+    "mtime": 1788335278.3939152,
+    "seen": 1788337071.9413953,
+    "ast_hash": "8e1e4f60d3f5e357cab47cbf463e3771",
+    "semantic_hash": "8e1e4f60d3f5e357cab47cbf463e3771"
+  },
+  "INSTALL.md": {
+    "mtime": 1788335278.3979409,
+    "seen": 1788337071.9413967,
+    "ast_hash": "9a78d10d85244e557ee001215ca66b97",
+    "semantic_hash": "9a78d10d85244e557ee001215ca66b97"
+  },
+  "README.md": {
+    "mtime": 1788335278.3999522,
+    "seen": 1788337071.9413986,
+    "ast_hash": "c8e5dc9e102bab5cb3e8d634cc860e42",
+    "semantic_hash": "c8e5dc9e102bab5cb3e8d634cc860e42"
+  },
+  "docs/architecture.md": {
+    "mtime": 1788335278.4019632,
+    "seen": 1788337071.9414,
+    "ast_hash": "0573745ed4c1bf4099cf4702849d6881",
+    "semantic_hash": "0573745ed4c1bf4099cf4702849d6881"
+  },
+  "docs/authoring.md": {
+    "mtime": 1788335278.4039733,
+    "seen": 1788337071.9414015,
+    "ast_hash": "4528702008c75edaf16cbbf7993877c3",
+    "semantic_hash": "4528702008c75edaf16cbbf7993877c3"
+  },
+  "docs/naming.md": {
+    "mtime": 1788335278.4077604,
+    "seen": 1788337071.9414036,
+    "ast_hash": "f6e8ead568edfb694863c782d6b153c2",
+    "semantic_hash": "f6e8ead568edfb694863c782d6b153c2"
+  },
+  "skills/routr-agents/SKILL.md": {
+    "mtime": 1788335278.4613717,
+    "seen": 1788337071.9414053,
+    "ast_hash": "153ef805e861d3c03ba6fd500e11493f",
+    "semantic_hash": "153ef805e861d3c03ba6fd500e11493f"
+  },
+  "skills/routr-ai/SKILL.md": {
+    "mtime": 1788335278.463389,
+    "seen": 1788337071.941407,
+    "ast_hash": "92ff31f69b43109b1645104b2371a3e3",
+    "semantic_hash": "92ff31f69b43109b1645104b2371a3e3"
+  },
+  "skills/routr-catalog/SKILL.md": {
+    "mtime": 1788335278.4654162,
+    "seen": 1788337071.9414084,
+    "ast_hash": "7565322e04acf42603c466df4e026414",
+    "semantic_hash": "7565322e04acf42603c466df4e026414"
+  },
+  "skills/routr-catalog/references/resolution.md": {
+    "mtime": 1788335278.4674382,
+    "seen": 1788337071.94141,
+    "ast_hash": "d66e6b34e3e8b23d1736d69bf76120ad",
+    "semantic_hash": "d66e6b34e3e8b23d1736d69bf76120ad"
+  },
+  "skills/routr-catalog/references/skill-catalog.md": {
+    "mtime": 1788335278.4674382,
+    "seen": 1788337071.9414115,
+    "ast_hash": "9772e365bc6ff3b3ac7cf9118bd9f8de",
+    "semantic_hash": "9772e365bc6ff3b3ac7cf9118bd9f8de"
+  },
+  "skills/routr-catalog/references/skill-registry.md": {
+    "mtime": 1788335278.4694505,
+    "seen": 1788337071.9414132,
+    "ast_hash": "7f51b40040c6078c0857d2fbcfeb7bce",
+    "semantic_hash": "7f51b40040c6078c0857d2fbcfeb7bce"
+  },
+  "skills/routr-catalog/references/video-skills-leaderboard.md": {
+    "mtime": 1788335278.4712207,
+    "seen": 1788337071.9414146,
+    "ast_hash": "e0a037c661ece7128dafdd86161e316f",
+    "semantic_hash": "e0a037c661ece7128dafdd86161e316f"
+  },
+  "skills/routr-database/SKILL.md": {
+    "mtime": 1788335278.475246,
+    "seen": 1788337071.9414163,
+    "ast_hash": "730a1e6e01e0de15c0c77fa4464f691b",
+    "semantic_hash": "730a1e6e01e0de15c0c77fa4464f691b"
+  },
+  "skills/routr-debug/SKILL.md": {
+    "mtime": 1788335278.475246,
+    "seen": 1788337071.941418,
+    "ast_hash": "3c2dc1fd4fed2e201822d4efcd6548fa",
+    "semantic_hash": "3c2dc1fd4fed2e201822d4efcd6548fa"
+  },
+  "skills/routr-debug/references/boundaries.md": {
+    "mtime": 1788335278.4772563,
+    "seen": 1788337071.9414196,
+    "ast_hash": "006c32d143dabaf28f411414aaea19e5",
+    "semantic_hash": "006c32d143dabaf28f411414aaea19e5"
+  },
+  "skills/routr-debug/references/examples.md": {
+    "mtime": 1788335278.4792645,
+    "seen": 1788337071.9414215,
+    "ast_hash": "7d99f49596bfab3c146935df5940e847",
+    "semantic_hash": "7d99f49596bfab3c146935df5940e847"
+  },
+  "skills/routr-debug/references/fallback.md": {
+    "mtime": 1788335278.481275,
+    "seen": 1788337071.9414232,
+    "ast_hash": "48fb941cf0d15ea8c9815e5b80944bac",
+    "semantic_hash": "48fb941cf0d15ea8c9815e5b80944bac"
+  },
+  "skills/routr-debug/references/gotchas.md": {
+    "mtime": 1788335278.481275,
+    "seen": 1788337071.9414246,
+    "ast_hash": "e6307f1ba804a4db7f8035d14603a561",
+    "semantic_hash": "e6307f1ba804a4db7f8035d14603a561"
+  },
+  "skills/routr-debug/references/workflow.md": {
+    "mtime": 1788335278.4832892,
+    "seen": 1788337071.9414263,
+    "ast_hash": "673505de2f6a9fddfe2b5647e83e2d6a",
+    "semantic_hash": "673505de2f6a9fddfe2b5647e83e2d6a"
+  },
+  "skills/routr-deploy/SKILL.md": {
+    "mtime": 1788335278.4870641,
+    "seen": 1788337071.941428,
+    "ast_hash": "15b948c9bc61774e1ed699cfa116d6ed",
+    "semantic_hash": "15b948c9bc61774e1ed699cfa116d6ed"
+  },
+  "skills/routr-depth-debug/SKILL.md": {
+    "mtime": 1788335278.4890752,
+    "seen": 1788337071.9414296,
+    "ast_hash": "d5ec232a129ee1884af9651ab412d911",
+    "semantic_hash": "d5ec232a129ee1884af9651ab412d911"
+  },
+  "skills/routr-depth-frontend/SKILL.md": {
+    "mtime": 1788335278.4985323,
+    "seen": 1788337071.9414313,
+    "ast_hash": "8387c86e5776334da81705a714364066",
+    "semantic_hash": "8387c86e5776334da81705a714364066"
+  },
+  "skills/routr-depth-plan/SKILL.md": {
+    "mtime": 1788335278.5166554,
+    "seen": 1788337071.9414325,
+    "ast_hash": "5933e2b7ebfc2b4bec11da9fdafd996b",
+    "semantic_hash": "5933e2b7ebfc2b4bec11da9fdafd996b"
+  },
+  "skills/routr-depth-ship/SKILL.md": {
+    "mtime": 1788335278.5184102,
+    "seen": 1788337071.9414344,
+    "ast_hash": "400bcc48771397d35af599fc5b77e3e4",
+    "semantic_hash": "400bcc48771397d35af599fc5b77e3e4"
+  },
+  "skills/routr-depth-test/SKILL.md": {
+    "mtime": 1788335278.5219598,
+    "seen": 1788337071.9414358,
+    "ast_hash": "213c27237afece428bcd0bf824ddaabe",
+    "semantic_hash": "213c27237afece428bcd0bf824ddaabe"
+  },
+  "skills/routr-explore/SKILL.md": {
+    "mtime": 1788335278.523987,
+    "seen": 1788337071.9414375,
+    "ast_hash": "c8840aa9cc89946c99d2f306e6621ec1",
+    "semantic_hash": "c8840aa9cc89946c99d2f306e6621ec1"
+  },
+  "skills/routr-frontend/SKILL.md": {
+    "mtime": 1788335278.5360825,
+    "seen": 1788337071.941439,
+    "ast_hash": "3ce319061ce1ca9e5756ff77b5fad22a",
+    "semantic_hash": "3ce319061ce1ca9e5756ff77b5fad22a"
+  },
+  "skills/routr-frontend/references/boundaries.md": {
+    "mtime": 1788335278.5420158,
+    "seen": 1788337071.9414408,
+    "ast_hash": "7338b9867bc8f354409e3dc8b94d59a6",
+    "semantic_hash": "7338b9867bc8f354409e3dc8b94d59a6"
+  },
+  "skills/routr-frontend/references/examples.md": {
+    "mtime": 1788335278.5444727,
+    "seen": 1788337071.9414423,
+    "ast_hash": "22b588a41234a3121badfce6ff6a7de0",
+    "semantic_hash": "22b588a41234a3121badfce6ff6a7de0"
+  },
+  "skills/routr-frontend/references/fallback.md": {
+    "mtime": 1788335278.5444727,
+    "seen": 1788337071.941444,
+    "ast_hash": "4ac7a464cc1bdc2aa78383580f9465c0",
+    "semantic_hash": "4ac7a464cc1bdc2aa78383580f9465c0"
+  },
+  "skills/routr-frontend/references/gotchas.md": {
+    "mtime": 1788335278.548505,
+    "seen": 1788337071.9414454,
+    "ast_hash": "8b28072dadda3202572aaf81b69e962c",
+    "semantic_hash": "8b28072dadda3202572aaf81b69e962c"
+  },
+  "skills/routr-frontend/references/workflow.md": {
+    "mtime": 1788335278.5505154,
+    "seen": 1788337071.9414473,
+    "ast_hash": "4dc1f8d7fa4e220025f924cbcacf5a3a",
+    "semantic_hash": "4dc1f8d7fa4e220025f924cbcacf5a3a"
+  },
+  "skills/routr-integrate/SKILL.md": {
+    "mtime": 1788335278.557049,
+    "seen": 1788337071.941449,
+    "ast_hash": "f3cde0c8c62e00a3f9cc3a4f03fb1f05",
+    "semantic_hash": "f3cde0c8c62e00a3f9cc3a4f03fb1f05"
+  },
+  "skills/routr-marketing/SKILL.md": {
+    "mtime": 1788335278.55906,
+    "seen": 1788337071.9414506,
+    "ast_hash": "354381f2197d4c2e78bb1cc24fbbff5c",
+    "semantic_hash": "354381f2197d4c2e78bb1cc24fbbff5c"
+  },
+  "skills/routr-mobile/SKILL.md": {
+    "mtime": 1788335278.5610707,
+    "seen": 1788337071.941452,
+    "ast_hash": "43d5ff574f271c36d89fac92a8541448",
+    "semantic_hash": "43d5ff574f271c36d89fac92a8541448"
+  },
+  "skills/routr-motion/SKILL.md": {
+    "mtime": 1788335278.5635915,
+    "seen": 1788337071.941454,
+    "ast_hash": "8cfb37c099092a082444f28cf98b8b3b",
+    "semantic_hash": "8cfb37c099092a082444f28cf98b8b3b"
+  },
+  "skills/routr-plan/SKILL.md": {
+    "mtime": 1788335278.565118,
+    "seen": 1788337071.941456,
+    "ast_hash": "4910868a72ad568fc21de6a04a3bcdf5",
+    "semantic_hash": "4910868a72ad568fc21de6a04a3bcdf5"
+  },
+  "skills/routr-plan/references/boundaries.md": {
+    "mtime": 1788335278.5671294,
+    "seen": 1788337071.941458,
+    "ast_hash": "285daeab60d912b0f17ec322df7098cb",
+    "semantic_hash": "285daeab60d912b0f17ec322df7098cb"
+  },
+  "skills/routr-plan/references/examples.md": {
+    "mtime": 1788335278.582559,
+    "seen": 1788337071.9414594,
+    "ast_hash": "b75f4c3e5880dd84996d1e8c53819fd0",
+    "semantic_hash": "b75f4c3e5880dd84996d1e8c53819fd0"
+  },
+  "skills/routr-plan/references/fallback.md": {
+    "mtime": 1788335278.596395,
+    "seen": 1788337071.941461,
+    "ast_hash": "1f33ca35dbab689f5140205dec8ac661",
+    "semantic_hash": "1f33ca35dbab689f5140205dec8ac661"
+  },
+  "skills/routr-plan/references/gotchas.md": {
+    "mtime": 1788335278.6004314,
+    "seen": 1788337071.9414628,
+    "ast_hash": "3f882ca7de67ef1550d56359d513c552",
+    "semantic_hash": "3f882ca7de67ef1550d56359d513c552"
+  },
+  "skills/routr-plan/references/workflow.md": {
+    "mtime": 1788335278.605779,
+    "seen": 1788337071.9414644,
+    "ast_hash": "3c33d664921f3e07052f8129306fbbeb",
+    "semantic_hash": "3c33d664921f3e07052f8129306fbbeb"
+  },
+  "skills/routr-qa/SKILL.md": {
+    "mtime": 1788335278.6099129,
+    "seen": 1788337071.9414659,
+    "ast_hash": "85ea1074388059f8237095b92ffe0326",
+    "semantic_hash": "85ea1074388059f8237095b92ffe0326"
+  },
+  "skills/routr-refactor/SKILL.md": {
+    "mtime": 1788335278.6129422,
+    "seen": 1788337071.9414673,
+    "ast_hash": "158b4c57a4e754408d2984f62113afe8",
+    "semantic_hash": "158b4c57a4e754408d2984f62113afe8"
+  },
+  "skills/routr-review/SKILL.md": {
+    "mtime": 1788335278.6149511,
+    "seen": 1788337071.941469,
+    "ast_hash": "084bcfc273f65a9d7034a52208b8be02",
+    "semantic_hash": "084bcfc273f65a9d7034a52208b8be02"
+  },
+  "skills/routr-router/SKILL.md": {
+    "mtime": 1788335278.616963,
+    "seen": 1788337071.9414706,
+    "ast_hash": "ab147bc025eb561f5476ff914ee8fd62",
+    "semantic_hash": "ab147bc025eb561f5476ff914ee8fd62"
+  },
+  "skills/routr-router/references/decision-tree.md": {
+    "mtime": 1788335278.618981,
+    "seen": 1788337071.9414723,
+    "ast_hash": "08dc8280c936ddd018e3a9b6e46d2ee5",
+    "semantic_hash": "08dc8280c936ddd018e3a9b6e46d2ee5"
+  },
+  "skills/routr-security/SKILL.md": {
+    "mtime": 1788335278.6230102,
+    "seen": 1788337071.9414742,
+    "ast_hash": "1336d2aec37b001b3c447267632064b7",
+    "semantic_hash": "1336d2aec37b001b3c447267632064b7"
+  },
+  "skills/routr-ship/SKILL.md": {
+    "mtime": 1788335278.6270354,
+    "seen": 1788337071.9414759,
+    "ast_hash": "da16e093ca338a599269fc0d2b88fa42",
+    "semantic_hash": "da16e093ca338a599269fc0d2b88fa42"
+  },
+  "skills/routr-ship/references/boundaries.md": {
+    "mtime": 1788335278.629059,
+    "seen": 1788337071.9414773,
+    "ast_hash": "5fbaa446df457d5f740d262209be6283",
+    "semantic_hash": "5fbaa446df457d5f740d262209be6283"
+  },
+  "skills/routr-ship/references/examples.md": {
+    "mtime": 1788335278.6307263,
+    "seen": 1788337071.9414792,
+    "ast_hash": "f4a484b427c6600b6208e0aac4f3ea57",
+    "semantic_hash": "f4a484b427c6600b6208e0aac4f3ea57"
+  },
+  "skills/routr-ship/references/fallback.md": {
+    "mtime": 1788335278.6317368,
+    "seen": 1788337071.9414806,
+    "ast_hash": "fbb0b628dfe6b43e3d6542e272bfa42c",
+    "semantic_hash": "fbb0b628dfe6b43e3d6542e272bfa42c"
+  },
+  "skills/routr-ship/references/gotchas.md": {
+    "mtime": 1788335278.6317368,
+    "seen": 1788337071.9414823,
+    "ast_hash": "b0ef59d868245b6d651e436fda26ca2e",
+    "semantic_hash": "b0ef59d868245b6d651e436fda26ca2e"
+  },
+  "skills/routr-ship/references/workflow.md": {
+    "mtime": 1788335278.6337473,
+    "seen": 1788337071.9414837,
+    "ast_hash": "66a985c2f7ae692c1d8f357fe6c6d291",
+    "semantic_hash": "66a985c2f7ae692c1d8f357fe6c6d291"
+  },
+  "skills/routr-test/SKILL.md": {
+    "mtime": 1788335278.636772,
+    "seen": 1788337071.9414856,
+    "ast_hash": "345f4c7d1c38c7b173497e2ceaed0ced",
+    "semantic_hash": "345f4c7d1c38c7b173497e2ceaed0ced"
+  },
+  "skills/routr-video/SKILL.md": {
+    "mtime": 1788335278.6508958,
+    "seen": 1788337071.941487,
+    "ast_hash": "f8a60a227c8b51c5f2928ae2523b71ad",
+    "semantic_hash": "f8a60a227c8b51c5f2928ae2523b71ad"
+  },
+  "skills/routr-video/references/boundaries.md": {
+    "mtime": 1788335278.654165,
+    "seen": 1788337071.9414887,
+    "ast_hash": "e3198ad0a77e18b328ab711b034cbed6",
+    "semantic_hash": "e3198ad0a77e18b328ab711b034cbed6"
+  },
+  "skills/routr-video/references/examples.md": {
+    "mtime": 1788335278.6744163,
+    "seen": 1788337071.9414902,
+    "ast_hash": "01f4c88158a63b228b22ae17c41e78d0",
+    "semantic_hash": "01f4c88158a63b228b22ae17c41e78d0"
+  },
+  "skills/routr-video/references/gotchas.md": {
+    "mtime": 1788335278.6784377,
+    "seen": 1788337071.9414916,
+    "ast_hash": "2e197183b3c26efe3c9c549c013bbcfe",
+    "semantic_hash": "2e197183b3c26efe3c9c549c013bbcfe"
+  },
+  "skills/routr-video/references/launch.md": {
+    "mtime": 1788335278.6804578,
+    "seen": 1788337071.9414933,
+    "ast_hash": "1f386ff330fd00e2a70d478b70ffcb8f",
+    "semantic_hash": "1f386ff330fd00e2a70d478b70ffcb8f"
+  },
+  "skills/routr-video/references/remotion.md": {
+    "mtime": 1788335278.6804578,
+    "seen": 1788337071.9414947,
+    "ast_hash": "3542a296712a11002c91893bea6461ae",
+    "semantic_hash": "3542a296712a11002c91893bea6461ae"
+  }
+}
