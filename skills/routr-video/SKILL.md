@@ -36,7 +36,11 @@ Install missing from `routr-catalog/references/skill-registry.md` (Video table).
 | 5 | `product-launch-video` | optional — external product URL/brief |
 | 6 | `pr-to-video` | optional — GitHub PR / changelog |
 
+**Budget gate:** read only the workflow child your quick-route row (§1) selects — `brag` and `remotion-best-practices` are alternatives, never both. Pull `hyperframes` only once the HTML stack is chosen, `media-use` only when the clip needs voice, music, SFX, captions or an avatar, and the two `optional` rows only for an external URL/brief or a PR/changelog.
+
 If `brag` and `hyperframes` are both missing → read [references/fallback.md](./references/fallback.md).
+
+**Skip:** `framer-motion-animator`, `ui-animation` (in-app UI motion → `routr-motion`), `copywriting`, `seo-audit` (copy, positioning, distribution → `routr-marketing`), `deploy-to-vercel` (cloud render or batch pipeline deploy → `routr-deploy`); a second workflow for the same clip.
 
 `hyperframes` may describe itself as the default for any video request. That claim covers stack execution once selected, not workflow selection — see [references/boundaries.md](./references/boundaries.md#precedence-over-self-declared-entry-points). Route from this file first.
 

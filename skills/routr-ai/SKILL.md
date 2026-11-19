@@ -25,13 +25,17 @@ description: "Build AI features with Vercel AI SDK (chat, agents, RAG, tools). U
 
 See `routr-catalog/references/skill-registry.md`:
 
-| Order | Skill | Role |
+| Order | Skill | Tier |
 |-------|-------|------|
-| 1 | `ai-sdk` | generateText, streamText, useChat, tools |
-| 2 | `migrate-ai-sdk-v6-to-v7` | SDK upgrades |
-| 3 | `find-docs` | Provider API docs |
-| 4 | `routr-agents` | Multi-agent architecture |
-| 5 | `routr-integrate` | Provider setup |
+| 1 | `ai-sdk` | required — generateText, streamText, useChat, tools |
+| 2 | `find-docs` | recommended — provider API docs |
+| 3 | `migrate-ai-sdk-v6-to-v7` | optional — SDK upgrades only |
+| 4 | `routr-agents` | optional — multi-agent architecture |
+| 5 | `routr-integrate` | optional — provider setup |
+
+**Budget gate:** `ai-sdk` carries a routine chat or tool feature; add `find-docs` for a provider API not yet verified. Pull `migrate-ai-sdk-v6-to-v7` only mid-upgrade, and the two router rows only when the task crosses into multi-agent design or provider setup.
+
+**Skip:** `evaluation`, `advanced-evaluation`, `multi-agent-patterns` (eval harness and agent architecture → `routr-agents`), `frontend-design`, `framer-motion-animator` (chat UI styling → `routr-frontend`).
 
 Chat UI → pair with `routr-frontend`.
 

@@ -24,13 +24,17 @@ description: "SQL, Postgres, Supabase schema and queries. Use when: migrations, 
 
 ## 0. Bootstrap
 
-| Skill | Role |
-|-------|------|
-| `supabase-postgres-best-practices` | Query perf, indexes |
-| `supabase` | Auth, storage, SDK |
-| `symdex-code-search` | Find models, migrations |
-| `lean-ctx` | Narrow schema reads |
-| `find-docs` | ORM API docs |
+| Order | Skill | Tier |
+|-------|-------|------|
+| 1 | `supabase-postgres-best-practices` | recommended — query perf, indexes |
+| 2 | `symdex-code-search` | recommended — find models, migrations |
+| 3 | `lean-ctx` | recommended — narrow schema reads |
+| 4 | `supabase` | optional — Supabase projects only (auth, storage, SDK) |
+| 5 | `find-docs` | optional — an ORM or driver API you can't verify |
+
+**Budget gate:** rows 1–3 cover routine schema and query work. Pull `supabase` only when the repo is a Supabase project, and `find-docs` only for a specific unverified ORM or driver call.
+
+**Skip:** `systematic-debugging` (wrong rows, cause unknown → `routr-debug`), `semgrep`, `firebase-security-rules-auditor` (audit beyond RLS → `routr-security`), `webapp-testing`, `vercel-react-best-practices` (app-level N+1 or latency → `routr-perf`).
 
 ## 1. Discover
 

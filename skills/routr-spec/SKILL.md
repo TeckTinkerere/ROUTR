@@ -43,6 +43,8 @@ Resolve only needed children through [resolution.md](../routr-catalog/references
 
 **Budget gate:** a sufficient source repository needs only the source path. "Reverse engineer my app" is not an REA trigger by itself. No REA readiness/provider calls on that path. Do not load planning children merely because the deliverable is called a PRD.
 
+**Skip:** `brainstorming`, `to-prd`, `grill-me` (deciding what to build next → `routr-plan`), `requesting-code-review` (diff quality → `routr-review`), `improve-codebase-architecture` (restructuring → `routr-refactor`), `reverse-engineer-anything` when source and tests already establish the behavior.
+
 REA applies to shipped binaries/packages, Electron/JS, APK/native/.NET, browser/application runtime, source-versus-production discrepancies, or absent/incomplete/contradictory source when those affect the question. Read the child's real skill for execution and its connection/recovery guide if tools are absent or blocked. Skill installation does not register MCP or install engines. Continue independently supported source work; mark only dependent claims unverified.
 
 ## 1. Establish baseline (medium freedom)

@@ -40,6 +40,8 @@ Install missing from `routr-catalog/references/skill-registry.md`.
 | 8 | `lean-ctx` | recommended |
 | 9 | `find-docs` | optional |
 
+**Budget gate:** read `required` + `recommended` for a new page or redesign; a small component tweak needs only `frontend-design` + `symdex-code-search`/`lean-ctx`. Pull an `optional` row only on its trigger: `shadcn` if the project uses it, `tailwind-design-system` on Tailwind, `find-docs` for an unfamiliar library API.
+
 If `frontend-design` missing → read `routr-depth-frontend` OR [references/fallback.md](./references/fallback.md).
 
 **Skip:** `caveman` during design exploration.

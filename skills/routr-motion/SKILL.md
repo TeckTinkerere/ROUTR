@@ -23,14 +23,18 @@ description: "Add or polish animations (Framer Motion, scroll, transitions). Use
 
 See `routr-catalog/references/skill-registry.md`:
 
-| Skill | When |
-|-------|------|
-| `framer-motion-animator` | React + Framer Motion |
-| `review-animations` | Pre-ship critique |
-| `motion-design` | Staging principles |
-| `ui-animation` | CSS motion |
-| `frontend-design` | Motion serves page thesis |
-| `find-docs` | Motion.dev API version |
+| Order | Skill | Tier |
+|-------|-------|------|
+| 1 | `framer-motion-animator` | recommended — React + Framer Motion stack |
+| 2 | `ui-animation` | recommended — CSS motion; use instead of row 1 on a non-Framer stack |
+| 3 | `review-animations` | recommended — pre-ship critique (§3) |
+| 4 | `motion-design` | optional — staging principles |
+| 5 | `frontend-design` | optional — only when motion must serve a page thesis |
+| 6 | `find-docs` | optional — Motion.dev API version check |
+
+**Budget gate:** one stack skill (row 1 or 2) plus `review-animations` covers a routine polish pass. Pull `motion-design` only for choreography questions, and `find-docs` only for an unverified Motion.dev API.
+
+**Skip:** `shadcn`, `ui-ux-pro-max` (new pages or components → `routr-frontend`), `remotion-best-practices`, `hyperframes` (exported MP4 → `routr-video`), `vercel-react-best-practices` (profiling why frames drop → `routr-perf`).
 
 ## 1. Audit
 
